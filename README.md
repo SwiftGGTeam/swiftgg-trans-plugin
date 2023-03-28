@@ -12,7 +12,9 @@ swiftgg-trans-plugin 是一款浏览器插件，旨在帮助 iOS 开发者更轻
 
 ## 初衷
 Apple 为了让初学者能够很好的学习 iOS 开发知识，提供了易于理解带有交互效果的学习教程，很多初学者通过这些教程顺利学会了 iOS 开发，创造出了独特且出色的产品。官方文档的质量非常高，但依然会有一些不完美的地方，例如不支持中文，不能及时更新到最新版本等，这也导致会有一部分初学者在学习的时候会遇到一些问题和困惑。
+
 我们创建这款插件的初衷便是帮助 iOS 开发者更容易地学习和理解 SwiftUI 官方文档。我们希望这个插件能够降低学习难度，让更多的人加入到 iOS 开发的行列中。同时我们也期待社区的力量，共同参与到插件和翻译的开发与完善中，让这个插件不断成长，更好地为大家服务。
+
 在未来，我们希望 swiftgg-trans-plugin 成为初学者和资深开发者的得力助手，不仅涵盖 SwiftUI，还能扩展到其他 Apple 官方文档。我们期待与社区成员一起为开源做出贡献，共同推进技术的发展。
 
 ## 功能及使用
@@ -79,7 +81,7 @@ Apple 为了让初学者能够很好的学习 iOS 开发知识，提供了易于
 
 ## 关于我们
 SwiftGG 是一个致力于为 Swift 语言和 iOS 开发者提供高质量中文技术文章的社区。我们热衷于分享技术知识和经验，我们希望通过这个插件，以及社区的其他活动和项目，帮助更多的开发者更好地学习和了解 Swift 和 iOS 开发。
-如果您对我们的项目感兴趣，或者想要了解更多关于 SwiftGG 的信息，请访问我们的官方网站：**[https://swiftgg.com](https://swiftgg.com/)**。
+如果您对我们的项目感兴趣，或者想要了解更多关于 SwiftGG 的信息，请访问我们的官方网站：[https://swiftgg.com](https://swiftgg.com/)。
 您也可以通过以下方式关注我们：
 - **[GitHub](https://github.com/SwiftGGTeam)**
 - **[微博](https://weibo.com/swiftguide)**
@@ -91,4 +93,4 @@ SwiftGG 是一个致力于为 Swift 语言和 iOS 开发者提供高质量中文
 - [OneeMe](https://github.com/OneeMe)
 - [IanIsMyUsername](https://github.com/IanIsMyUsername)
 - [hiETsang](https://github.com/hiETsang)
-
+- [Ryan-BetterMe](https://github.com/Ryan-BetterMe)
