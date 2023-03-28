@@ -1,0 +1,29 @@
+{
+    "name": "SwiftGG Translator",
+    "description": "Apple document",
+    "version": "0.1.0",
+    "manifest_version": 3,
+    "background": {
+        "service_worker": "./background.js"
+    },
+    "action": {
+        "default_popup": "./popup.html"
+    },
+    "options_page": "./options.html",
+    "permissions": [
+        "activeTab",
+        "tabs",
+        "storage",
+        "scripting"
+    ],
+    "host_permissions": [
+        "https://developer.apple.com/*"
+    ],
+    "content_scripts": [
+        {
+          "matches": ["https://developer.apple.com/*"],
+          "css": ["content_script.css"],
+          "js": ["content_script.js"]
+        }
+    ]
+}
