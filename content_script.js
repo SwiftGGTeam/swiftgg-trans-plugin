@@ -398,34 +398,15 @@ var json = {
     "When you apply a modifier to a layout view like a stack, SwiftUI applies the modifier to all the elements contained in the group.": {
         "zh": "当你将修饰符应用到堆栈等布局视图时，SwiftUI 会将修饰符应用到堆栈中包含的所有元素。",
         "tips": ""
-    },
-    "Question 1 of 4": {
-        "zh": "汉语翻译",
-        "tips": ""
-    },
-    "When creating a custom SwiftUI view, where do you declare the view’s layout?": {
-        "zh": "汉语翻译",
-        "tips": ""
-    },
-    "In the view’s initializer.": {
-        "zh": "汉语翻译",
-        "tips": ""
-    },
-    "In the body property.": {
-        "zh": "汉语翻译",
-        "tips": ""
-    },
-    "In the layoutSubviews() method.": {
-        "zh": "汉语翻译",
-        "tips": ""
-    },
-    "With the basic landmark detail view set up, you need to provide a way for users to see the full list of landmarks, and to view the details about each location.": {
-        "zh": "汉语翻译",
-        "tips": ""
     }
 }
 
-appendNodes()
+// document.addEventListener('DOMContentLoaded', function() {
+//     console.log('我被执行了！');
+//     appendNodes();
+// });
+
+appendNodes();
 
 function addTitle() {
     var title = document.querySelector("div.headline h1");
@@ -466,8 +447,8 @@ function appendNodes() {
         var t = document.createTextNode(json[node.innerText].zh);
         p.appendChild(t);
 
-        // parent.insertBefore(p, node);
-        insertAfter(p, node);
+        parent.insertBefore(p, node);
+        // insertAfter(p, node);
     })
 }
 
