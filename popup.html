@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="popup.css">
+    <style type="text/css">
+        #switch {
+            position: relative;
+        }
+
+        #switch .labelBox {
+            background: #409eff;
+            border-radius: 40px;
+            width: 42px;
+            position: relative;
+            height: 22px;
+        }
+
+        #switch.off .labelBox {
+            background: #cacaca;
+
+        }
+
+        #switch .check {
+            display: block;
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            background: #fff;
+            /* border: 1px solid #e5e5e5; */
+            position: absolute;
+            top: 0px;
+            left: 0px;
+        }
+
+        #switch input[type=checkbox] {
+            border: 0 none !important;
+            clip: rect(1px, 1px, 1px, 1px);
+            height: 1px !important;
+            overflow: hidden !important;
+            position: absolute !important;
+            width: 1px !important;
+        }
+
+        @keyframes labelON {
+            0% {
+                top: 2px;
+                left: 2px;
+            }
+
+            100% {
+                top: 2px;
+                left: 22px;
+            }
+        }
+
+        @keyframes labelOFF {
+            0% {
+                top: 2px;
+                left: 22px;
+            }
+
+            100% {
+                top: 2px;
+                left: 2px;
+            }
+        }
+
+        #switch input[type=checkbox]:checked+label.check {
+            top: 2px;
+            left: 22px;
+            -webkit-animation: labelON 0.2s ease-in 0s 1;
+            -moz-animation: labelON 0.2s ease-in 0s 1;
+            -o-animation: labelON 0.2s ease-in 0s 1;
+            -ms-animation: labelON 0.2s ease-in 0s 1;
+            animation: labelON 0.2s ease-in 0s 1;
+        }
+
+        #switch input[type=checkbox]+label.check {
+            top: 2px;
+            left: 2px;
+            -webkit-animation: labelOFF 0.2s ease-in 0s 1;
+            -moz-animation: labelOFF 0.2s ease-in 0s 1;
+            -o-animation: labelOFF 0.2s ease-in 0s 1;
+            -ms-animation: labelOFF 0.2s ease-in 0s 1;
+            animation: labelOFF 0.2s ease-in 0s 1;
+        }
+    </style>
+
+</head>
+
+<body>
+    <main class="popup">
+
+        <header>
+            <img src="https://www.gitbook.com/cdn-cgi/image/width=40,dpr=2,height=40,fit=contain,format=auto/https%3A%2F%2F4205117763-files.gitbook.io%2F~%2Ffiles%2Fv0%2Fb%2Fgitbook-legacy-files%2Fo%2Fspaces%252F-Law_TwYroharctnLUSD%252Favatar.png%3Fgeneration%3D1553649267470994%26alt%3Dmedia"
+                alt="">
+            SwiftGG_TRANSL
+        </header>
+
+        <ul class="tool">
+            <li class="translate">
+                <span>开始翻译</span>
+
+                <div id="switch">
+                    <div class="labelBox">
+                        <input type="checkbox" id="checkbox" />
+                        <label for="checkbox" class="check"></label>
+                    </div>
+                </div>
+            </li>
+
+            <li class="project">
+                <span>
+                    项目地址
+                </span>
+                <a href="https://github.com/SwiftGGTeam/swiftgg-trans-plugin" target="__blank"><img src="/source/intro/project.svg"></a>
+            </li>
+        </ul>
+
+        <div class="divider"></div>
+
+        <div class="course">
+            <h3 class="course-title">当前支持的 Apple 课程</h3>
+            <ul>
+                <li>
+                    <span>
+                        introducing SwiftUI
+                    </span>
+                    <a href="https://developer.apple.com/tutorials/swiftui" target="__blank"><img src="/source/intro/link.png"></a>
+                </li>
+                <li>
+                    <span>
+                        Learning SwiftUI
+                    </span>
+                    <a href="https://developer.apple.com/tutorials/swiftui-concepts/" target="__blank"><img src="/source/intro/link.png"></a>
+                </li>
+                <li>
+                    <span>
+                        Explore SwiftUI Sample Apps
+                    </span>
+                    <a href="https://developer.apple.com/tutorials/sample-apps" target="__blank"><img src="/source/intro/link.png"></a>
+                </li>
+            </ul>
+        </div>
+
+        <div class="divider"></div>
+
+
+        <footer>
+            <span>遇到问题？</span>
+            <a href="https://github.com/SwiftGGTeam/swiftui-tutorial-chinese" target="__blank">获取帮助</a>
+        </footer>
+
+    </main>
+
+</body>
+<script src="./popup.js"></script>
+
+</html>

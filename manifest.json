@@ -7,7 +7,13 @@
         "service_worker": "./background.js"
     },
     "action": {
-        "default_popup": "./popup.html"
+        "default_popup": "./popup.html",
+        "default_icon": {
+            "128": "/source/intro/swiftLogo.png"
+        }
+    },
+    "icons": {
+        "128": "/source/intro/swiftLogo.png"
     },
     "options_page": "./options.html",
     "permissions": [
@@ -21,9 +27,15 @@
     ],
     "content_scripts": [
         {
-          "matches": ["https://developer.apple.com/*"],
-          "css": ["content_script.css"],
-          "js": ["content_script.js"]
+            "matches": [
+                "https://developer.apple.com/*"
+            ],
+            "css": [
+                "content_script.css"
+            ],
+            "js": [
+                "content_script.js"
+            ]
         }
     ]
 }
