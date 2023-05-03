@@ -1,8 +1,8 @@
 var json = {}
 let currentURL = new URL(document.URL);
 let pathArray = currentURL.pathname.split('/');
-let baseURL = "https://api.swift.gg/content/"
-let url = baseURL + pathArray[pathArray.length-2] + '/' + pathArray[pathArray.length-1]
+let baseURL = "https://api.swift.gg/content/";
+let url = baseURL + pathArray[pathArray.length-2] + '/' + pathArray[pathArray.length-1];
 
 fetch(url)
   .then(response => response.json())
