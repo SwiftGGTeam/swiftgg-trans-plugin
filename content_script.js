@@ -7,18 +7,26 @@ let url = baseURL + pathArray[pathArray.length-2] + '/' + pathArray[pathArray.le
 fetch(url)
   .then(response => response.json())
   .then(data => {
-    json = data
+    json = data;
+    addTitle();
     appendNodes();
   });
 
 
 function addTitle() {
     var title = document.querySelector("div.headline h1");
-    console.log(title.innerHTML); // "title"
-    var h = document.createElement("h1");
-    var t = document.createTextNode("创建卡片视图");
-    h.appendChild(t);
-    title.append(h);
+    titleText = json[title.innerText.trim()].zh;
+    // console.log(title.innerText.trim());
+    // console.log(titleText);
+    if (!titleText || titleText == "") {
+        return;
+    }
+    var newNode = document.createElement("h3");
+    var text = document.createTextNode(titleText);
+    newNode.appendChild(text);
+    
+    var parent = title.parentElement;
+    parent.insertBefore(newNode, title);
 }
 
 
@@ -32,26 +40,17 @@ function cloneNode() {
 
 function appendNodes() {
     var pNodes = document.querySelectorAll("p");
-    // var json = JSON.parse(rawJSON);
-    console.log(typeof pNodes);
-    console.log(pNodes.length);
-    console.log(Array.isArray(pNodes));
-    // console.log(json);
 
     Array.from(pNodes).filter((node) => Boolean(json[node.innerText])).forEach((node) => {
-        console.log(node.innerHTML);
-        console.log(node.innerText);
-        console.log(typeof json[node.innerText]);
-        console.log(json[node.innerText]);
         // debugger;
-        console.log(json[node.innerText]["zh"]);
+        // console.log(json[node.innerText]["zh"]);
         var parent = node.parentElement;
 
-        var p = document.createElement("p");
+        var newNode = document.createElement("p");
         var t = document.createTextNode(json[node.innerText].zh);
-        p.appendChild(t);
+        newNode.appendChild(t);
 
-        parent.insertBefore(p, node);
+        parent.insertBefore(newNode, node);
         // insertAfter(p, node);
     })
 }
