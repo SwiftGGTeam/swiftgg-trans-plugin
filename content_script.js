@@ -23,7 +23,7 @@ function addTitleNode() {
         return;
     }
     var newNode = document.createElement("h3");
-    var text = document.createTextNode("汉字有点大");
+    var text = document.createTextNode(titleText);
     newNode.appendChild(text);
     
     var parent = title.parentElement;
