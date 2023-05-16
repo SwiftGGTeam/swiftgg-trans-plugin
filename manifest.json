@@ -17,10 +17,7 @@
     },
     "options_page": "./options.html",
     "permissions": [
-        "activeTab",
-        "tabs",
-        "storage",
-        "scripting"
+        "tabs"
     ],
     "host_permissions": [
         "https://developer.apple.com/*"
