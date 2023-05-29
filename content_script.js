@@ -4,7 +4,6 @@ let pathArray = currentURL.pathname.split('/');
 let baseURL = "https://api.swift.gg/content/";
 let url = baseURL + pathArray[pathArray.length-2] + '/' + pathArray[pathArray.length-1];
 
-updateAHerfToAbsolutURL()
 fetchRelatedData(url)
 waitPageLoaded()
 
@@ -19,6 +18,7 @@ function waitPageLoaded() {
         currentCheckCount ++;
         const element = document.querySelector("div.headline h1");
         if (element) {
+          updateAHerfToAbsolutURL()
           clearInterval(interval);
           addTitleNode();
           appendH2Nodes();
