@@ -29,10 +29,21 @@ function waitPageLoaded() {
 }
 
 function fetchRelatedData(url) {
-    fetch(url)
-  .then(response => response.json())
-  .then(data => {
-    json = data;
+  if (url.endsWith("swiftui") || url.endsWith("swiftui/")) {
+    return;
+  }
+  fetch(url)
+   .then(response => {
+    if (!response.ok) {
+        throw new Error(`HTTP error ${response.status}`);
+    }
+    return response.json();
+   })
+   .then(data => {
+     json = data;
+  })    
+  .catch(error => {
+    console.error('Error fetching data:', error);
   });
 }
 
