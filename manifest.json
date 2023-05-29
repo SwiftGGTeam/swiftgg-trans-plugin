@@ -25,7 +25,8 @@
     "content_scripts": [
         {
             "matches": [
-                "https://developer.apple.com/*"
+                "https://developer.apple.com/*",
+                "*://developer.apple.com/*"
             ],
             "css": [
                 "content_script.css"
