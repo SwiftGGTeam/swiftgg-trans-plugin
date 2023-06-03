@@ -17,7 +17,8 @@
     },
     "options_page": "./options.html",
     "permissions": [
-        "tabs"
+        "tabs",
+        "storage"
     ],
     "host_permissions": [
         "https://developer.apple.com/*"

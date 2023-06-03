@@ -3,9 +3,17 @@ let currentURL = new URL(document.URL);
 let pathArray = currentURL.pathname.split('/');
 let baseURL = "https://api.swift.gg/content/";
 let url = baseURL + pathArray[pathArray.length-2] + '/' + pathArray[pathArray.length-1];
+let initalRequestMethod = "shouldTranslate"
+let updateRequestMethod = "updateShouldTranslate"
+let reloadRequestMethod = "reloadShouldTranslate"
 
-fetchRelatedData(url)
-waitPageLoaded()
+chrome.runtime.sendMessage({type: initalRequestMethod}, (response) => {
+  const data = response.data;
+  if (data == true) {
+    fetchRelatedData(url)
+    waitPageLoaded()
+  }
+});
 
 function waitPageLoaded() {
     var maxCheckCount = 10
