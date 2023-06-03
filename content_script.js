@@ -8,15 +8,16 @@ let updateRequestMethod = "updateShouldTranslate"
 let reloadRequestMethod = "reloadShouldTranslate"
 
 chrome.runtime.sendMessage({type: initalRequestMethod}, (response) => {
-  const data = response.data;
-  if (data == true) {
+  const shouldTranslate = response.shouldTranslate;
+  if (shouldTranslate == true) {
     fetchRelatedData(url)
     waitPageLoaded()
   }
 });
 
+
 function waitPageLoaded() {
-    var maxCheckCount = 10
+    var maxCheckCount = 1000
     var currentCheckCount = 0
     window.addEventListener('load', () => {
       const interval = setInterval(() => {
@@ -32,6 +33,7 @@ function waitPageLoaded() {
           appendH2Nodes();
           appendPNodes();
         }
+        console.log("retry times:", currentCheckCount);
       }, 200);
     });
 }

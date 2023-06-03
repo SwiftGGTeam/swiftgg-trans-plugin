@@ -17,7 +17,7 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
           chrome.tabs.reload(tabs[0].id);
         });
     } else if (request.type === initalRequestMethod) {
-        sendResponse({data: shouldTranslate});
+        sendResponse({shouldTranslate: shouldTranslate});
     }
 });
 
