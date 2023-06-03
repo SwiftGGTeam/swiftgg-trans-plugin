@@ -13,6 +13,9 @@ chrome.storage.local.get(pluginFlag, (result) => {
 chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
     if (request.type === updateRequestMethod) {
         shouldTranslate = request.data;
+        chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
+          chrome.tabs.reload(tabs[0].id);
+        });
     } else if (request.type === initalRequestMethod) {
         sendResponse({data: shouldTranslate});
     }
