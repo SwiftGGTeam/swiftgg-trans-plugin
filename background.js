@@ -6,9 +6,10 @@ let reloadRequestMethod = "reloadShouldTranslate"
 
 
 chrome.storage.local.get(pluginFlag, (result) => {
-    console.log(result.pluginFlag,"local");
     shouldTranslate = result.pluginFlag || false
   });
+
+delay(1);
 
 chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
     if (request.type === updateRequestMethod) {
@@ -21,4 +22,8 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
     }
 });
 
-
+function delay(i) {
+  setTimeout(() => {
+    console.log(i);
+  }, i * 1000);
+}

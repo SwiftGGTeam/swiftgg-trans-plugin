@@ -8,39 +8,42 @@ let updateRequestMethod = "updateShouldTranslate"
 let reloadRequestMethod = "reloadShouldTranslate"
 
 chrome.runtime.sendMessage({type: initalRequestMethod}, (response) => {
-  const shouldTranslate = response.shouldTranslate;
-  if (shouldTranslate == true) {
-    fetchRelatedData(url)
-    waitPageLoaded()
+  if (response.shouldTranslate == true) {
+    if (fetchRelatedData(url) == true) {
+      waitPageLoaded();
+    } else {
+      updateAHerfToAbsolutURL()
+    }
   }
 });
 
-
 function waitPageLoaded() {
+    console.log("Will wait loaded")
     var maxCheckCount = 1000
     var currentCheckCount = 0
     window.addEventListener('load', () => {
+      console.log("Add Listener")
       const interval = setInterval(() => {
+        console.log("retry times:", currentCheckCount);
         if (currentCheckCount >= maxCheckCount) {
           clearInterval(interval);
         }
         currentCheckCount ++;
         const element = document.querySelector("div.headline h1");
-        if (element) {
+        if (element && json != null) {
           updateAHerfToAbsolutURL()
           clearInterval(interval);
           addTitleNode();
           appendH2Nodes();
           appendPNodes();
         }
-        console.log("retry times:", currentCheckCount);
       }, 200);
     });
 }
 
 function fetchRelatedData(url) {
   if (url.endsWith("swiftui") || url.endsWith("swiftui/")) {
-    return;
+    return false;
   }
   fetch(url)
    .then(response => {
@@ -55,6 +58,7 @@ function fetchRelatedData(url) {
   .catch(error => {
     console.error('Error fetching data:', error);
   });
+  return true;
 }
 
 function updateAHerfToAbsolutURL() {
