@@ -2,14 +2,17 @@ const pluginFlag = "pluginFlag"
 let updateRequestMethod = "updateShouldTranslate"
 
 document.addEventListener("DOMContentLoaded", function () {
-  const label = document.querySelector("#switch label.check");
+  const switchButton = document.querySelector("#switch");
+  const label = switchButton.querySelector("label.check");
+  const checkbox = document.getElementById("checkbox");
   label.classList.add("disable-animation");
-  document.getElementById("checkbox").addEventListener('change', (e) => {
+  switchButton.addEventListener('click', () => {
     label.classList.remove("disable-animation");
-    document.getElementById('switch').setAttribute('class', e.target.checked ? 'on' : 'off')
-    chrome.storage.local.set({ pluginFlag: e.target.checked });
-    chrome.runtime.sendMessage({type: updateRequestMethod, data: e.target.checked});
-  })
+    checkbox.checked = !checkbox.checked
+    document.getElementById('switch').setAttribute('class', checkbox.checked ? 'on' : 'off')
+    chrome.storage.local.set({ pluginFlag: checkbox.checked });
+    chrome.runtime.sendMessage({type: updateRequestMethod, data: checkbox.checked});
+  });
 });
 
 chrome.storage.local.get(pluginFlag, (result) => {
