@@ -9,8 +9,6 @@ chrome.storage.local.get(pluginFlag, (result) => {
     shouldTranslate = result.pluginFlag || false
   });
 
-delay(1);
-
 chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
     if (request.type === updateRequestMethod) {
         shouldTranslate = request.data;

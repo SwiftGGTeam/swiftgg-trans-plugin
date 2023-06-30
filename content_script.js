@@ -1,50 +1,77 @@
+const isDebugMode = true;
+log("Plugin start");
 var json = {}
-let currentURL = new URL(document.URL);
-let pathArray = currentURL.pathname.split('/');
-let baseURL = "https://api.swift.gg/content/";
-let url = baseURL + pathArray[pathArray.length-2] + '/' + pathArray[pathArray.length-1];
-let initalRequestMethod = "shouldTranslate"
-let updateRequestMethod = "updateShouldTranslate"
-let reloadRequestMethod = "reloadShouldTranslate"
+const currentURL = new URL(document.URL);
+const pathArray = currentURL.pathname.split('/');
+const baseURL = "https://api.swift.gg/content/";
+const url = baseURL + pathArray[pathArray.length-2] + '/' + pathArray[pathArray.length-1];
+const initalRequestMethod = "shouldTranslate"
+const updateRequestMethod = "updateShouldTranslate"
+const reloadRequestMethod = "reloadShouldTranslate"
+const endUpWhiteList = ["swiftui","swiftui/","sample-apps","sample-apps/","swiftui-concepts","swiftui-concepts/"];
 
+log("Plugin start request flag");
 chrome.runtime.sendMessage({type: initalRequestMethod}, (response) => {
-  if (response.shouldTranslate == true) {
-    if (fetchRelatedData(url) == true) {
-      waitPageLoaded();
-    } else {
-      updateAHerfToAbsolutURL()
-    }
+  log(`Flag status: ${response.shouldTranslate}`);
+  if (response.shouldTranslate == false) {
+    return
   }
+
+  if (isCategoryPage() == false) {
+    fetchRelatedData(url) == true
+  }
+
+  waitPage(function() {
+    if (isCategoryPage() == true) {
+      updateAHerfToAbsolutURL()
+    } else {
+      waitJsonLoaded(function() {
+        log("Plugin Start add content");
+        updateAHerfToAbsolutURL()
+        addTitleNode();
+        appendH2Nodes();
+        appendPNodes();
+      });
+    }
+  });
+
+  log("Plugin wait page loaded");
+
 });
 
-function waitPageLoaded() {
-    console.log("Will wait loaded")
+function waitPage(callback) {
+  const flagElement = isCategoryPage() ? ".title" : "div.headline h1";
+  log(`Plugin ${flagElement}`);
+  log("Plugin waiting");
+  let interval = setInterval(function() {
+    log("Plugin retry");
+    let asyncElement = document.querySelector(flagElement);
+      if (asyncElement) {
+        clearInterval(interval);
+        log("Element loaded");
+        callback()
+      }
+  }, 200);
+}
+
+function waitJsonLoaded(callback) {
+    log("Will wait Json loaded");
     var maxCheckCount = 1000
     var currentCheckCount = 0
-    window.addEventListener('load', () => {
-      console.log("Add Listener")
-      const interval = setInterval(() => {
-        console.log("retry times:", currentCheckCount);
-        if (currentCheckCount >= maxCheckCount) {
-          clearInterval(interval);
-        }
-        currentCheckCount ++;
-        const element = document.querySelector("div.headline h1");
-        if (element && json != null) {
-          updateAHerfToAbsolutURL()
-          clearInterval(interval);
-          addTitleNode();
-          appendH2Nodes();
-          appendPNodes();
-        }
-      }, 200);
-    });
+    const interval = setInterval(() => {
+      log(`retry times: ${currentCheckCount}`);
+      if (currentCheckCount >= maxCheckCount) {
+        clearInterval(interval);
+      }
+      currentCheckCount ++;
+      if (json != null) {
+        clearInterval(interval);
+        callback();
+      }
+    }, 400);
 }
 
 function fetchRelatedData(url) {
-  if (url.endsWith("swiftui") || url.endsWith("swiftui/")) {
-    return false;
-  }
   fetch(url)
    .then(response => {
     if (!response.ok) {
@@ -58,15 +85,16 @@ function fetchRelatedData(url) {
   .catch(error => {
     console.error('Error fetching data:', error);
   });
-  return true;
 }
 
 function updateAHerfToAbsolutURL() {
   let relativeLinks = document.querySelectorAll('a[href^="/"]');
+  log("Plugin start update herf");
   for (let i = 0; i < relativeLinks.length; i++) {
     let link = relativeLinks[i];
     let relativePath = link.getAttribute('href');
     let absolutePath = `https://developer.apple.com${relativePath}`;
+    log(absolutePath);
     link.setAttribute('href', absolutePath);
     link.setAttribute('target', '_blank');
   }
@@ -129,3 +157,13 @@ function delay(i) {
   }, i * 1000);
 }
 
+function log(message) {
+  if (isDebugMode) {
+    console.log(message)
+  }
+}
+
+function isCategoryPage() {
+  const lastPath = pathArray[pathArray.length - 1] || pathArray[pathArray.length - 2];
+  return endUpWhiteList.includes(lastPath)
+}
