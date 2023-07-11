@@ -5,7 +5,7 @@
 
 .popup {
     background-color: #FFFFFF;
-    width: 280px;
+    width: 500px;
     padding: 0px;
 }
 
@@ -61,22 +61,60 @@ body {
     background-color: #f0f0f0;
 }
 
-.course {
-    padding: 30px 20px;
-}
-
 .course-title {
+    padding: 30px 20px;
     font-size: 14px;
     font-weight: 600;
+    padding-bottom: 12px;
 }
 
-.course li {
-    height: 22px;
+.course ul li {
     display: flex;
     align-items: center;
     justify-content: space-between;
     font-size: 12px;
-    margin-top: 12px;
+}
+
+.course {
+    padding-bottom: 30px;
+}
+
+.course a {
+    display: block;
+    text-decoration: none;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    padding-left: 20px;
+    width: 100%;
+    font-weight: 600;
+    color: #2cade6;
+}
+
+.course a:hover {
+    color: #fb8065;
+    background: #f1f1f1;
+}
+
+.course ul li ul.dropdown-content a {
+    color: #000000;
+}
+
+.course ul ul {
+    display: none;
+    position: absolute;
+    left: 280px;
+    width: 220px;
+    background-color: #FFFFFF;
+    min-width: 120px;
+    z-index: inherit;
+}
+
+.course ul .dropdown:hover {
+    position: relative;
+}
+
+.course ul .dropdown:hover ul {
+    display: initial;
 }
 
 .course li a img {
