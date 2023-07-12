@@ -133,17 +133,21 @@
 
         <div class="course">
             <h3 class="course-title">当前支持的 Apple 课程</h3>
-            <ul>
-                <li>
-                    <a href="https://developer.apple.com/tutorials/swiftui" target="__blank">Introducing SwiftUI</a>
-                </li>
-                <li>
-                    <a href="https://developer.apple.com/tutorials/swiftui-concepts/" target="__blank">Learning SwiftUI</a>
-                </li>
-                <li>
-                    <a href="https://developer.apple.com/tutorials/sample-apps" target="__blank">Explore SwiftUI Sample Apps</a>
-                </li>
-            </ul>
+            <select class="menu" id="swiftui-menu">
+                <option value="" disabled selected>SwiftUI</option>
+                <option value="https://developer.apple.com/tutorials/swiftui">Introducing SwiftUI - 认识 SwiftUI，学习基础控件的使用和开发</option>
+                <option value="https://developer.apple.com/tutorials/swiftui-concepts/">Learning SwiftUI - 通过教程和示例学习 SwiftUI 的结构，布局和数据流</option>
+                <option value="https://developer.apple.com/tutorials/sample-apps">Explore SwiftUI Sample Apps - 通过多个示例程序探索 SwiftUI 的开发和框架使用</option>
+            </select>
+            <select class="menu" id="visionOS-menu">
+                <option value="" disabled selected>visionOS</option>
+            </select>
+            <select class="menu" id="swiftui-menu">
+                <option value="" disabled selected hidden>请选择...</option>
+                <option value="https://developer.apple.com/tutorials/swiftui">Introducing SwiftUI</option>
+                <option value="https://developer.apple.com/tutorials/swiftui-concepts/">Learning SwiftUI</option>
+                <option value="https://developer.apple.com/tutorials/sample-apps">Explore SwiftUI Sample Apps</option>
+            </select>
         </div>
 
         <div class="divider"></div>

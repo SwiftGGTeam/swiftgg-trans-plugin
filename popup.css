@@ -66,6 +66,7 @@ body {
 }
 
 .course-title {
+    padding-bottom: 15px;
     font-size: 14px;
     font-weight: 600;
 }
@@ -82,6 +83,15 @@ body {
 .course li a img {
     width: 20px;
     height: 20px;
+}
+
+.course select {
+    border: none;
+    background-color: transparent;
+    width: 100%;
+    padding: 10px 0px;
+    font-weight: 600;
+    color: #2cade6;
 }
 
 footer {
