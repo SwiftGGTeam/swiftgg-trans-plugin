@@ -21,3 +21,10 @@ chrome.storage.local.get(pluginFlag, (result) => {
   document.getElementById('switch').setAttribute('class', shouldTranslate ? 'on' : 'off')
 
 });
+
+document.addEventListener('change', function(event) {
+  var target = event.target;
+  if (target.tagName.toLowerCase() === 'select') {
+    chrome.tabs.create({ url: target.value });
+  }
+});
