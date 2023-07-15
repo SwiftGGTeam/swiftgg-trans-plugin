@@ -8,6 +8,7 @@ let startTranslateRequestMethod = "startTranslate"
 var currentTranslatingPage = [];
 var currentTabID = 0
 var previousTabID = 0
+const pageSwitchedRequestMethod = "pageSwitched"
 
 chrome.storage.local.get(pluginFlag, (result) => {
     shouldTranslate = result.pluginFlag || false
@@ -59,6 +60,12 @@ function delay(i) {
 }
 
 chrome.tabs.onUpdated.addListener(function(tabId, info, tab) {
+    if (info.url) {
+        chrome.tabs.sendMessage( tabId, {
+            message: pageSwitchedRequestMethod,
+            url: info.url
+        }).then()
+    }
     chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
         const activeTab = tabs[0]
         updateTabId(activeTab.id)

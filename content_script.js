@@ -1,43 +1,18 @@
 const isDebugMode = true;
 log("Plugin start");
 var json = {}
-const currentURL = new URL(document.URL);
-const pathArray = currentURL.pathname.split('/');
-const baseURL = "https://api.swift.gg/content/";
-const url = baseURL + pathArray[pathArray.length-2] + '/' + pathArray[pathArray.length-1];
 const initialRequestMethod = "shouldTranslate"
 const updateRequestMethod = "updateShouldTranslate"
 const reloadRequestMethod = "reloadShouldTranslate"
 const startTranslateRequestMethod = "startTranslate"
+const pageSwitchedRequestMethod = "pageSwitched"
 const endUpWhiteList = ["swiftui","swiftui/","sample-apps","sample-apps/","swiftui-concepts","swiftui-concepts/"];
 
 log("Plugin start request flag");
 chrome.runtime.sendMessage({type: initialRequestMethod}, (response) => {
   log(`Flag status: ${response.shouldTranslate}`);
-  if (response.shouldTranslate === false) {
-    return
-  }
 
-  if (isCategoryPage() === false) {
-    fetchRelatedData(url) == true
-  }
-
-  waitPage(function() {
-    if (isCategoryPage() === true) {
-      updateAHerfToAbsolutURL()
-      log("in category page")
-      addInstructionToCategoryPage()
-    } else {
-      waitJsonLoaded(function() {
-        log("Plugin Start add content");
-        updateAHerfToAbsolutURL()
-        addTitleNode();
-        appendH2Nodes();
-        appendPNodes();
-        chrome.runtime.sendMessage({type: startTranslateRequestMethod}, (response) => {})
-      });
-    }
-  });
+  startTranslate()
 
   log("Plugin wait page loaded");
 
@@ -168,6 +143,11 @@ function log(message) {
 }
 
 function isCategoryPage() {
+  const currentURL = new URL(document.URL);
+  const pathArray = currentURL.pathname.split('/');
+  const baseURL = "https://api.swift.gg/content/";
+  const url = baseURL + pathArray[pathArray.length-2] + '/' + pathArray[pathArray.length-1];
+
   const lastPath = pathArray[pathArray.length - 1] || pathArray[pathArray.length - 2];
   return endUpWhiteList.includes(lastPath)
 }
@@ -188,4 +168,53 @@ function addInstructionToCategoryPage() {
   contentDiv.appendChild(spaceElement)
   contentDiv.appendChild(spaceElement2)
   contentDiv.appendChild(pElement)
+}
+chrome.runtime.onMessage.addListener(
+    function(request, sender, sendResponse) {
+      // listen for messages sent from background.js
+      if (request.message === pageSwitchedRequestMethod) {
+        if (request.url.includes("developer.apple.com")) {
+          chrome.runtime.sendMessage({type: initialRequestMethod}, (response) => {
+            log(`Flag status: ${response.shouldTranslate}`);
+
+            startTranslate()
+
+            log("Plugin wait page loaded");
+
+          });
+        }
+      }
+    }
+);
+
+function startTranslate(shouldTranslate) {
+  const currentURL = new URL(document.URL);
+  const pathArray = currentURL.pathname.split('/');
+  const baseURL = "https://api.swift.gg/content/";
+  const url = baseURL + pathArray[pathArray.length-2] + '/' + pathArray[pathArray.length-1];
+
+  if (shouldTranslate === false) {
+    return
+  }
+
+  if (isCategoryPage() === false) {
+    fetchRelatedData(url)
+  }
+
+  waitPage(function() {
+    if (isCategoryPage() === true) {
+      updateAHerfToAbsolutURL()
+      log("in category page")
+      addInstructionToCategoryPage()
+    } else {
+      waitJsonLoaded(function() {
+        log("Plugin Start add content");
+        updateAHerfToAbsolutURL()
+        addTitleNode();
+        appendH2Nodes();
+        appendPNodes();
+        chrome.runtime.sendMessage({type: startTranslateRequestMethod}, (response) => {})
+      });
+    }
+  });
 }
