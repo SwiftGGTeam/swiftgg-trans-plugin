@@ -33,21 +33,17 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
                const activeTab = tabs[0]
                updateTabId(activeTab.id)
                if (activeTab.url.includes("developer.apple.com")) {
-                   if (shouldTranslate) {
-                       chrome.action.setIcon({ path: { "128": "/source/intro/swiftLogo-running.png"} }).then(r => {})
-                   } else {
-                       chrome.action.setIcon({ path: { "128": "/source/intro/swiftLogo.png"} }).then(r => {})
-                   }
+                   updateLogo(true)
                } else {
-                   chrome.action.setIcon({ path: { "128": "/source/intro/swiftLogo.png"} }).then(r => {})
+                   updateLogo(false)
                }
            })
         });
     } else if (request.type === initalRequestMethod) {
         sendResponse({shouldTranslate: shouldTranslate});
     } else if (request.type === startTranslateRequestMethod) {
-        chrome.action.setIcon({ path: { "128": "/source/intro/swiftLogo-translating.png"} }).then(r => {})
         currentTranslatingPage.push(sender.tab.id)
+        updateLogo(true)
     }
 });
 
@@ -63,18 +59,9 @@ chrome.tabs.onUpdated.addListener(function(tabId, info, tab) {
         updateTabId(activeTab.id)
         currentTranslatingPage = removeItemAll(currentTranslatingPage, previousTabID)
         if (activeTab.url.includes("developer.apple.com")) {
-            if (shouldTranslate) {
-                if (currentTranslatingPage.includes(currentTabID)) {
-                    chrome.action.setIcon({ path: { "128": "/source/intro/swiftLogo-translating.png"} }).then(r => {})
-                } else {
-                    console.log(currentTranslatingPage, tab.id)
-                    chrome.action.setIcon({ path: { "128": "/source/intro/swiftLogo-running.png"} }).then(r => {})
-                }
-            } else {
-                chrome.action.setIcon({ path: { "128": "/source/intro/swiftLogo.png"} }).then(r => {})
-            }
+            updateLogo(true)
         } else {
-            chrome.action.setIcon({ path: { "128": "/source/intro/swiftLogo.png"} }).then(r => {})
+            updateLogo(false)
         }
     });
 });
@@ -83,19 +70,10 @@ chrome.tabs.onActivated.addListener(function(activeInfo) {
     chrome.tabs.get(activeInfo.tabId, function(tab) {
         updateTabId(tab.id)
         if (tab.url && !(tab.url.includes('developer.apple.com/'))) {
-            chrome.action.setIcon({ path: { "128": "/source/intro/swiftLogo.png"} }).then(r => {})
+            updateLogo(false)
             currentTranslatingPage = removeItemAll(currentTranslatingPage, currentTabID)
         } else if (tab.url && (tab.url.includes('developer.apple.com/'))) {
-            if (shouldTranslate) {
-                if (currentTranslatingPage.includes(currentTabID)) {
-                    chrome.action.setIcon({ path: { "128": "/source/intro/swiftLogo-translating.png"} }).then(r => {})
-                } else {
-                    console.log(currentTranslatingPage, tab.id)
-                    chrome.action.setIcon({ path: { "128": "/source/intro/swiftLogo-running.png"} }).then(r => {})
-                }
-            } else {
-                chrome.action.setIcon({ path: { "128": "/source/intro/swiftLogo.png"} }).then(r => {})
-            }
+            updateLogo(true)
         }
     });
 });
@@ -110,4 +88,21 @@ function removeItemAll(arr, value) {
 function updateTabId(id) {
     previousTabID = currentTabID
     currentTabID = id
+}
+
+function updateLogo(active) {
+    if (active) {
+        if (shouldTranslate) {
+            if (currentTranslatingPage.includes(currentTabID)) {
+                chrome.action.setIcon({ path: { "128": "/source/intro/swiftLogo-translating.png"} }).then(r => {})
+            } else {
+                console.log(currentTranslatingPage, tab.id)
+                chrome.action.setIcon({ path: { "128": "/source/intro/swiftLogo-running.png"} }).then(r => {})
+            }
+        } else {
+            chrome.action.setIcon({ path: { "128": "/source/intro/swiftLogo.png"} }).then(r => {})
+        }
+    } else {
+        chrome.action.setIcon({ path: { "128": "/source/intro/swiftLogo.png"} }).then(r => {})
+    }
 }
