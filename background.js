@@ -11,6 +11,9 @@ var previousTabID = 0
 
 chrome.storage.local.get(pluginFlag, (result) => {
     shouldTranslate = result.pluginFlag || false
+    if (!shouldTranslate) {
+        chrome.action.setIcon({ path: { "128": "/source/intro/swiftLogo-closed.png"} }).then(r => {})
+    }
 });
 
 chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
@@ -100,9 +103,13 @@ function updateLogo(active) {
                 chrome.action.setIcon({ path: { "128": "/source/intro/swiftLogo-running.png"} }).then(r => {})
             }
         } else {
-            chrome.action.setIcon({ path: { "128": "/source/intro/swiftLogo.png"} }).then(r => {})
+            chrome.action.setIcon({ path: { "128": "/source/intro/swiftLogo-closed.png"} }).then(r => {})
         }
     } else {
-        chrome.action.setIcon({ path: { "128": "/source/intro/swiftLogo.png"} }).then(r => {})
+        if (shouldTranslate) {
+            chrome.action.setIcon({ path: { "128": "/source/intro/swiftLogo.png"} }).then(r => {})
+        } else {
+            chrome.action.setIcon({ path: { "128": "/source/intro/swiftLogo-closed.png"} }).then(r => {})
+        }
     }
 }
