@@ -200,6 +200,7 @@ function startTranslate(shouldTranslate) {
   const url = baseURL + pathArray[pathArray.length-2] + '/' + pathArray[pathArray.length-1];
 
   if (previousGlobalUrl.toString() === globalUrl.toString()) {
+    chrome.runtime.sendMessage({type: startTranslateRequestMethod}, (response) => {})
     return;
   }
 
