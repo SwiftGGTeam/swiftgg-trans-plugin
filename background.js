@@ -22,7 +22,6 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
         shouldTranslate = request.data;
         currentTranslatingPage = []
         currentTabID = 0
-        console.log("clear" + " Current" + currentTabID)
         chrome.tabs.query({}, function (tabs) {
            let running = []
            for (let tab of tabs) {
@@ -32,8 +31,6 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
            }
 
            Promise.allSettled(running).then()
-
-            console.log("finish refreshing")
 
            chrome.tabs.query({active: true, currentWindow: true}, function (tabs) {
                const activeTab = tabs[0]
@@ -55,18 +52,10 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
 
 function delay(i) {
   setTimeout(() => {
-    console.log(i);
   }, i * 1000);
 }
 
 chrome.tabs.onUpdated.addListener(function(tabId, info, tab) {
-    if (info.url) {
-        chrome.tabs.sendMessage( tabId, {
-            message: pageSwitchedRequestMethod,
-            url: info.url
-        }).then()
-    }
-
     chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
         const activeTab = tabs[0]
         updateTabId(activeTab.id)
@@ -76,6 +65,11 @@ chrome.tabs.onUpdated.addListener(function(tabId, info, tab) {
         } else {
             updateLogo(false)
         }
+
+        chrome.tabs.sendMessage( tabId, {
+            message: pageSwitchedRequestMethod,
+            url: activeTab.url
+        }).then()
     });
 
     return true
@@ -149,7 +143,6 @@ function detectBrowser() {
 }
 
 function setIcon(path) {
-    console.log(detectBrowser())
     switch (detectBrowser()) {
         case BrowserType.chrome:
             chrome.action.setIcon({ path: { "128": path} }).then(r => {})
