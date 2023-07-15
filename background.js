@@ -1,7 +1,7 @@
 const pluginFlag = "pluginFlag"
 const translatedFlag = "pluginFlag"
 var shouldTranslate = false
-let initalRequestMethod = "shouldTranslate"
+let initialRequestMethod = "shouldTranslate"
 let updateRequestMethod = "updateShouldTranslate"
 let reloadRequestMethod = "reloadShouldTranslate"
 let startTranslateRequestMethod = "startTranslate"
@@ -44,7 +44,7 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
                }
            })
         });
-    } else if (request.type === initalRequestMethod) {
+    } else if (request.type === initialRequestMethod) {
         sendResponse({shouldTranslate: shouldTranslate});
     } else if (request.type === startTranslateRequestMethod) {
         currentTranslatingPage.push(sender.tab.id)
@@ -99,18 +99,58 @@ function updateLogo(active) {
     if (active) {
         if (shouldTranslate) {
             if (currentTranslatingPage.includes(currentTabID)) {
-                chrome.action.setIcon({ path: { "128": "/source/intro/swiftLogo-translating.png"} }).then(r => {})
+                setIcon("/source/intro/swiftLogo-translating.png")
             } else {
-                chrome.action.setIcon({ path: { "128": "/source/intro/swiftLogo-running.png"} }).then(r => {})
+                setIcon("/source/intro/swiftLogo-running.png")
             }
         } else {
-            chrome.action.setIcon({ path: { "128": "/source/intro/swiftLogo-closed.png"} }).then(r => {})
+            setIcon("/source/intro/swiftLogo-closed.png")
         }
     } else {
         if (shouldTranslate) {
-            chrome.action.setIcon({ path: { "128": "/source/intro/swiftLogo.png"} }).then(r => {})
+            setIcon("/source/intro/swiftLogo.png")
         } else {
-            chrome.action.setIcon({ path: { "128": "/source/intro/swiftLogo-closed.png"} }).then(r => {})
+            setIcon("/source/intro/swiftLogo-closed.png")
         }
+    }
+}
+
+const BrowserType = {
+    chrome: Symbol("chrome"),
+    safari: Symbol("safari"),
+    firefox: Symbol("firefox"),
+    unknown: Symbol("unknown")
+}
+
+function detectBrowser() {
+    const isChrome = typeof chrome !== 'undefined' && typeof chrome.runtime !== 'undefined';
+    const isFirefox = typeof browser !== 'undefined' && typeof browser.runtime !== 'undefined';
+    const isSafari = typeof safari !== 'undefined' && typeof safari.extension !== 'undefined';
+
+    if (isChrome) {
+        return BrowserType.chrome
+    } else if (isFirefox) {
+        return BrowserType.firefox
+    } else if (isSafari) {
+        return BrowserType.safari
+    } else {
+        return BrowserType.unknown
+    }
+}
+
+function setIcon(path) {
+    console.log(detectBrowser())
+    switch (detectBrowser()) {
+        case BrowserType.chrome:
+            chrome.action.setIcon({ path: { "128": path} }).then(r => {})
+            break
+        case BrowserType.firefox:
+            browser.browserAction.setIcon({ path: { "128": path} }).then()
+            break
+        case BrowserType.safari:
+            browser.browserAction.setIcon({ path: { "128": path} }).then()
+            break
+        case BrowserType.unknown:
+            break
     }
 }

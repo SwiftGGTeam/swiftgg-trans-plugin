@@ -5,25 +5,25 @@ const currentURL = new URL(document.URL);
 const pathArray = currentURL.pathname.split('/');
 const baseURL = "https://api.swift.gg/content/";
 const url = baseURL + pathArray[pathArray.length-2] + '/' + pathArray[pathArray.length-1];
-const initalRequestMethod = "shouldTranslate"
+const initialRequestMethod = "shouldTranslate"
 const updateRequestMethod = "updateShouldTranslate"
 const reloadRequestMethod = "reloadShouldTranslate"
 const startTranslateRequestMethod = "startTranslate"
 const endUpWhiteList = ["swiftui","swiftui/","sample-apps","sample-apps/","swiftui-concepts","swiftui-concepts/"];
 
 log("Plugin start request flag");
-chrome.runtime.sendMessage({type: initalRequestMethod}, (response) => {
+chrome.runtime.sendMessage({type: initialRequestMethod}, (response) => {
   log(`Flag status: ${response.shouldTranslate}`);
-  if (response.shouldTranslate == false) {
+  if (response.shouldTranslate === false) {
     return
   }
 
-  if (isCategoryPage() == false) {
+  if (isCategoryPage() === false) {
     fetchRelatedData(url) == true
   }
 
   waitPage(function() {
-    if (isCategoryPage() == true) {
+    if (isCategoryPage() === true) {
       updateAHerfToAbsolutURL()
     } else {
       waitJsonLoaded(function() {
@@ -104,8 +104,8 @@ function updateAHerfToAbsolutURL() {
 
 function addTitleNode() {
   var title = document.querySelector("div.headline h1");
-  titleText = json[title.innerText.trim()].zh;
-  if (!titleText || titleText == "") {
+  let titleText = json[title.innerText.trim()].zh;
+  if (!titleText || titleText === "") {
     return;
   }
   var newNode = document.createElement("h3");
@@ -146,7 +146,7 @@ function appendPNodes() {
 
 function insertAfter(newElement, targetElement) {
   var parent = targetElement.parentElement;
-  if (parent.lastChild == targetElement) {
+  if (parent.lastChild === targetElement) {
     parent.appendChild(newElement);
   } else {
     parent.insertBefore(newElement, targetElement.nextSibline);
