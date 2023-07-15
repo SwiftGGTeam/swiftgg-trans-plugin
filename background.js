@@ -32,6 +32,8 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
 
            Promise.allSettled(running).then()
 
+            console.log("finish refreshing")
+
            chrome.tabs.query({active: true, currentWindow: true}, function (tabs) {
                const activeTab = tabs[0]
                updateTabId(activeTab.id)
@@ -99,7 +101,6 @@ function updateLogo(active) {
             if (currentTranslatingPage.includes(currentTabID)) {
                 chrome.action.setIcon({ path: { "128": "/source/intro/swiftLogo-translating.png"} }).then(r => {})
             } else {
-                console.log(currentTranslatingPage, tab.id)
                 chrome.action.setIcon({ path: { "128": "/source/intro/swiftLogo-running.png"} }).then(r => {})
             }
         } else {
