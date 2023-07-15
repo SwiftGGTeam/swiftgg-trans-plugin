@@ -66,6 +66,7 @@ chrome.tabs.onUpdated.addListener(function(tabId, info, tab) {
             url: info.url
         }).then()
     }
+
     chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
         const activeTab = tabs[0]
         updateTabId(activeTab.id)
@@ -76,6 +77,8 @@ chrome.tabs.onUpdated.addListener(function(tabId, info, tab) {
             updateLogo(false)
         }
     });
+
+    return true
 });
 
 chrome.tabs.onActivated.addListener(function(activeInfo) {

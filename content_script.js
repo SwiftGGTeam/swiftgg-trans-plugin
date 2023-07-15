@@ -7,12 +7,14 @@ const reloadRequestMethod = "reloadShouldTranslate"
 const startTranslateRequestMethod = "startTranslate"
 const pageSwitchedRequestMethod = "pageSwitched"
 const endUpWhiteList = ["swiftui","swiftui/","sample-apps","sample-apps/","swiftui-concepts","swiftui-concepts/"];
+var previousGlobalUrl = {}
+var globalUrl = {}
 
 log("Plugin start request flag");
 chrome.runtime.sendMessage({type: initialRequestMethod}, (response) => {
   log(`Flag status: ${response.shouldTranslate}`);
 
-  startTranslate()
+  startTranslate(response.shouldTranslate)
 
   log("Plugin wait page loaded");
 
@@ -177,7 +179,7 @@ chrome.runtime.onMessage.addListener(
           chrome.runtime.sendMessage({type: initialRequestMethod}, (response) => {
             log(`Flag status: ${response.shouldTranslate}`);
 
-            startTranslate()
+            startTranslate(response.shouldTranslate)
 
             log("Plugin wait page loaded");
 
@@ -189,9 +191,17 @@ chrome.runtime.onMessage.addListener(
 
 function startTranslate(shouldTranslate) {
   const currentURL = new URL(document.URL);
+  previousGlobalUrl = globalUrl
+  globalUrl = currentURL
+  globalUrl.search = ""
+  globalUrl.hash = ""
   const pathArray = currentURL.pathname.split('/');
   const baseURL = "https://api.swift.gg/content/";
   const url = baseURL + pathArray[pathArray.length-2] + '/' + pathArray[pathArray.length-1];
+
+  if (previousGlobalUrl.toString() === globalUrl.toString()) {
+    return;
+  }
 
   if (shouldTranslate === false) {
     return
