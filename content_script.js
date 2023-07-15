@@ -25,6 +25,8 @@ chrome.runtime.sendMessage({type: initialRequestMethod}, (response) => {
   waitPage(function() {
     if (isCategoryPage() === true) {
       updateAHerfToAbsolutURL()
+      log("in category page")
+      addInstructionToCategoryPage()
     } else {
       waitJsonLoaded(function() {
         log("Plugin Start add content");
@@ -168,4 +170,22 @@ function log(message) {
 function isCategoryPage() {
   const lastPath = pathArray[pathArray.length - 1] || pathArray[pathArray.length - 2];
   return endUpWhiteList.includes(lastPath)
+}
+
+function addInstructionToCategoryPage() {
+  let contentDiv = document.getElementsByClassName("copy-container")[0]
+  let spaceElement = document.createElement("br");
+  let spaceElement2 = document.createElement("br");
+  let style = document.createElement("style");
+  style.innerHTML = "p.indicator {\n" +
+      "    font-size: 18px;\n" +
+      "    font-weight: bold;\n" +
+      "}";
+  document.head.appendChild(style);
+  let pElement = document.createElement("p")
+  pElement.classList.add("indicator")
+  pElement.textContent = "SwiftGG 正在运行，请点击上方按钮开始学习 ⬆️"
+  contentDiv.appendChild(spaceElement)
+  contentDiv.appendChild(spaceElement2)
+  contentDiv.appendChild(pElement)
 }
