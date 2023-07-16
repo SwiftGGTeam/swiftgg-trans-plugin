@@ -1,5 +1,4 @@
 const pluginFlag = "pluginFlag"
-const translatedFlag = "pluginFlag"
 var shouldTranslate = false
 let initialRequestMethod = "shouldTranslate"
 let updateRequestMethod = "updateShouldTranslate"
