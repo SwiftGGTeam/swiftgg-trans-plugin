@@ -3,7 +3,7 @@ var shouldTranslate = false
 let initialRequestMethod = "shouldTranslate"
 let updateRequestMethod = "updateShouldTranslate"
 let reloadRequestMethod = "reloadShouldTranslate"
-let startTranslateRequestMethod = "startTranslate"
+let translatedRequestMethod = "translated"
 var currentTranslatingPage = [];
 var currentTabID = 0
 var previousTabID = 0
@@ -43,7 +43,7 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
         });
     } else if (request.type === initialRequestMethod) {
         sendResponse({shouldTranslate: shouldTranslate});
-    } else if (request.type === startTranslateRequestMethod) {
+    } else if (request.type === translatedRequestMethod) {
         currentTranslatingPage.push(sender.tab.id)
         updateLogo(true)
     }

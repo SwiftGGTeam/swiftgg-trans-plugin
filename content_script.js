@@ -4,7 +4,7 @@ var json = {}
 const initialRequestMethod = "shouldTranslate"
 const updateRequestMethod = "updateShouldTranslate"
 const reloadRequestMethod = "reloadShouldTranslate"
-const startTranslateRequestMethod = "startTranslate"
+const translatedRequestMethod = "translated"
 const pageSwitchedRequestMethod = "pageSwitched"
 const endUpWhiteList = ["swiftui","swiftui/","sample-apps","sample-apps/","swiftui-concepts","swiftui-concepts/"];
 var previousGlobalUrl = {}
@@ -200,7 +200,7 @@ function startTranslate(shouldTranslate) {
   const url = baseURL + pathArray[pathArray.length-2] + '/' + pathArray[pathArray.length-1];
 
   if (previousGlobalUrl.toString() === globalUrl.toString()) {
-    chrome.runtime.sendMessage({type: startTranslateRequestMethod}, (response) => {})
+    chrome.runtime.sendMessage({type: translatedRequestMethod}, (response) => {})
     return;
   }
 
@@ -224,7 +224,7 @@ function startTranslate(shouldTranslate) {
         addTitleNode();
         appendH2Nodes();
         appendPNodes();
-        chrome.runtime.sendMessage({type: startTranslateRequestMethod}, (response) => {})
+        chrome.runtime.sendMessage({type: translatedRequestMethod}, (response) => {})
       });
     }
   });
