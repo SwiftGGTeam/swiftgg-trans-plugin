@@ -33,8 +33,8 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
         currentTranslatedPage = []
         currentTabID = 0
         refreshRequested = true
-        chrome.tabs.query({}, function (allTabs) {
-           chrome.tabs.query({active: true, currentWindow: true}, function (tabs) {
+        queryAllTabs(function (allTabs) {
+           queryActiveTab(function (tabs) {
                const activeTab = tabs[0]
                updateTabId(activeTab.id)
                if (activeTab.url.includes("developer.apple.com")) {
@@ -75,7 +75,7 @@ chrome.tabs.onUpdated.addListener(function(tabId, info, tab) {
         return true
     }
 
-    chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
+    queryActiveTab(function (tabs) {
         const activeTab = tabs[0]
         updateTabId(activeTab.id)
         currentTranslatedPage = removeItemAll(currentTranslatedPage, previousTabID)
@@ -168,4 +168,16 @@ function setIcon(path) {
         case BrowserType.unknown:
             break
     }
+}
+
+function queryAllTabs(callback) {
+    chrome.tabs.query({}, function (allTabs) {
+        callback(allTabs)
+    })
+}
+
+function queryActiveTab(callback) {
+    chrome.tabs.query({ active: true, currentWindow: true }, function (allTabs) {
+        callback(allTabs)
+    })
 }
