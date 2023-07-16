@@ -162,6 +162,7 @@ function addInstructionToCategoryPage() {
   style.innerHTML = "p.indicator {\n" +
       "    font-size: 18px;\n" +
       "    font-weight: bold;\n" +
+      "    color: #FFFFFF;\n"+
       "}";
   document.head.appendChild(style);
   let pElement = document.createElement("p")
