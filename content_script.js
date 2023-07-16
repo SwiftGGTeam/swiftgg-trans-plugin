@@ -181,7 +181,7 @@ chrome.runtime.onMessage.addListener(
           chrome.runtime.sendMessage({type: initialRequestMethod}, (response) => {
             log(`Flag status: ${response.shouldTranslate}`);
 
-            tabUrlUpdated(response.shouldTranslate)
+            tabURLUpdated(response.shouldTranslate)
 
             log("Plugin wait page loaded");
 
@@ -191,7 +191,7 @@ chrome.runtime.onMessage.addListener(
     }
 );
 
-function tabUrlUpdated(shouldTranslate) {
+function tabURLUpdated(shouldTranslate) {
   const currentURL = new URL(document.URL);
   currentURL.search = ""
   currentURL.hash = ""
