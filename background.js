@@ -4,6 +4,10 @@ let initalRequestMethod = "shouldTranslate"
 let updateRequestMethod = "updateShouldTranslate"
 let reloadRequestMethod = "reloadShouldTranslate"
 
+chrome.storage.local.get(pluginFlag, (result) => {
+    shouldTranslate = result.pluginFlag || false
+
+});
 
 chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
     if (request.type === updateRequestMethod) {
@@ -12,11 +16,7 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
           chrome.tabs.reload(tabs[0].id);
         });
     } else if (request.type === initalRequestMethod) {
-      chrome.storage.local.get(pluginFlag, (result) => {
-        shouldTranslate = result.pluginFlag || false
         sendResponse({shouldTranslate: shouldTranslate});
-      });
-      return true; // 因为 chrome.storage.local.get 是异步的，显式地返回 true 以保持 sendResponse 的引用
     }
 });
 
