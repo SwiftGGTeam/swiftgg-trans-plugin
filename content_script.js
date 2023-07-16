@@ -7,8 +7,9 @@ const reloadRequestMethod = "reloadShouldTranslate"
 const translatedRequestMethod = "translated"
 const pageSwitchedRequestMethod = "pageSwitched"
 const endUpWhiteList = ["swiftui","swiftui/","sample-apps","sample-apps/","swiftui-concepts","swiftui-concepts/"];
-var previousGlobalUrl = {}
-var globalUrl = {}
+var currentTranslatedURL = new URL(document.URL);
+currentTranslatedURL.hash = ""
+currentTranslatedURL.search = ""
 
 log("Plugin start request flag");
 chrome.runtime.sendMessage({type: initialRequestMethod}, (response) => {
@@ -180,7 +181,7 @@ chrome.runtime.onMessage.addListener(
           chrome.runtime.sendMessage({type: initialRequestMethod}, (response) => {
             log(`Flag status: ${response.shouldTranslate}`);
 
-            startTranslate(response.shouldTranslate)
+            tabUrlUpdated(response.shouldTranslate)
 
             log("Plugin wait page loaded");
 
@@ -190,22 +191,28 @@ chrome.runtime.onMessage.addListener(
     }
 );
 
-function startTranslate(shouldTranslate) {
+function tabUrlUpdated(shouldTranslate) {
   const currentURL = new URL(document.URL);
-  previousGlobalUrl = globalUrl
-  globalUrl = currentURL
-  globalUrl.search = ""
-  globalUrl.hash = ""
-  const pathArray = currentURL.pathname.split('/');
-  const baseURL = "https://api.swift.gg/content/";
-  const url = baseURL + pathArray[pathArray.length-2] + '/' + pathArray[pathArray.length-1];
+  currentURL.search = ""
+  currentURL.hash = ""
 
-  if (previousGlobalUrl.toString() === globalUrl.toString()) {
+  if (currentURL.toString() === currentTranslatedURL.toString()) {
     if (isCategoryPage() === false) {
       chrome.runtime.sendMessage({type: translatedRequestMethod}, (response) => {})
     }
     return;
   }
+
+  currentTranslatedURL = currentURL
+
+  startTranslate(shouldTranslate)
+}
+
+function startTranslate(shouldTranslate) {
+  const currentURL = new URL(document.URL);
+  const pathArray = currentURL.pathname.split('/');
+  const baseURL = "https://api.swift.gg/content/";
+  const url = baseURL + pathArray[pathArray.length-2] + '/' + pathArray[pathArray.length-1];
 
   if (shouldTranslate === false) {
     return
