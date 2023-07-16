@@ -32,6 +32,7 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
         shouldTranslate = request.data;
         currentTranslatedPage = []
         currentTabID = 0
+        refreshRequested = true
         chrome.tabs.query({}, function (allTabs) {
            chrome.tabs.query({active: true, currentWindow: true}, function (tabs) {
                const activeTab = tabs[0]
@@ -41,8 +42,6 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
                } else {
                    updateLogo(false)
                }
-
-               refreshRequested = true
 
                let running = []
                for (let tab of allTabs) {
