@@ -9,6 +9,7 @@ var currentTabID = 0
 var previousTabID = 0
 const pageSwitchedRequestMethod = "pageSwitched"
 let refreshRequested = false
+const endUpWhiteList = ["swiftui","swiftui/","sample-apps","sample-apps/","swiftui-concepts","swiftui-concepts/"];
 
 const BrowserType = {
     chrome: Symbol("chrome"),
@@ -46,7 +47,9 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
                let running = []
                for (let tab of allTabs) {
                    if (tab.url.includes("developer.apple.com")) {
-                       running.push(chrome.tabs.reload(tab.id))
+                       if (isSupportedPage(tab.url)) {
+                           running.push(chrome.tabs.reload(tab.id))
+                       }
                    }
                }
 
@@ -180,4 +183,13 @@ function queryActiveTab(callback) {
     chrome.tabs.query({ active: true, currentWindow: true }, function (allTabs) {
         callback(allTabs)
     })
+}
+
+function isSupportedPage(url) {
+    const currentURL = new URL(url)
+    const pathArray = currentURL.pathname.split('/').filter(function (el){
+        return el !== ""
+    })
+
+    return endUpWhiteList.includes(pathArray[pathArray.length-2]) || endUpWhiteList.includes(pathArray[pathArray.length-1])
 }
