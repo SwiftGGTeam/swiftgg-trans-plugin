@@ -15,7 +15,6 @@
     "icons": {
         "128": "/source/intro/swiftLogo.png"
     },
-    "options_page": "./options.html",
     "permissions": [
         "tabs",
         "storage"
