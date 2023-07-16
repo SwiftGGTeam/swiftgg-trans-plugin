@@ -90,6 +90,7 @@ body {
     background-color: transparent;
     width: 100%;
     padding: 10px 0px;
+    appearance: none;
     font-weight: 600;
     color: #2cade6;
 }
