@@ -96,7 +96,7 @@ function addTitleNode() {
 }
 
 function appendH2Nodes() {
-  var h2Nodes = document.querySelectorAll("h2");
+  let h2Nodes = document.querySelectorAll("h2");
 
   Array.from(h2Nodes).filter((node) => Boolean(json[node.innerText])).forEach((node) => {
     var parent = node.parentElement;
