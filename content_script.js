@@ -5,6 +5,7 @@ const initialRequestMethod = "shouldTranslate"
 const updateRequestMethod = "updateShouldTranslate"
 const reloadRequestMethod = "reloadShouldTranslate"
 const translatedRequestMethod = "translated"
+const reTranslatedRequestMethod = "reTranslated"
 const pageSwitchedRequestMethod = "pageSwitched"
 const endUpWhiteList = ["swiftui","swiftui/","sample-apps","sample-apps/","swiftui-concepts","swiftui-concepts/"];
 var previousGlobalUrl = {}
@@ -200,7 +201,7 @@ function startTranslate(shouldTranslate) {
   const url = baseURL + pathArray[pathArray.length-2] + '/' + pathArray[pathArray.length-1];
 
   if (previousGlobalUrl.toString() === globalUrl.toString()) {
-    chrome.runtime.sendMessage({type: translatedRequestMethod}, (response) => {})
+    chrome.runtime.sendMessage({type: reTranslatedRequestMethod}, (response) => {})
     return;
   }
 
