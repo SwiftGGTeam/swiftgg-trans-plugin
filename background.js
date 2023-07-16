@@ -32,7 +32,7 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
         shouldTranslate = request.data;
         currentTranslatedPage = []
         currentTabID = 0
-        chrome.tabs.query({}, function (tabs) {
+        chrome.tabs.query({}, function (allTabs) {
            chrome.tabs.query({active: true, currentWindow: true}, function (tabs) {
                const activeTab = tabs[0]
                updateTabId(activeTab.id)
@@ -41,19 +41,20 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
                } else {
                    updateLogo(false)
                }
+
+               refreshRequested = true
+
+               let running = []
+               for (let tab of allTabs) {
+                   if (tab.url.includes("developer.apple.com")) {
+                       running.push(chrome.tabs.reload(tab.id))
+                   }
+               }
+
+               Promise.allSettled(running).then()
            })
-
-            refreshRequested = true
-
-            let running = []
-            for (let tab of tabs) {
-                if (tab.url.includes("developer.apple.com")) {
-                    running.push(chrome.tabs.reload(tab.id))
-                }
-            }
-
-            Promise.allSettled(running).then()
         });
+
         return true
     } else if (request.type === initialRequestMethod) {
         sendResponse({shouldTranslate: shouldTranslate});
