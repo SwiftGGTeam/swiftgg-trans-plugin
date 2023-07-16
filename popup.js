@@ -11,9 +11,10 @@ document.addEventListener("DOMContentLoaded", function () {
     checkbox.checked = !checkbox.checked
     document.getElementById('switch').setAttribute('class', checkbox.checked ? 'on' : 'off')
     chrome.storage.local.set({ pluginFlag: checkbox.checked });
-    chrome.runtime.sendMessage({type: updateRequestMethod, data: checkbox.checked});
+    chrome.runtime.sendMessage({type: updateRequestMethod, data: checkbox.checked}).then();
   });
 });
+
 
 chrome.storage.local.get(pluginFlag, (result) => {
   shouldTranslate = result.pluginFlag || false

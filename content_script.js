@@ -8,6 +8,7 @@ const url = baseURL + pathArray[pathArray.length-2] + '/' + pathArray[pathArray.
 const initalRequestMethod = "shouldTranslate"
 const updateRequestMethod = "updateShouldTranslate"
 const reloadRequestMethod = "reloadShouldTranslate"
+const startTranslateRequestMethod = "startTranslate"
 const endUpWhiteList = ["swiftui","swiftui/","sample-apps","sample-apps/","swiftui-concepts","swiftui-concepts/"];
 
 log("Plugin start request flag");
@@ -31,6 +32,7 @@ chrome.runtime.sendMessage({type: initalRequestMethod}, (response) => {
         addTitleNode();
         appendH2Nodes();
         appendPNodes();
+        chrome.runtime.sendMessage({type: startTranslateRequestMethod}, (response) => {})
       });
     }
   });
