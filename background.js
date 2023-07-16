@@ -9,12 +9,15 @@ var currentTabID = 0
 var previousTabID = 0
 const pageSwitchedRequestMethod = "pageSwitched"
 
-chrome.storage.local.get(pluginFlag, (result) => {
-    shouldTranslate = result.pluginFlag || false
-    if (!shouldTranslate) {
-        chrome.action.setIcon({ path: { "128": "/source/intro/swiftLogo-closed.png"} }).then(r => {})
-    }
-});
+setTimeout(() => {
+    chrome.storage.local.get(pluginFlag, (result) => {
+        shouldTranslate = result.pluginFlag || false
+        if (!shouldTranslate) {
+            chrome.action.setIcon({ path: { "128": "/source/intro/swiftLogo-closed.png"} }).then(r => {})
+        }
+    });
+
+}, 1)
 
 chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
     if (request.type === updateRequestMethod) {
