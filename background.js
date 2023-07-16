@@ -2,7 +2,6 @@ const pluginFlag = "pluginFlag"
 var shouldTranslate = false
 let initialRequestMethod = "shouldTranslate"
 let updateRequestMethod = "updateShouldTranslate"
-let reloadRequestMethod = "reloadShouldTranslate"
 let translatedRequestMethod = "translated"
 const reTranslatedRequestMethod = "reTranslated"
 var currentTranslatedPage = [];
@@ -47,9 +46,6 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
         sendResponse({shouldTranslate: shouldTranslate});
     } else if (request.type === translatedRequestMethod) {
         currentTranslatedPage.push(sender.tab.id)
-        updateLogo(true)
-        return true
-    } else if (request.type === reTranslatedRequestMethod) {
         updateLogo(true)
         return true
     }
