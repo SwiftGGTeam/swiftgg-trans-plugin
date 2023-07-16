@@ -34,26 +34,26 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
         currentTabID = 0
         refreshRequested = true
         queryAllTabs(function (allTabs) {
-           queryActiveTab(function (tabs) {
-               const activeTab = tabs[0]
-               updateTabId(activeTab.id)
-               if (activeTab.url.includes("developer.apple.com")) {
-                   updateLogo(true)
-               } else {
-                   updateLogo(false)
-               }
+            queryActiveTab(function (tabs) {
+                const activeTab = tabs[0]
+                updateTabId(activeTab.id)
+                if (activeTab.url.includes("developer.apple.com")) {
+                    updateLogo(true)
+                } else {
+                    updateLogo(false)
+                }
 
-               let running = []
-               for (let tab of allTabs) {
-                   if (tab.url.includes("developer.apple.com")) {
-                       if (isSupportedPage(tab.url)) {
-                           running.push(chrome.tabs.reload(tab.id))
-                       }
-                   }
-               }
+                let running = []
+                for (let tab of allTabs) {
+                    if (tab.url.includes("developer.apple.com")) {
+                        if (isSupportedPage(tab.url)) {
+                            running.push(chrome.tabs.reload(tab.id))
+                        }
+                    }
+                }
 
-               Promise.allSettled(running).then()
-           })
+                Promise.allSettled(running).then()
+            })
         });
 
         return true
@@ -67,8 +67,8 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
 });
 
 function delay(i) {
-  setTimeout(() => {
-  }, i * 1000);
+    setTimeout(() => {
+    }, i * 1000);
 }
 
 chrome.tabs.onUpdated.addListener(function(tabId, info, tab) {
