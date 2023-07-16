@@ -45,7 +45,7 @@ Apple 为了让初学者能够很好的学习 iOS 开发知识，提供了易于
     1. 打开 `about:debugging` 页面。
     2. 点击 "此 Firefox"，然后点击 "临时加载附加组件"。
     3. 修改 `manifest.json` 文件中的 `"service_worker": "./background.js"` 到 `"scripts": ["./background.js"]`。
-    3. 选择克隆到本地的仓库文件夹中的 `manifest.json` 文件。
+    4. 选择克隆到本地的仓库文件夹中的 `manifest.json` 文件。
 - 对于 **Microsoft Edge** 用户：
     1. 打开 `edge://extensions/` 页面。
     2. 开启右下角的 "开发者模式"。
