@@ -3,7 +3,6 @@ let shouldTranslate = false
 let initialRequestMethod = "shouldTranslate"
 let updateRequestMethod = "updateShouldTranslate"
 let translatedRequestMethod = "translated"
-const reTranslatedRequestMethod = "reTranslated"
 var currentTranslatedPage = [];
 var currentTabID = 0
 var previousTabID = 0
