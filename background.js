@@ -1,5 +1,5 @@
 const pluginFlag = "pluginFlag"
-var shouldTranslate = false
+let shouldTranslate = false
 let initialRequestMethod = "shouldTranslate"
 let updateRequestMethod = "updateShouldTranslate"
 let translatedRequestMethod = "translated"
@@ -8,7 +8,7 @@ var currentTranslatedPage = [];
 var currentTabID = 0
 var previousTabID = 0
 const pageSwitchedRequestMethod = "pageSwitched"
-var refreshRequested = false
+let refreshRequested = false
 
 const BrowserType = {
     chrome: Symbol("chrome"),

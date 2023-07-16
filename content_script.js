@@ -7,7 +7,7 @@ const reloadRequestMethod = "reloadShouldTranslate"
 const translatedRequestMethod = "translated"
 const pageSwitchedRequestMethod = "pageSwitched"
 const endUpWhiteList = ["swiftui","swiftui/","sample-apps","sample-apps/","swiftui-concepts","swiftui-concepts/"];
-var currentTranslatedURL = new URL(document.URL);
+let currentTranslatedURL = new URL(document.URL);
 currentTranslatedURL.hash = ""
 currentTranslatedURL.search = ""
 
