@@ -191,13 +191,20 @@ chrome.runtime.onMessage.addListener(
     }
 );
 
+function isSupportedPage() {
+  const currentURL = getCurrentURL()
+  const pathArray = currentURL.pathname.split('/').filter(function (el){
+    return el !== ""
+  })
+
+  return endUpWhiteList.includes(pathArray[pathArray.length-2]) || endUpWhiteList.includes(pathArray[pathArray.length-1])
+}
+
 function tabURLUpdated(shouldTranslate) {
-  const currentURL = new URL(document.URL);
-  currentURL.search = ""
-  currentURL.hash = ""
+  const currentURL = getCurrentURL()
 
   if (currentURL.toString() === currentTranslatedURL.toString()) {
-    if (isCategoryPage() === false) {
+    if (isCategoryPage() === false && isSupportedPage() === true) {
       chrome.runtime.sendMessage({type: translatedRequestMethod}, (response) => {})
     }
     return;
@@ -209,13 +216,17 @@ function tabURLUpdated(shouldTranslate) {
 }
 
 function startTranslate(shouldTranslate) {
-  const currentURL = new URL(document.URL);
+  const currentURL = getCurrentURL()
   const pathArray = currentURL.pathname.split('/');
   const baseURL = "https://api.swift.gg/content/";
   const url = baseURL + pathArray[pathArray.length-2] + '/' + pathArray[pathArray.length-1];
 
   if (shouldTranslate === false) {
     return
+  }
+
+  if (isSupportedPage() === false) {
+    return;
   }
 
   if (isCategoryPage() === false) {
@@ -238,4 +249,11 @@ function startTranslate(shouldTranslate) {
       });
     }
   });
+}
+
+function getCurrentURL() {
+  const currentURL = new URL(document.URL)
+  currentURL.hash = ""
+  currentURL.search = ""
+  return currentURL
 }
