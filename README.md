@@ -1,4 +1,4 @@
-![logo.png](/source/intro/logo.png)
+![logo.png](./source/intro/logo.png)
 
 swiftgg-trans-plugin 是一款浏览器插件，旨在帮助 iOS 开发者更轻松地学习和理解 Apple 官方文档。只需安装此插件，即可在浏览器中自动对照翻译 SwiftUI 官方教程页面。同时，插件提供翻译开关，方便用户根据需要进行切换。
 
@@ -23,7 +23,7 @@ Apple 为了让初学者能够很好的学习 iOS 开发知识，提供了易于
 - [Learning SwiftUI](https://developer.apple.com/tutorials/swiftui-concepts/)
 - [Exploring SwiftUI Sample Apps](https://developer.apple.com/tutorials/sample-apps)
 
-![screenshot.png](/source/intro/screenshot.png)
+![screenshot.png](./source/intro/screenshot.png)
 
 ### 安装
 - [Chrome 下载](https://chrome.google.com/webstore/category/extensions)  [待上架]
@@ -44,7 +44,8 @@ Apple 为了让初学者能够很好的学习 iOS 开发知识，提供了易于
 - 对于 **Mozilla Firefox** 用户：
     1. 打开 `about:debugging` 页面。
     2. 点击 "此 Firefox"，然后点击 "临时加载附加组件"。
-    3. 选择克隆到本地的仓库文件夹中的 `manifest.json` 文件。
+    3. 修改 `manifest.json` 文件中的 `"service_worker": "./background.js"` 到 `"scripts": ["./background.js"]`。
+    4. 选择克隆到本地的仓库文件夹中的 `manifest.json` 文件。
 - 对于 **Microsoft Edge** 用户：
     1. 打开 `edge://extensions/` 页面。
     2. 开启右下角的 "开发者模式"。

@@ -1,39 +1,21 @@
 const isDebugMode = true;
 log("Plugin start");
 var json = {}
-const currentURL = new URL(document.URL);
-const pathArray = currentURL.pathname.split('/');
-const baseURL = "https://api.swift.gg/content/";
-const url = baseURL + pathArray[pathArray.length-2] + '/' + pathArray[pathArray.length-1];
-const initalRequestMethod = "shouldTranslate"
+const initialRequestMethod = "shouldTranslate"
 const updateRequestMethod = "updateShouldTranslate"
 const reloadRequestMethod = "reloadShouldTranslate"
+const translatedRequestMethod = "translated"
+const pageSwitchedRequestMethod = "pageSwitched"
 const endUpWhiteList = ["swiftui","swiftui/","sample-apps","sample-apps/","swiftui-concepts","swiftui-concepts/"];
+let currentTranslatedURL = new URL(document.URL);
+currentTranslatedURL.hash = ""
+currentTranslatedURL.search = ""
 
 log("Plugin start request flag");
-chrome.runtime.sendMessage({type: initalRequestMethod}, (response) => {
+chrome.runtime.sendMessage({type: initialRequestMethod}, (response) => {
   log(`Flag status: ${response.shouldTranslate}`);
-  if (response.shouldTranslate == false) {
-    return
-  }
 
-  if (isCategoryPage() == false) {
-    fetchRelatedData(url) == true
-  }
-
-  waitPage(function() {
-    if (isCategoryPage() == true) {
-      updateAHerfToAbsolutURL()
-    } else {
-      waitJsonLoaded(function() {
-        log("Plugin Start add content");
-        updateAHerfToAbsolutURL()
-        addTitleNode();
-        appendH2Nodes();
-        appendPNodes();
-      });
-    }
-  });
+  startTranslate(response.shouldTranslate)
 
   log("Plugin wait page loaded");
 
@@ -102,8 +84,8 @@ function updateAHerfToAbsolutURL() {
 
 function addTitleNode() {
   var title = document.querySelector("div.headline h1");
-  titleText = json[title.innerText.trim()].zh;
-  if (!titleText || titleText == "") {
+  let titleText = json[title.innerText.trim()].zh;
+  if (!titleText || titleText === "") {
     return;
   }
   var newNode = document.createElement("h3");
@@ -114,7 +96,7 @@ function addTitleNode() {
 }
 
 function appendH2Nodes() {
-  var h2Nodes = document.querySelectorAll("h2");
+  let h2Nodes = document.querySelectorAll("h2");
 
   Array.from(h2Nodes).filter((node) => Boolean(json[node.innerText])).forEach((node) => {
     var parent = node.parentElement;
@@ -144,7 +126,7 @@ function appendPNodes() {
 
 function insertAfter(newElement, targetElement) {
   var parent = targetElement.parentElement;
-  if (parent.lastChild == targetElement) {
+  if (parent.lastChild === targetElement) {
     parent.appendChild(newElement);
   } else {
     parent.insertBefore(newElement, targetElement.nextSibline);
@@ -164,6 +146,107 @@ function log(message) {
 }
 
 function isCategoryPage() {
+  const currentURL = new URL(document.URL);
+  const pathArray = currentURL.pathname.split('/');
+  const baseURL = "https://api.swift.gg/content/";
+  const url = baseURL + pathArray[pathArray.length-2] + '/' + pathArray[pathArray.length-1];
+
   const lastPath = pathArray[pathArray.length - 1] || pathArray[pathArray.length - 2];
   return endUpWhiteList.includes(lastPath)
+}
+
+function addInstructionToCategoryPage() {
+  let contentDiv = document.getElementsByClassName("copy-container")[0]
+  let spaceElement = document.createElement("br");
+  let spaceElement2 = document.createElement("br");
+  let pElement = document.createElement("p")
+  pElement.classList.add("indicator")
+  pElement.textContent = "SwiftGG 正在运行，请点击上方按钮开始学习 ⬆️"
+  contentDiv.appendChild(spaceElement)
+  contentDiv.appendChild(spaceElement2)
+  contentDiv.appendChild(pElement)
+}
+chrome.runtime.onMessage.addListener(
+    function(request, sender, sendResponse) {
+      // listen for messages sent from background.js
+      if (request.message === pageSwitchedRequestMethod) {
+        if (request.url.includes("developer.apple.com")) {
+          chrome.runtime.sendMessage({type: initialRequestMethod}, (response) => {
+            log(`Flag status: ${response.shouldTranslate}`);
+
+            tabURLUpdated(response.shouldTranslate)
+
+            log("Plugin wait page loaded");
+
+          });
+        }
+      }
+    }
+);
+
+function isSupportedPage() {
+  const currentURL = getCurrentURL()
+  const pathArray = currentURL.pathname.split('/').filter(function (el){
+    return el !== ""
+  })
+
+  return endUpWhiteList.includes(pathArray[pathArray.length-2]) || endUpWhiteList.includes(pathArray[pathArray.length-1])
+}
+
+function tabURLUpdated(shouldTranslate) {
+  const currentURL = getCurrentURL()
+
+  if (currentURL.toString() === currentTranslatedURL.toString()) {
+    if (isCategoryPage() === false && isSupportedPage() === true) {
+      chrome.runtime.sendMessage({type: translatedRequestMethod}, (response) => {})
+    }
+    return;
+  }
+
+  currentTranslatedURL = currentURL
+
+  startTranslate(shouldTranslate)
+}
+
+function startTranslate(shouldTranslate) {
+  const currentURL = getCurrentURL()
+  const pathArray = currentURL.pathname.split('/');
+  const baseURL = "https://api.swift.gg/content/";
+  const url = baseURL + pathArray[pathArray.length-2] + '/' + pathArray[pathArray.length-1];
+
+  if (shouldTranslate === false) {
+    return
+  }
+
+  if (isSupportedPage() === false) {
+    return;
+  }
+
+  if (isCategoryPage() === false) {
+    fetchRelatedData(url)
+  }
+
+  waitPage(function() {
+    if (isCategoryPage() === true) {
+      updateAHerfToAbsolutURL()
+      log("in category page")
+      addInstructionToCategoryPage()
+    } else {
+      waitJsonLoaded(function() {
+        log("Plugin Start add content");
+        updateAHerfToAbsolutURL()
+        addTitleNode();
+        appendH2Nodes();
+        appendPNodes();
+        chrome.runtime.sendMessage({type: translatedRequestMethod}, (response) => {})
+      });
+    }
+  });
+}
+
+function getCurrentURL() {
+  const currentURL = new URL(document.URL)
+  currentURL.hash = ""
+  currentURL.search = ""
+  return currentURL
 }
