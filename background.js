@@ -10,6 +10,13 @@ var previousTabID = 0
 const pageSwitchedRequestMethod = "pageSwitched"
 var refreshRequested = false
 
+const BrowserType = {
+    chrome: Symbol("chrome"),
+    safari: Symbol("safari"),
+    firefox: Symbol("firefox"),
+    unknown: Symbol("unknown")
+}
+
 setTimeout(() => {
     chrome.storage.local.get(pluginFlag, (result) => {
         shouldTranslate = result.pluginFlag || false
@@ -129,13 +136,6 @@ function updateLogo(active) {
             setIcon("/source/intro/swiftLogo-closed.png")
         }
     }
-}
-
-const BrowserType = {
-    chrome: Symbol("chrome"),
-    safari: Symbol("safari"),
-    firefox: Symbol("firefox"),
-    unknown: Symbol("unknown")
 }
 
 function detectBrowser() {
