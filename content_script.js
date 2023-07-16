@@ -159,13 +159,6 @@ function addInstructionToCategoryPage() {
   let contentDiv = document.getElementsByClassName("copy-container")[0]
   let spaceElement = document.createElement("br");
   let spaceElement2 = document.createElement("br");
-  let style = document.createElement("style");
-  style.innerHTML = "p.indicator {\n" +
-      "    font-size: 18px;\n" +
-      "    font-weight: bold;\n" +
-      "    color: #FFFFFF;\n"+
-      "}";
-  document.head.appendChild(style);
   let pElement = document.createElement("p")
   pElement.classList.add("indicator")
   pElement.textContent = "SwiftGG 正在运行，请点击上方按钮开始学习 ⬆️"
