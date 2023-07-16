@@ -8,6 +8,7 @@ var currentTranslatedPage = [];
 var currentTabID = 0
 var previousTabID = 0
 const pageSwitchedRequestMethod = "pageSwitched"
+var refreshRequested = false
 
 setTimeout(() => {
     chrome.storage.local.get(pluginFlag, (result) => {
@@ -25,15 +26,6 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
         currentTranslatedPage = []
         currentTabID = 0
         chrome.tabs.query({}, function (tabs) {
-           let running = []
-           for (let tab of tabs) {
-               if (tab.url.includes("developer.apple.com")) {
-                   running.push(chrome.tabs.reload(tab.id))
-               }
-           }
-
-           Promise.allSettled(running).then()
-
            chrome.tabs.query({active: true, currentWindow: true}, function (tabs) {
                const activeTab = tabs[0]
                updateTabId(activeTab.id)
@@ -43,6 +35,17 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
                    updateLogo(false)
                }
            })
+
+            refreshRequested = true
+
+            let running = []
+            for (let tab of tabs) {
+                if (tab.url.includes("developer.apple.com")) {
+                    running.push(chrome.tabs.reload(tab.id))
+                }
+            }
+
+            Promise.allSettled(running).then()
         });
         return true
     } else if (request.type === initialRequestMethod) {
@@ -60,6 +63,11 @@ function delay(i) {
 }
 
 chrome.tabs.onUpdated.addListener(function(tabId, info, tab) {
+    if (refreshRequested) {
+        refreshRequested = false
+        return true
+    }
+
     chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
         const activeTab = tabs[0]
         updateTabId(activeTab.id)
