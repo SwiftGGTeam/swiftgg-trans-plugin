@@ -151,20 +151,21 @@ function addInstructionToCategoryPage() {
   contentDiv.appendChild(pElement)
 }
 chrome.runtime.onMessage.addListener(
-    function(request, sender, sendResponse) {
-      // listen for messages sent from background.js
-      if (request.message === pageSwitchedRequestMethod) {
-        if (request.url.includes("developer.apple.com")) {
-          chrome.runtime.sendMessage({type: initialRequestMethod}, (response) => {
-            log(`Flag status: ${response.shouldTranslate}`);
+     function(request, sender, sendResponse) {
+       (async () => {
+         if (request.message === pageSwitchedRequestMethod) {
+           if (request.url.includes("developer.apple.com")) {
+             const response = await chrome.runtime.sendMessage({type: initialRequestMethod})
+             log(`Flag status: ${response.shouldTranslate}`);
 
-            tabURLUpdated(response.shouldTranslate)
+             await tabURLUpdated(response.shouldTranslate)
 
-            log("Plugin wait page loaded");
+             log("Plugin wait page loaded");
+           }
+         }
+       })()
 
-          });
-        }
-      }
+       return true
     }
 );
 
@@ -177,7 +178,7 @@ function isSupportedPage() {
   return endUpWhiteList.includes(pathArray[pathArray.length-2]) || endUpWhiteList.includes(pathArray[pathArray.length-1])
 }
 
-function tabURLUpdated(shouldTranslate) {
+async function tabURLUpdated(shouldTranslate) {
   const currentURL = getCurrentURL()
 
   if (currentURL.toString() === currentTranslatedURL.toString()) {
@@ -187,9 +188,7 @@ function tabURLUpdated(shouldTranslate) {
     return;
   }
 
-  (async () => {
-    await startTranslate(shouldTranslate)
-  })()
+  await startTranslate(shouldTranslate)
 }
 
 async function startTranslate(shouldTranslate) {
