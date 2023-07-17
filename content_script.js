@@ -151,7 +151,7 @@ function log(message) {
 }
 
 function isCategoryPage() {
-  const currentURL = new URL(document.URL);
+  const currentURL = getCurrentURL()
   const pathArray = currentURL.pathname.split('/');
   const baseURL = "https://api.swift.gg/content/";
   const url = baseURL + pathArray[pathArray.length-2] + '/' + pathArray[pathArray.length-1];

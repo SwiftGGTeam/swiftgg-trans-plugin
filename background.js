@@ -30,7 +30,7 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
 
             for (let tab of allTabs) {
                 if (tab.url.includes("developer.apple.com")) {
-                    if (isSupportedPage(tab.url)) {
+                    if (isCategoryPage(tab.url) || tab.id === activeTab.id) {
                         await chrome.tabs.reload(tab.id)
                     }
                 }
@@ -187,4 +187,14 @@ async function queryActiveTabStatus() {
     } catch (error) {
         return false
     }
+}
+
+function isCategoryPage(url) {
+    const currentURL = new URL(url)
+    currentURL.hash = ""
+    currentURL.search = ""
+    const pathArray = currentURL.pathname.split('/');
+
+    const lastPath = pathArray[pathArray.length - 1] || pathArray[pathArray.length - 2];
+    return endUpWhiteList.includes(lastPath)
 }
