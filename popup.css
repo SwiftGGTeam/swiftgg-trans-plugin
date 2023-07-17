@@ -92,7 +92,10 @@ select {
     outline: none;
     background-color: transparent;
     width: 100%;
-    padding: 10px 0px;
+    
+    margin-top: 10px;
+    padding-right: 20px;
+
     appearance: none;
     font-weight: 600;
     color: #2cade6;
