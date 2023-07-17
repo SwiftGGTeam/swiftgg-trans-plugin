@@ -35,6 +35,8 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
                     }
                 }
             }
+
+            sendResponse()
         })();
 
         return true
@@ -48,6 +50,7 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
     } else if (request.type === translatedRequestMethod) {
         (async () => {
             await updateLogo(true)
+            sendResponse()
         })()
 
         return true
@@ -86,6 +89,7 @@ chrome.tabs.onActivated.addListener(function(activeInfo) {
         if (tab.url && !(tab.url.includes('developer.apple.com/'))) {
             await updateLogo(false)
         } else if (tab.url && (tab.url.includes('developer.apple.com/'))) {
+            console.log("active")
             await updateLogo(true)
         }
     })()
@@ -175,12 +179,12 @@ async function retrieveShouldTranslate() {
 async function queryActiveTabStatus() {
     try {
         const activeTab = await queryActiveTab()
-        const response = await chrome.tabs.sendMessage( activeTab.id, {
+        const response = await chrome.tabs.sendMessage(activeTab.id, {
             message: queryStatusRequestMethod,
             url: activeTab.url
         })
         return response.status
-    } catch {
+    } catch (error) {
         return false
     }
 }

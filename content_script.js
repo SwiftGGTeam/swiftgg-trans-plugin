@@ -64,7 +64,7 @@ async function fetchRelatedData(url) {
     checkResponse(response)
     json = await response.json()
   } catch (error) {
-    console.error('Error fetching data:', error);
+    console.log('Error fetching data:', error);
   }
 }
 
@@ -200,6 +200,7 @@ async function tabURLUpdated(shouldTranslate) {
 
 async function startTranslate(shouldTranslate) {
   const currentURL = getCurrentURL()
+  currentTranslatedURL = currentURL
   const pathArray = currentURL.pathname.split('/');
   const baseURL = "https://api.swift.gg/content/";
   const url = baseURL + pathArray[pathArray.length-2] + '/' + pathArray[pathArray.length-1];
@@ -217,8 +218,6 @@ async function startTranslate(shouldTranslate) {
   }
 
   await waitPage()
-
-  currentTranslatedURL = currentURL
 
   if (isCategoryPage() === true) {
     updateAHerfToAbsolutURL()
@@ -241,4 +240,3 @@ function getCurrentURL() {
   currentURL.search = ""
   return currentURL
 }
-
