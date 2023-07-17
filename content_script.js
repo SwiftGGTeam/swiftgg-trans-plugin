@@ -2,12 +2,14 @@ const isDebugMode = true;
 log("Plugin start");
 var json = {}
 const initialRequestMethod = "shouldTranslate"
+const queryStatusRequestMethod = "queryStatus"
 const updateRequestMethod = "updateShouldTranslate"
 const reloadRequestMethod = "reloadShouldTranslate"
 const translatedRequestMethod = "translated"
 const pageSwitchedRequestMethod = "pageSwitched"
 const endUpWhiteList = ["swiftui","swiftui/","sample-apps","sample-apps/","swiftui-concepts","swiftui-concepts/"];
 let currentTranslatedURL = null
+let translated = false
 
 log("Plugin start request flag");
 
@@ -19,6 +21,25 @@ log("Plugin start request flag");
 
   log("Plugin wait page loaded");
 })()
+
+chrome.runtime.onMessage.addListener(
+    function(request, sender, sendResponse) {
+      if (request.message === pageSwitchedRequestMethod) {
+        (async () => {
+          if (request.url.includes("developer.apple.com")) {
+            const response = await chrome.runtime.sendMessage({type: initialRequestMethod})
+            await tabURLUpdated(response.shouldTranslate)
+
+            sendResponse()
+          }
+        })()
+
+        return true
+      } else if (request.message === queryStatusRequestMethod) {
+        sendResponse({status: translated})
+      }
+    }
+);
 
 function waitPage() {
   const flagElement = isCategoryPage() ? ".title" : "div.headline h1";
@@ -150,24 +171,8 @@ function addInstructionToCategoryPage() {
   contentDiv.appendChild(spaceElement2)
   contentDiv.appendChild(pElement)
 }
-chrome.runtime.onMessage.addListener(
-     function(request, sender, sendResponse) {
-       (async () => {
-         if (request.message === pageSwitchedRequestMethod) {
-           if (request.url.includes("developer.apple.com")) {
-             const response = await chrome.runtime.sendMessage({type: initialRequestMethod})
-             log(`Flag status: ${response.shouldTranslate}`);
 
-             await tabURLUpdated(response.shouldTranslate)
 
-             log("Plugin wait page loaded");
-           }
-         }
-       })()
-
-       return true
-    }
-);
 
 function isSupportedPage() {
   const currentURL = getCurrentURL()
@@ -181,11 +186,13 @@ function isSupportedPage() {
 async function tabURLUpdated(shouldTranslate) {
   const currentURL = getCurrentURL()
 
-  if (currentURL.toString() === currentTranslatedURL.toString()) {
-    if (isCategoryPage() === false && isSupportedPage() === true) {
-      chrome.runtime.sendMessage({type: translatedRequestMethod}, (response) => {})
+  if (currentTranslatedURL) {
+    if (currentURL.toString() === currentTranslatedURL.toString()) {
+      if (isCategoryPage() === false && isSupportedPage() === true) {
+        chrome.runtime.sendMessage({type: translatedRequestMethod}, (response) => {})
+      }
+      return;
     }
-    return;
   }
 
   await startTranslate(shouldTranslate)
@@ -193,7 +200,6 @@ async function tabURLUpdated(shouldTranslate) {
 
 async function startTranslate(shouldTranslate) {
   const currentURL = getCurrentURL()
-  currentTranslatedURL = currentURL
   const pathArray = currentURL.pathname.split('/');
   const baseURL = "https://api.swift.gg/content/";
   const url = baseURL + pathArray[pathArray.length-2] + '/' + pathArray[pathArray.length-1];
@@ -212,6 +218,8 @@ async function startTranslate(shouldTranslate) {
 
   await waitPage()
 
+  currentTranslatedURL = currentURL
+
   if (isCategoryPage() === true) {
     updateAHerfToAbsolutURL()
     log("in category page")
@@ -222,7 +230,8 @@ async function startTranslate(shouldTranslate) {
     addTitleNode();
     appendH2Nodes();
     appendPNodes();
-    chrome.runtime.sendMessage({type: translatedRequestMethod}, (response) => {})
+    translated = true
+    await chrome.runtime.sendMessage({type: translatedRequestMethod}, (response) => {})
   }
 }
 
