@@ -10,45 +10,30 @@ const endUpWhiteList = ["swiftui","swiftui/","sample-apps","sample-apps/","swift
 let currentTranslatedURL = null
 
 log("Plugin start request flag");
-chrome.runtime.sendMessage({type: initialRequestMethod}, (response) => {
+
+(async () => {
+  const response = await chrome.runtime.sendMessage({type: initialRequestMethod});
   log(`Flag status: ${response.shouldTranslate}`);
 
-  startTranslate(response.shouldTranslate)
+  await startTranslate(response.shouldTranslate)
 
   log("Plugin wait page loaded");
+})()
 
-});
-
-function waitPage(callback) {
+async function waitPage() {
   const flagElement = isCategoryPage() ? ".title" : "div.headline h1";
   log(`Plugin ${flagElement}`);
   log("Plugin waiting");
-  let interval = setInterval(function() {
-    log("Plugin retry");
-    let asyncElement = document.querySelector(flagElement);
+  return new Promise((resolve, reject) => {
+    setInterval(function() {
+      log("Plugin retry");
+      let asyncElement = document.querySelector(flagElement);
       if (asyncElement) {
-        clearInterval(interval);
         log("Element loaded");
-        callback()
+        resolve()
       }
-  }, 200);
-}
-
-function waitJsonLoaded(callback) {
-    log("Will wait Json loaded");
-    var maxCheckCount = 1000
-    var currentCheckCount = 0
-    const interval = setInterval(() => {
-      log(`retry times: ${currentCheckCount}`);
-      if (currentCheckCount >= maxCheckCount) {
-        clearInterval(interval);
-      }
-      currentCheckCount ++;
-      if (json != null) {
-        clearInterval(interval);
-        callback();
-      }
-    }, 400);
+    }, 200);
+  })
 }
 
 function fetchRelatedData(url) {
@@ -201,10 +186,12 @@ function tabURLUpdated(shouldTranslate) {
     return;
   }
 
-  startTranslate(shouldTranslate)
+  (async () => {
+    await startTranslate(shouldTranslate)
+  })()
 }
 
-function startTranslate(shouldTranslate) {
+async function startTranslate(shouldTranslate) {
   const currentURL = getCurrentURL()
   currentTranslatedURL = currentURL
   const pathArray = currentURL.pathname.split('/');
@@ -220,25 +207,23 @@ function startTranslate(shouldTranslate) {
   }
 
   if (isCategoryPage() === false) {
-    fetchRelatedData(url)
+    await fetchRelatedData(url)
   }
 
-  waitPage(function() {
-    if (isCategoryPage() === true) {
-      updateAHerfToAbsolutURL()
-      log("in category page")
-      addInstructionToCategoryPage()
-    } else {
-      waitJsonLoaded(function() {
-        log("Plugin Start add content");
-        updateAHerfToAbsolutURL()
-        addTitleNode();
-        appendH2Nodes();
-        appendPNodes();
-        chrome.runtime.sendMessage({type: translatedRequestMethod}, (response) => {})
-      });
-    }
-  });
+  await waitPage()
+
+  if (isCategoryPage() === true) {
+    updateAHerfToAbsolutURL()
+    log("in category page")
+    addInstructionToCategoryPage()
+  } else {
+    log("Plugin Start add content");
+    updateAHerfToAbsolutURL()
+    addTitleNode();
+    appendH2Nodes();
+    appendPNodes();
+    chrome.runtime.sendMessage({type: translatedRequestMethod}, (response) => {})
+  }
 }
 
 function getCurrentURL() {
@@ -247,3 +232,4 @@ function getCurrentURL() {
   currentURL.search = ""
   return currentURL
 }
+
