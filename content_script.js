@@ -2,71 +2,76 @@ const isDebugMode = true;
 log("Plugin start");
 var json = {}
 const initialRequestMethod = "shouldTranslate"
+const queryStatusRequestMethod = "queryStatus"
 const updateRequestMethod = "updateShouldTranslate"
 const reloadRequestMethod = "reloadShouldTranslate"
 const translatedRequestMethod = "translated"
 const pageSwitchedRequestMethod = "pageSwitched"
 const endUpWhiteList = ["swiftui","swiftui/","sample-apps","sample-apps/","swiftui-concepts","swiftui-concepts/"];
-let currentTranslatedURL = new URL(document.URL);
-currentTranslatedURL.hash = ""
-currentTranslatedURL.search = ""
+let currentTranslatedURL = null
+let translated = false
 
 log("Plugin start request flag");
-chrome.runtime.sendMessage({type: initialRequestMethod}, (response) => {
+
+(async () => {
+  const response = await chrome.runtime.sendMessage({type: initialRequestMethod});
   log(`Flag status: ${response.shouldTranslate}`);
 
-  startTranslate(response.shouldTranslate)
+  await startTranslate(response.shouldTranslate)
 
   log("Plugin wait page loaded");
+})()
 
-});
+chrome.runtime.onMessage.addListener(
+    function(request, sender, sendResponse) {
+      if (request.message === pageSwitchedRequestMethod) {
+        (async () => {
+          if (request.url.includes("developer.apple.com")) {
+            const response = await chrome.runtime.sendMessage({type: initialRequestMethod})
+            await tabURLUpdated(response.shouldTranslate)
 
-function waitPage(callback) {
+            sendResponse()
+          }
+        })()
+
+        return true
+      } else if (request.message === queryStatusRequestMethod) {
+        sendResponse({status: translated})
+      }
+    }
+);
+
+function waitPage() {
   const flagElement = isCategoryPage() ? ".title" : "div.headline h1";
   log(`Plugin ${flagElement}`);
   log("Plugin waiting");
-  let interval = setInterval(function() {
-    log("Plugin retry");
-    let asyncElement = document.querySelector(flagElement);
+  return new Promise((resolve, reject) => {
+    const interval = setInterval(function() {
+      log("Plugin retry");
+      let asyncElement = document.querySelector(flagElement);
       if (asyncElement) {
-        clearInterval(interval);
         log("Element loaded");
-        callback()
-      }
-  }, 200);
-}
-
-function waitJsonLoaded(callback) {
-    log("Will wait Json loaded");
-    var maxCheckCount = 1000
-    var currentCheckCount = 0
-    const interval = setInterval(() => {
-      log(`retry times: ${currentCheckCount}`);
-      if (currentCheckCount >= maxCheckCount) {
+        resolve()
         clearInterval(interval);
       }
-      currentCheckCount ++;
-      if (json != null) {
-        clearInterval(interval);
-        callback();
-      }
-    }, 400);
+    }, 200);
+  })
 }
 
-function fetchRelatedData(url) {
-  fetch(url)
-   .then(response => {
-    if (!response.ok) {
-        throw new Error(`HTTP error ${response.status}`);
-    }
-    return response.json();
-   })
-   .then(data => {
-     json = data;
-  })    
-  .catch(error => {
-    console.error('Error fetching data:', error);
-  });
+async function fetchRelatedData(url) {
+  try {
+    const response = await fetch(url)
+    checkResponse(response)
+    json = await response.json()
+  } catch (error) {
+    console.log('Error fetching data:', error);
+  }
+}
+
+function checkResponse(response) {
+  if (!response.ok) {
+    throw new Error(`HTTP error ${response.status}`);
+  }
 }
 
 function updateAHerfToAbsolutURL() {
@@ -166,23 +171,8 @@ function addInstructionToCategoryPage() {
   contentDiv.appendChild(spaceElement2)
   contentDiv.appendChild(pElement)
 }
-chrome.runtime.onMessage.addListener(
-    function(request, sender, sendResponse) {
-      // listen for messages sent from background.js
-      if (request.message === pageSwitchedRequestMethod) {
-        if (request.url.includes("developer.apple.com")) {
-          chrome.runtime.sendMessage({type: initialRequestMethod}, (response) => {
-            log(`Flag status: ${response.shouldTranslate}`);
 
-            tabURLUpdated(response.shouldTranslate)
 
-            log("Plugin wait page loaded");
-
-          });
-        }
-      }
-    }
-);
 
 function isSupportedPage() {
   const currentURL = getCurrentURL()
@@ -193,23 +183,24 @@ function isSupportedPage() {
   return endUpWhiteList.includes(pathArray[pathArray.length-2]) || endUpWhiteList.includes(pathArray[pathArray.length-1])
 }
 
-function tabURLUpdated(shouldTranslate) {
+async function tabURLUpdated(shouldTranslate) {
   const currentURL = getCurrentURL()
 
-  if (currentURL.toString() === currentTranslatedURL.toString()) {
-    if (isCategoryPage() === false && isSupportedPage() === true) {
-      chrome.runtime.sendMessage({type: translatedRequestMethod}, (response) => {})
+  if (currentTranslatedURL) {
+    if (currentURL.toString() === currentTranslatedURL.toString()) {
+      if (isCategoryPage() === false && isSupportedPage() === true) {
+        chrome.runtime.sendMessage({type: translatedRequestMethod}, (response) => {})
+      }
+      return;
     }
-    return;
   }
 
-  currentTranslatedURL = currentURL
-
-  startTranslate(shouldTranslate)
+  await startTranslate(shouldTranslate)
 }
 
-function startTranslate(shouldTranslate) {
+async function startTranslate(shouldTranslate) {
   const currentURL = getCurrentURL()
+  currentTranslatedURL = currentURL
   const pathArray = currentURL.pathname.split('/');
   const baseURL = "https://api.swift.gg/content/";
   const url = baseURL + pathArray[pathArray.length-2] + '/' + pathArray[pathArray.length-1];
@@ -223,25 +214,24 @@ function startTranslate(shouldTranslate) {
   }
 
   if (isCategoryPage() === false) {
-    fetchRelatedData(url)
+    await fetchRelatedData(url)
   }
 
-  waitPage(function() {
-    if (isCategoryPage() === true) {
-      updateAHerfToAbsolutURL()
-      log("in category page")
-      addInstructionToCategoryPage()
-    } else {
-      waitJsonLoaded(function() {
-        log("Plugin Start add content");
-        updateAHerfToAbsolutURL()
-        addTitleNode();
-        appendH2Nodes();
-        appendPNodes();
-        chrome.runtime.sendMessage({type: translatedRequestMethod}, (response) => {})
-      });
-    }
-  });
+  await waitPage()
+
+  if (isCategoryPage() === true) {
+    updateAHerfToAbsolutURL()
+    log("in category page")
+    addInstructionToCategoryPage()
+  } else {
+    log("Plugin Start add content");
+    updateAHerfToAbsolutURL()
+    addTitleNode();
+    appendH2Nodes();
+    appendPNodes();
+    translated = true
+    await chrome.runtime.sendMessage({type: translatedRequestMethod}, (response) => {})
+  }
 }
 
 function getCurrentURL() {

@@ -1,13 +1,10 @@
 const pluginFlag = "pluginFlag"
-let shouldTranslate = false
+let shouldTranslate = null
 let initialRequestMethod = "shouldTranslate"
 let updateRequestMethod = "updateShouldTranslate"
+const queryStatusRequestMethod = "queryStatus"
 let translatedRequestMethod = "translated"
-var currentTranslatedPage = [];
-var currentTabID = 0
-var previousTabID = 0
 const pageSwitchedRequestMethod = "pageSwitched"
-let refreshRequested = false
 const endUpWhiteList = ["swiftui","swiftui/","sample-apps","sample-apps/","swiftui-concepts","swiftui-concepts/"];
 
 const BrowserType = {
@@ -17,51 +14,45 @@ const BrowserType = {
     unknown: Symbol("unknown")
 }
 
-setTimeout(() => {
-    chrome.storage.local.get(pluginFlag, (result) => {
-        shouldTranslate = result.pluginFlag || false
-        if (!shouldTranslate) {
-            chrome.action.setIcon({ path: { "128": "/source/intro/swiftLogo-closed.png"} }).then(r => {})
-        }
-    });
-
-}, 2)
+retrieveShouldTranslate().then()
 
 chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
     if (request.type === updateRequestMethod) {
-        shouldTranslate = request.data;
-        currentTranslatedPage = []
-        currentTabID = 0
-        refreshRequested = true
-        queryAllTabs(function (allTabs) {
-            queryActiveTab(function (tabs) {
-                const activeTab = tabs[0]
-                updateTabId(activeTab.id)
-                if (activeTab.url.includes("developer.apple.com")) {
-                    updateLogo(true)
-                } else {
-                    updateLogo(false)
-                }
+        (async () => {
+            shouldTranslate = request.data;
+            const allTabs = await queryAllTabs()
+            const activeTab = await queryActiveTab()
+            if (activeTab.url.includes("developer.apple.com")) {
+                await updateLogo(true)
+            } else {
+                await updateLogo(false)
+            }
 
-                let running = []
-                for (let tab of allTabs) {
-                    if (tab.url.includes("developer.apple.com")) {
-                        if (isSupportedPage(tab.url)) {
-                            running.push(chrome.tabs.reload(tab.id))
-                        }
+            for (let tab of allTabs) {
+                if (tab.url.includes("developer.apple.com")) {
+                    if (isSupportedPage(tab.url)) {
+                        await chrome.tabs.reload(tab.id)
                     }
                 }
+            }
 
-                Promise.allSettled(running).then()
-            })
-        });
+            sendResponse()
+        })();
 
         return true
     } else if (request.type === initialRequestMethod) {
-        sendResponse({shouldTranslate: shouldTranslate});
+        (async () => {
+            const result = await retrieveShouldTranslate()
+            sendResponse({shouldTranslate: result});
+        })()
+
+        return true
     } else if (request.type === translatedRequestMethod) {
-        currentTranslatedPage.push(sender.tab.id)
-        updateLogo(true)
+        (async () => {
+            await updateLogo(true)
+            sendResponse()
+        })()
+
         return true
     }
 });
@@ -72,58 +63,42 @@ function delay(i) {
 }
 
 chrome.tabs.onUpdated.addListener(function(tabId, info, tab) {
-    if (refreshRequested) {
-        refreshRequested = false
-        return true
-    }
+    (async () => {
+        const activeTab = await queryActiveTab()
 
-    queryActiveTab(function (tabs) {
-        const activeTab = tabs[0]
-        updateTabId(activeTab.id)
-        currentTranslatedPage = removeItemAll(currentTranslatedPage, previousTabID)
         if (activeTab.url.includes("developer.apple.com")) {
-            updateLogo(true)
+            await updateLogo(true)
         } else {
-            updateLogo(false)
+            await updateLogo(false)
         }
 
-        chrome.tabs.sendMessage( tabId, {
-            message: pageSwitchedRequestMethod,
-            url: activeTab.url
-        }).then()
-    });
-
-    return true
+        try {
+            await chrome.tabs.sendMessage(activeTab.id, {
+                message: pageSwitchedRequestMethod,
+                url: activeTab.url
+            })
+        } catch (error) {
+            console.log(error)
+        }
+    })()
 });
 
 chrome.tabs.onActivated.addListener(function(activeInfo) {
-    chrome.tabs.get(activeInfo.tabId, function(tab) {
-        updateTabId(tab.id)
+    (async () => {
+        const tab = await chrome.tabs.get(activeInfo.tabId)
         if (tab.url && !(tab.url.includes('developer.apple.com/'))) {
-            updateLogo(false)
-            currentTranslatedPage = removeItemAll(currentTranslatedPage, currentTabID)
+            await updateLogo(false)
         } else if (tab.url && (tab.url.includes('developer.apple.com/'))) {
-            updateLogo(true)
+            console.log("active")
+            await updateLogo(true)
         }
-    });
+    })()
 });
 
-function removeItemAll(arr, value) {
-    var index = arr.indexOf(value);
-    if (index > -1) {
-        arr.splice(index, 1);
-    }
-    return arr;
-}
-function updateTabId(id) {
-    previousTabID = currentTabID
-    currentTabID = id
-}
-
-function updateLogo(active) {
+async function updateLogo(active) {
     if (active) {
         if (shouldTranslate) {
-            if (currentTranslatedPage.includes(currentTabID)) {
+            if ((await queryActiveTabStatus())) {
                 setIcon("/source/intro/swiftLogo-translating.png")
             } else {
                 setIcon("/source/intro/swiftLogo-running.png")
@@ -172,16 +147,12 @@ function setIcon(path) {
     }
 }
 
-function queryAllTabs(callback) {
-    chrome.tabs.query({}, function (allTabs) {
-        callback(allTabs)
-    })
+async function queryAllTabs(callback) {
+    return await chrome.tabs.query({})
 }
 
-function queryActiveTab(callback) {
-    chrome.tabs.query({ active: true, currentWindow: true }, function (allTabs) {
-        callback(allTabs)
-    })
+async function queryActiveTab(callback) {
+    return (await chrome.tabs.query({ active: true, currentWindow: true }))[0]
 }
 
 function isSupportedPage(url) {
@@ -191,4 +162,29 @@ function isSupportedPage(url) {
     })
 
     return endUpWhiteList.includes(pathArray[pathArray.length-2]) || endUpWhiteList.includes(pathArray[pathArray.length-1])
+}
+
+async function retrieveShouldTranslate() {
+    const result = await chrome.storage.local.get(pluginFlag)
+    const previousShouldTranslate = shouldTranslate
+    shouldTranslate = result.pluginFlag || false
+    if (previousShouldTranslate == null) {
+        if (!shouldTranslate) {
+            chrome.action.setIcon({ path: { "128": "/source/intro/swiftLogo-closed.png"} }).then(r => {})
+        }
+    }
+    return result.pluginFlag || false
+}
+
+async function queryActiveTabStatus() {
+    try {
+        const activeTab = await queryActiveTab()
+        const response = await chrome.tabs.sendMessage(activeTab.id, {
+            message: queryStatusRequestMethod,
+            url: activeTab.url
+        })
+        return response.status
+    } catch (error) {
+        return false
+    }
 }
