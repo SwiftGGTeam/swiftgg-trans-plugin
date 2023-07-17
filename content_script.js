@@ -7,9 +7,7 @@ const reloadRequestMethod = "reloadShouldTranslate"
 const translatedRequestMethod = "translated"
 const pageSwitchedRequestMethod = "pageSwitched"
 const endUpWhiteList = ["swiftui","swiftui/","sample-apps","sample-apps/","swiftui-concepts","swiftui-concepts/"];
-let currentTranslatedURL = new URL(document.URL);
-currentTranslatedURL.hash = ""
-currentTranslatedURL.search = ""
+let currentTranslatedURL = null
 
 log("Plugin start request flag");
 chrome.runtime.sendMessage({type: initialRequestMethod}, (response) => {
@@ -203,13 +201,12 @@ function tabURLUpdated(shouldTranslate) {
     return;
   }
 
-  currentTranslatedURL = currentURL
-
   startTranslate(shouldTranslate)
 }
 
 function startTranslate(shouldTranslate) {
   const currentURL = getCurrentURL()
+  currentTranslatedURL = currentURL
   const pathArray = currentURL.pathname.split('/');
   const baseURL = "https://api.swift.gg/content/";
   const url = baseURL + pathArray[pathArray.length-2] + '/' + pathArray[pathArray.length-1];
