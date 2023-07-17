@@ -20,36 +20,37 @@ log("Plugin start request flag");
   log("Plugin wait page loaded");
 })()
 
-async function waitPage() {
+function waitPage() {
   const flagElement = isCategoryPage() ? ".title" : "div.headline h1";
   log(`Plugin ${flagElement}`);
   log("Plugin waiting");
   return new Promise((resolve, reject) => {
-    setInterval(function() {
+    const interval = setInterval(function() {
       log("Plugin retry");
       let asyncElement = document.querySelector(flagElement);
       if (asyncElement) {
         log("Element loaded");
         resolve()
+        clearInterval(interval);
       }
     }, 200);
   })
 }
 
-function fetchRelatedData(url) {
-  fetch(url)
-   .then(response => {
-    if (!response.ok) {
-        throw new Error(`HTTP error ${response.status}`);
-    }
-    return response.json();
-   })
-   .then(data => {
-     json = data;
-  })    
-  .catch(error => {
+async function fetchRelatedData(url) {
+  try {
+    const response = await fetch(url)
+    checkResponse(response)
+    json = await response.json()
+  } catch (error) {
     console.error('Error fetching data:', error);
-  });
+  }
+}
+
+function checkResponse(response) {
+  if (!response.ok) {
+    throw new Error(`HTTP error ${response.status}`);
+  }
 }
 
 function updateAHerfToAbsolutURL() {
