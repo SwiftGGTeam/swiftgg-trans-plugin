@@ -6,6 +6,7 @@ const queryStatusRequestMethod = "queryStatus"
 let translatedRequestMethod = "translated"
 const pageSwitchedRequestMethod = "pageSwitched"
 const endUpWhiteList = ["swiftui","swiftui/","sample-apps","sample-apps/","swiftui-concepts","swiftui-concepts/"];
+let globalActiveTab = null
 
 const BrowserType = {
     chrome: Symbol("chrome"),
@@ -152,7 +153,12 @@ async function queryAllTabs(callback) {
 }
 
 async function queryActiveTab(callback) {
-    return (await chrome.tabs.query({ active: true, currentWindow: true }))[0]
+    const activeTab = (await chrome.tabs.query({ active: true, currentWindow: true }))[0]
+    if (activeTab) {
+        globalActiveTab = activeTab
+    }
+
+    return activeTab || globalActiveTab
 }
 
 function isSupportedPage(url) {
