@@ -166,7 +166,7 @@ function addInstructionToCategoryPage() {
   let spaceElement2 = document.createElement("br");
   let pElement = document.createElement("p")
   pElement.classList.add("indicator")
-  pElement.textContent = "SwiftGG 正在运行，请点击上方按钮开始学习 ⬆️"
+  pElement.textContent = "⬆️ SwiftGG 正在运行，请点击上方按钮开始学习 ⬆️"
   contentDiv.appendChild(spaceElement)
   contentDiv.appendChild(spaceElement2)
   contentDiv.appendChild(pElement)
@@ -229,6 +229,7 @@ async function startTranslate(shouldTranslate) {
     addTitleNode();
     appendH2Nodes();
     appendPNodes();
+    await injectFloat()
     translated = true
     await chrome.runtime.sendMessage({type: translatedRequestMethod}, (response) => {})
   }
@@ -239,4 +240,14 @@ function getCurrentURL() {
   currentURL.hash = ""
   currentURL.search = ""
   return currentURL
+}
+
+async function injectFloat() {
+  const response = await fetch(chrome.runtime.getURL("float.html"))
+  const floatContent = await response.text()
+  console.log(floatContent)
+  const container = document.createElement('div')
+  container.innerHTML = floatContent
+  const bodyElement = document.body
+  bodyElement.insertBefore(container, bodyElement.firstChild)
 }
