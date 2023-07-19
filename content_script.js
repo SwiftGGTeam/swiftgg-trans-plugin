@@ -10,6 +10,7 @@ const pageSwitchedRequestMethod = "pageSwitched"
 const endUpWhiteList = ["swiftui","swiftui/","sample-apps","sample-apps/","swiftui-concepts","swiftui-concepts/"];
 let currentTranslatedURL = null
 let translated = false
+const tabActiveRequestMethod = "tacActive"
 
 log("Plugin start request flag");
 
@@ -37,6 +38,22 @@ chrome.runtime.onMessage.addListener(
         return true
       } else if (request.message === queryStatusRequestMethod) {
         sendResponse({status: translated})
+      } else if (request.message === tabActiveRequestMethod) {
+        (async () => {
+          if (isSupportedPage(request.url) && !isCategoryPage(request.url)) {
+            if (request.shouldTranslate && !translated) {
+              await injectFloat()
+            } else if (!request.shouldTranslate) {
+              if (elementExists("swiftgg-float")) {
+                directRemoveElement("swiftgg-float")
+              }
+            }
+          }
+
+          sendResponse()
+        })()
+
+        return true
       }
     }
 );
@@ -229,7 +246,6 @@ async function startTranslate(shouldTranslate) {
     addTitleNode();
     appendH2Nodes();
     appendPNodes();
-    await injectFloat()
     translated = true
     await chrome.runtime.sendMessage({type: translatedRequestMethod}, (response) => {})
   }
@@ -243,6 +259,9 @@ function getCurrentURL() {
 }
 
 async function injectFloat() {
+  if (elementExists("swiftgg-float")) {
+    return
+  }
   const response = await fetch(chrome.runtime.getURL("float.html"))
   const floatContent = await response.text()
   console.log(floatContent)
@@ -250,4 +269,80 @@ async function injectFloat() {
   container.innerHTML = floatContent
   const bodyElement = document.body
   bodyElement.insertBefore(container, bodyElement.firstChild)
+  addListenerToFloatElement()
+}
+
+function elementExists(elementId) {
+  const element = document.getElementById(elementId);
+  return !!element;
+}
+
+function directRemoveElement(elementId) {
+  const element = document.getElementById(elementId);
+  element.remove()
+}
+
+function addListenerToFloatElement() {
+  const cancelButton = document.getElementById("swiftgg-float-cancel")
+
+  cancelButton.addEventListener("mouseenter", function( event ) {
+    cancelButton.style.backgroundColor = "#292929"
+  }, false)
+
+  cancelButton.addEventListener("mouseleave", function( event ) {
+    cancelButton.style.backgroundColor = "#1F1F1F"
+  }, false)
+
+  cancelButton.addEventListener("mousedown", function (event) {
+    cancelButton.style.backgroundColor = "#333333"
+  })
+
+  cancelButton.addEventListener("mouseup", function (event) {
+    cancelButton.style.backgroundColor = "#292929"
+  })
+
+  cancelButton.onclick = floatCancel
+
+  const translateButton = document.getElementById("swiftgg-float-translate")
+
+  translateButton.addEventListener("mouseenter", function( event ) {
+    translateButton.style.backgroundColor = "#212629"
+  }, false)
+
+  translateButton.addEventListener("mouseleave", function( event ) {
+    translateButton.style.backgroundColor = "#1F1F1F"
+  }, false)
+
+  translateButton.addEventListener("mousedown", function (event) {
+    translateButton.style.backgroundColor = "#223038"
+  })
+
+  translateButton.addEventListener("mouseup", function (event) {
+    translateButton.style.backgroundColor = "#212629"
+  })
+
+  translateButton.onclick = floatTranslate
+}
+
+function floatCancel() {
+  const floatElement = document.getElementById("swiftgg-float")
+  removeFadeOut(floatElement, 600)
+}
+
+function floatTranslate() {
+  const floatElement = document.getElementById("swiftgg-float")
+  removeFadeOut(floatElement, 600);
+
+  (async () => {
+    await startTranslate(true)
+  })()
+}
+function removeFadeOut(el, speed) {
+  let seconds = speed/1000;
+  el.style.transition = "opacity "+seconds+"s ease";
+
+  el.style.opacity = 0;
+  setTimeout(function() {
+    el.parentNode.removeChild(el);
+  }, speed);
 }

@@ -3,6 +3,7 @@ let shouldTranslate = null
 let initialRequestMethod = "shouldTranslate"
 let updateRequestMethod = "updateShouldTranslate"
 const queryStatusRequestMethod = "queryStatus"
+const tabActiveRequestMethod = "tacActive"
 let translatedRequestMethod = "translated"
 const pageSwitchedRequestMethod = "pageSwitched"
 const endUpWhiteList = ["swiftui","swiftui/","sample-apps","sample-apps/","swiftui-concepts","swiftui-concepts/"];
@@ -21,6 +22,7 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
     if (request.type === updateRequestMethod) {
         (async () => {
             shouldTranslate = request.data;
+            needAlertTabs = []
             const allTabs = await queryAllTabs()
             const activeTab = await queryActiveTab()
             if (activeTab.url.includes("developer.apple.com")) {
@@ -87,11 +89,24 @@ chrome.tabs.onUpdated.addListener(function(tabId, info, tab) {
 chrome.tabs.onActivated.addListener(function(activeInfo) {
     (async () => {
         const tab = await chrome.tabs.get(activeInfo.tabId)
-        if (tab.url && !(tab.url.includes('developer.apple.com/'))) {
+        const activeTab = await queryActiveTab()
+
+        if (tab.url && !(tab.url.includes('developer.apple.com'))) {
             await updateLogo(false)
-        } else if (tab.url && (tab.url.includes('developer.apple.com/'))) {
-            console.log("active")
+        } else if (tab.url && (tab.url.includes('developer.apple.com'))) {
             await updateLogo(true)
+        }
+
+        try {
+            if (activeTab.id && activeTab.url.includes("developer.apple.com")) {
+                await chrome.tabs.sendMessage(activeTab.id, {
+                    message: tabActiveRequestMethod,
+                    url: activeTab.url,
+                    shouldTranslate: shouldTranslate,
+                })
+            }
+        } catch (error) {
+            console.log(error)
         }
     })()
 });
@@ -171,6 +186,9 @@ function isSupportedPage(url) {
 }
 
 async function retrieveShouldTranslate() {
+    if (shouldTranslate) {
+        return shouldTranslate
+    }
     const result = await chrome.storage.local.get(pluginFlag)
     const previousShouldTranslate = shouldTranslate
     shouldTranslate = result.pluginFlag || false
