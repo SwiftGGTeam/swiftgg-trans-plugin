@@ -9,6 +9,7 @@ const endUpWhiteList = ["swiftui","swiftui/","sample-apps","sample-apps/","swift
 let currentTranslatedURL = null
 let translated = false
 const tabActiveRequestMethod = "tacActive"
+let noDisturb = false
 
 log("Plugin start request flag");
 
@@ -39,7 +40,7 @@ chrome.runtime.onMessage.addListener(
       } else if (request.message === tabActiveRequestMethod) {
         (async () => {
           if (isSupportedPage(request.url) && !isCategoryPage(request.url)) {
-            if (request.shouldTranslate && !translated) {
+            if (request.shouldTranslate && !translated && !noDisturb) {
               await injectFloat()
             } else if (!request.shouldTranslate) {
               if (elementExists("swiftgg-float")) {
@@ -324,6 +325,7 @@ function addListenerToFloatElement() {
 
 function floatCancel() {
   const floatElement = document.getElementById("swiftgg-float")
+  noDisturb = true
   removeFadeOut(floatElement, 600)
 }
 
