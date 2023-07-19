@@ -3,8 +3,6 @@ log("Plugin start");
 var json = {}
 const initialRequestMethod = "shouldTranslate"
 const queryStatusRequestMethod = "queryStatus"
-const updateRequestMethod = "updateShouldTranslate"
-const reloadRequestMethod = "reloadShouldTranslate"
 const translatedRequestMethod = "translated"
 const pageSwitchedRequestMethod = "pageSwitched"
 const endUpWhiteList = ["swiftui","swiftui/","sample-apps","sample-apps/","swiftui-concepts","swiftui-concepts/"];
