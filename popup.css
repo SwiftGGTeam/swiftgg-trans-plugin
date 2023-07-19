@@ -119,3 +119,49 @@ footer a {
     background-color: transparent;
     color: #FF6A46;
 }
+
+span.header-text {
+    padding-left: 6px;
+}
+
+img.gh-image {
+
+}
+
+img.header-image {
+
+}
+
+@media (prefers-color-scheme: dark) {
+    .popup {
+        background-color: #1F1F1F;
+    }
+
+    header {
+        background-color: #1C1C1C;
+    }
+
+    span {
+        color: white;
+    }
+
+    img.gh-image {
+        filter: invert(1);
+    }
+
+    .course-title {
+        color: white;
+    }
+
+    img.header-image {
+        filter: brightness(120%);
+    }
+
+    .course select {
+        color: #31C0FF;
+    }
+
+    .divider {
+        background-color: #2E2E2E;
+    }
+}
