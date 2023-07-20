@@ -8,7 +8,7 @@ const pageSwitchedRequestMethod = "pageSwitched"
 const endUpWhiteList = ["swiftui","swiftui/","sample-apps","sample-apps/","swiftui-concepts","swiftui-concepts/"];
 let currentTranslatedURL = null
 let translated = false
-const tabActiveRequestMethod = "tacActive"
+const tabActiveRequestMethod = "tabActive"
 let noDisturb = false
 
 log("Plugin start request flag");
