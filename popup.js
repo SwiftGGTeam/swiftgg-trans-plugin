@@ -11,9 +11,7 @@ document.addEventListener("DOMContentLoaded", function () {
     checkbox.checked = !checkbox.checked
     document.getElementById('switch').setAttribute('class', checkbox.checked ? 'on' : 'off')
     chrome.storage.local.set({ pluginFlag: checkbox.checked }).then(() => {
-      chrome.runtime.sendMessage({type: updateRequestMethod, data: checkbox.checked}).then(() => {
-        console.log("13456")
-      });
+      chrome.runtime.sendMessage({type: updateRequestMethod, data: checkbox.checked}).then();
     });
   });
 });

@@ -1,15 +1,20 @@
 const isDebugMode = true;
 log("Plugin start");
-var json = {}
+
+/**
+ * @param {{zh:string}} json
+ */
+let json = {}
+
 const initialRequestMethod = "shouldTranslate"
 const queryStatusRequestMethod = "queryStatus"
-const updateRequestMethod = "updateShouldTranslate"
-const reloadRequestMethod = "reloadShouldTranslate"
 const translatedRequestMethod = "translated"
 const pageSwitchedRequestMethod = "pageSwitched"
 const endUpWhiteList = ["swiftui","swiftui/","sample-apps","sample-apps/","swiftui-concepts","swiftui-concepts/"];
 let currentTranslatedURL = null
 let translated = false
+const tabActiveRequestMethod = "tabActive"
+let noDisturb = false
 
 log("Plugin start request flag");
 
@@ -37,6 +42,22 @@ chrome.runtime.onMessage.addListener(
         return true
       } else if (request.message === queryStatusRequestMethod) {
         sendResponse({status: translated})
+      } else if (request.message === tabActiveRequestMethod) {
+        (async () => {
+          if (isSupportedPage(request.url) && !isCategoryPage(request.url)) {
+            if (request.shouldTranslate && !translated && !noDisturb) {
+              await injectFloat()
+            } else if (!request.shouldTranslate) {
+              if (elementExists("swiftgg-float")) {
+                directRemoveElement("swiftgg-float")
+              }
+            }
+          }
+
+          sendResponse()
+        })()
+
+        return true
       }
     }
 );
@@ -45,7 +66,7 @@ function waitPage() {
   const flagElement = isCategoryPage() ? ".title" : "div.headline h1";
   log(`Plugin ${flagElement}`);
   log("Plugin waiting");
-  return new Promise((resolve, reject) => {
+  return new Promise((resolve) => {
     const interval = setInterval(function() {
       log("Plugin retry");
       let asyncElement = document.querySelector(flagElement);
@@ -88,15 +109,15 @@ function updateAHerfToAbsolutURL() {
 }
 
 function addTitleNode() {
-  var title = document.querySelector("div.headline h1");
+  let title = document.querySelector("div.headline h1");
   let titleText = json[title.innerText.trim()].zh;
   if (!titleText || titleText === "") {
     return;
   }
-  var newNode = document.createElement("h3");
-  var text = document.createTextNode(titleText);
+  let newNode = document.createElement("h3");
+  let text = document.createTextNode(titleText);
   newNode.appendChild(text);
-  var parent = title.parentElement;
+  let parent = title.parentElement;
   parent.insertBefore(newNode, title);
 }
 
@@ -104,44 +125,29 @@ function appendH2Nodes() {
   let h2Nodes = document.querySelectorAll("h2");
 
   Array.from(h2Nodes).filter((node) => Boolean(json[node.innerText])).forEach((node) => {
-    var parent = node.parentElement;
-    var newNode = document.createElement("h2");
-    var t = document.createTextNode(json[node.innerText].zh);
+    let parent = node.parentElement;
+    let newNode = document.createElement("h2");
+    let t = document.createTextNode(json[node.innerText].zh);
     newNode.appendChild(t);
     parent.insertBefore(newNode, node);
   })
 }
 
-function cloneNode() {
-  var div = document.querySelector("#introduction div.intro div.content");
-  var cloneNode = div.cloneNode(true);
-  div.append(cloneNode);
-}
+// function cloneNode() {
+//   let div = document.querySelector("#introduction div.intro div.content");
+//   let cloneNode = div.cloneNode(true);
+//   div.append(cloneNode);
+// }
 
 function appendPNodes() {
-  var pNodes = document.querySelectorAll("p");
+  let pNodes = document.querySelectorAll("p");
   Array.from(pNodes).filter((node) => Boolean(json[node.innerText])).forEach((node) => {
-    var parent = node.parentElement;
-    var newNode = document.createElement("p");
-    var t = document.createTextNode(json[node.innerText].zh);
+    let parent = node.parentElement;
+    let newNode = document.createElement("p");
+    let t = document.createTextNode(json[node.innerText].zh);
     newNode.appendChild(t);
     parent.insertBefore(newNode, node);
   })
-}
-
-function insertAfter(newElement, targetElement) {
-  var parent = targetElement.parentElement;
-  if (parent.lastChild === targetElement) {
-    parent.appendChild(newElement);
-  } else {
-    parent.insertBefore(newElement, targetElement.nextSibline);
-  }
-}
-
-function delay(i) {
-  setTimeout(() => {
-    console.log(i);
-  }, i * 1000);
 }
 
 function log(message) {
@@ -151,10 +157,8 @@ function log(message) {
 }
 
 function isCategoryPage() {
-  const currentURL = new URL(document.URL);
+  const currentURL = getCurrentURL()
   const pathArray = currentURL.pathname.split('/');
-  const baseURL = "https://api.swift.gg/content/";
-  const url = baseURL + pathArray[pathArray.length-2] + '/' + pathArray[pathArray.length-1];
 
   const lastPath = pathArray[pathArray.length - 1] || pathArray[pathArray.length - 2];
   return endUpWhiteList.includes(lastPath)
@@ -166,7 +170,7 @@ function addInstructionToCategoryPage() {
   let spaceElement2 = document.createElement("br");
   let pElement = document.createElement("p")
   pElement.classList.add("indicator")
-  pElement.textContent = "SwiftGG 正在运行，请点击上方按钮开始学习 ⬆️"
+  pElement.textContent = "⬆️ SwiftGG 正在运行，请点击上方按钮开始学习 ⬆️"
   contentDiv.appendChild(spaceElement)
   contentDiv.appendChild(spaceElement2)
   contentDiv.appendChild(pElement)
@@ -189,7 +193,7 @@ async function tabURLUpdated(shouldTranslate) {
   if (currentTranslatedURL) {
     if (currentURL.toString() === currentTranslatedURL.toString()) {
       if (isCategoryPage() === false && isSupportedPage() === true) {
-        chrome.runtime.sendMessage({type: translatedRequestMethod}, (response) => {})
+        chrome.runtime.sendMessage({type: translatedRequestMethod}, () => {})
       }
       return;
     }
@@ -230,7 +234,7 @@ async function startTranslate(shouldTranslate) {
     appendH2Nodes();
     appendPNodes();
     translated = true
-    await chrome.runtime.sendMessage({type: translatedRequestMethod}, (response) => {})
+    await chrome.runtime.sendMessage({type: translatedRequestMethod}, () => {})
   }
 }
 
@@ -239,4 +243,191 @@ function getCurrentURL() {
   currentURL.hash = ""
   currentURL.search = ""
   return currentURL
+}
+
+async function injectFloat() {
+  if (elementExists("swiftgg-float")) {
+    return
+  }
+
+  const response = await fetch(chrome.runtime.getURL("float.html"))
+  const floatContent = await response.text()
+  console.log(floatContent)
+  const container = document.createElement('div')
+  container.innerHTML = floatContent
+  const bodyElement = document.body
+  bodyElement.insertBefore(container, bodyElement.firstChild)
+
+  setFloatColorSchema()
+  addListenerToFloatElement()
+}
+
+function elementExists(elementId) {
+  const element = document.getElementById(elementId);
+  return !!element;
+}
+
+function directRemoveElement(elementId) {
+  const element = document.getElementById(elementId);
+  element.remove()
+}
+
+function addListenerToFloatElement() {
+  const cancelButton = document.getElementById("swiftgg-float-cancel")
+
+  cancelButton.addEventListener("mouseenter", function() {
+    if (checkColorSchema()) {
+      cancelButton.style.backgroundColor = "#292929"
+    } else {
+      cancelButton.style.backgroundColor = "#F0F0F0"
+    }
+  }, false)
+
+  cancelButton.addEventListener("mouseleave", function() {
+    if (checkColorSchema()) {
+      cancelButton.style.backgroundColor = "#1F1F1F"
+    } else {
+      cancelButton.style.backgroundColor = "#FAFAFA"
+    }
+  }, false)
+
+  cancelButton.addEventListener("mousedown", function () {
+    if (checkColorSchema()) {
+      cancelButton.style.backgroundColor = "#333333"
+    } else {
+      cancelButton.style.backgroundColor = "#E6E6E6"
+    }
+  })
+
+  cancelButton.addEventListener("mouseup", function () {
+    if (checkColorSchema()) {
+      cancelButton.style.backgroundColor = "#292929"
+    } else {
+      cancelButton.style.backgroundColor = "#F0F0F0"
+    }
+  })
+
+  cancelButton.onclick = floatCancel
+
+  const translateButton = document.getElementById("swiftgg-float-translate")
+
+  translateButton.addEventListener("mouseenter", function()  {
+    if (checkColorSchema()) {
+      translateButton.style.backgroundColor = "#212629"
+    } else {
+      translateButton.style.backgroundColor = "#D9F2FF"
+    }
+  }, false)
+
+  translateButton.addEventListener("mouseleave", function() {
+    if (checkColorSchema()) {
+      translateButton.style.backgroundColor = "#1F1F1F"
+    } else {
+      translateButton.style.backgroundColor = "#FAFAFA"
+    }
+  }, false)
+
+  translateButton.addEventListener("mousedown", function () {
+    if (checkColorSchema()) {
+      translateButton.style.backgroundColor = "#223038"
+    } else {
+      translateButton.style.backgroundColor = "#B8E0F5"
+    }
+  })
+
+  translateButton.addEventListener("mouseup", function () {
+    if (checkColorSchema()) {
+      translateButton.style.backgroundColor = "#212629"
+    } else {
+      translateButton.style.backgroundColor = "#D9F2FF"
+    }
+  })
+
+  translateButton.onclick = floatTranslate
+
+  window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e) => {
+    if (e.matches) {
+      applyDarkSchemaToFloat()
+    } else {
+      applyLightSchemaToFloat()
+    }
+  });
+}
+
+function floatCancel() {
+  const floatElement = document.getElementById("swiftgg-float")
+  noDisturb = true
+  removeFadeOut(floatElement, 600)
+}
+
+function floatTranslate() {
+  const floatElement = document.getElementById("swiftgg-float")
+  removeFadeOut(floatElement, 600);
+
+  (async () => {
+    await startTranslate(true)
+  })()
+}
+function removeFadeOut(el, speed) {
+  let seconds = speed/1000;
+  el.style.transition = "opacity "+seconds+"s ease";
+
+  el.style.opacity = "0";
+  setTimeout(function() {
+    el.parentNode.removeChild(el);
+  }, speed);
+}
+
+function applyLightSchemaToFloat() {
+  const swiftggFloatDiv = document.getElementById("swiftgg-float")
+  if (swiftggFloatDiv) swiftggFloatDiv.style.backgroundColor = "#FAFAFA"
+  if (swiftggFloatDiv) swiftggFloatDiv.style.setProperty("box-shadow", "0 0 15px  rgba(0,0,0,0.10)")
+  if (swiftggFloatDiv) swiftggFloatDiv.style.setProperty("-moz-box-shadow", "0 0 15px  rgba(0,0,0,0.10)")
+  if (swiftggFloatDiv) swiftggFloatDiv.style.setProperty("-webkit-box-shadow", "0 0 15px  rgba(0,0,0,0.10)")
+  if (swiftggFloatDiv) swiftggFloatDiv.style.setProperty("-o-box-shadow", "0 0 15px  rgba(0,0,0,0.10)")
+  const swiftggFloatHeaderText = document.getElementById("swiftgg-float-header-text")
+  if (swiftggFloatHeaderText) swiftggFloatHeaderText.style.color = "#000000"
+  const swiftggFloatBodyText = document.getElementById("swiftgg-float-body-text")
+  if (swiftggFloatBodyText) swiftggFloatBodyText.style.color = "#595959"
+  const swiftggFloatCancelButton = document.getElementById("swiftgg-float-cancel")
+  if (swiftggFloatCancelButton) swiftggFloatCancelButton.style.backgroundColor = "#FAFAFA"
+  if (swiftggFloatCancelButton) swiftggFloatCancelButton.style.border = "2px solid #CCCCCC"
+  const swiftggFloatCancelText = document.getElementById("swiftgg-float-cancel-text")
+  if (swiftggFloatCancelText) swiftggFloatCancelText.style.color = "#A6A6A6"
+  const swiftggFloatTranslateButton = document.getElementById("swiftgg-float-translate")
+  if (swiftggFloatTranslateButton) swiftggFloatTranslateButton.style.backgroundColor = "#FAFAFA"
+  if (swiftggFloatTranslateButton) swiftggFloatTranslateButton.style.border = "2px solid #00A0F0"
+  const swiftggFloatTranslateText = document.getElementById("swiftgg-float-translate-text")
+  if (swiftggFloatTranslateText) swiftggFloatTranslateText.style.color = "#00AAFF"
+}
+
+function applyDarkSchemaToFloat() {
+  const swiftggFloatDiv = document.getElementById("swiftgg-float")
+  if (swiftggFloatDiv) swiftggFloatDiv.style.backgroundColor = "#1F1F1F"
+  const swiftggFloatHeaderText = document.getElementById("swiftgg-float-header-text")
+  if (swiftggFloatHeaderText) swiftggFloatHeaderText.style.color = "#FFFFFF"
+  const swiftggFloatBodyText = document.getElementById("swiftgg-float-body-text")
+  if (swiftggFloatBodyText) swiftggFloatBodyText.style.color = "#CCCCCC"
+  const swiftggFloatCancelButton = document.getElementById("swiftgg-float-cancel")
+  if (swiftggFloatCancelButton) swiftggFloatCancelButton.style.backgroundColor = "#1F1F1F"
+  if (swiftggFloatCancelButton) swiftggFloatCancelButton.style.border = "2px solid #404040"
+  const swiftggFloatCancelText = document.getElementById("swiftgg-float-cancel-text")
+  if (swiftggFloatCancelText) swiftggFloatCancelText.style.color = "#878787"
+  const swiftggFloatTranslateButton = document.getElementById("swiftgg-float-translate")
+  if (swiftggFloatTranslateButton) swiftggFloatTranslateButton.style.backgroundColor = "#1F1F1F"
+  if (swiftggFloatTranslateButton) swiftggFloatTranslateButton.style.border = "2px solid #006FA6"
+  const swiftggFloatTranslateText = document.getElementById("swiftgg-float-translate-text")
+  if (swiftggFloatTranslateText) swiftggFloatTranslateText.style.color = "#01AAFF"
+}
+
+function setFloatColorSchema() {
+  if (checkColorSchema()) {
+    applyDarkSchemaToFloat()
+  } else {
+    applyLightSchemaToFloat()
+  }
+}
+
+function checkColorSchema() {
+  return (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches)
 }

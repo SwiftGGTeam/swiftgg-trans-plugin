@@ -36,5 +36,12 @@
             ],
             "run_at": "document_end"
         }
-    ]
+    ],
+    "web_accessible_resources": [{
+        "resources": ["float.html"],
+        "matches": [
+            "https://developer.apple.com/*",
+            "*://developer.apple.com/*"
+        ]
+    }]
 }
