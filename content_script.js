@@ -391,44 +391,44 @@ function removeFadeOut(el, speed) {
 
 function applyLightSchemaToFloat() {
   const swiftggFloatDiv = document.getElementById("swiftgg-float")
-  swiftggFloatDiv.style.backgroundColor = "#FAFAFA"
-  swiftggFloatDiv.style.setProperty("box-shadow", "0 0 15px  rgba(0,0,0,0.10)")
-  swiftggFloatDiv.style.setProperty("-moz-box-shadow", "0 0 15px  rgba(0,0,0,0.10)")
-  swiftggFloatDiv.style.setProperty("-webkit-box-shadow", "0 0 15px  rgba(0,0,0,0.10)")
-  swiftggFloatDiv.style.setProperty("-o-box-shadow", "0 0 15px  rgba(0,0,0,0.10)")
+  if (swiftggFloatDiv) swiftggFloatDiv.style.backgroundColor = "#FAFAFA"
+  if (swiftggFloatDiv) swiftggFloatDiv.style.setProperty("box-shadow", "0 0 15px  rgba(0,0,0,0.10)")
+  if (swiftggFloatDiv) swiftggFloatDiv.style.setProperty("-moz-box-shadow", "0 0 15px  rgba(0,0,0,0.10)")
+  if (swiftggFloatDiv) swiftggFloatDiv.style.setProperty("-webkit-box-shadow", "0 0 15px  rgba(0,0,0,0.10)")
+  if (swiftggFloatDiv) swiftggFloatDiv.style.setProperty("-o-box-shadow", "0 0 15px  rgba(0,0,0,0.10)")
   const swiftggFloatHeaderText = document.getElementById("swiftgg-float-header-text")
-  swiftggFloatHeaderText.style.color = "#000000"
+  if (swiftggFloatHeaderText) swiftggFloatHeaderText.style.color = "#000000"
   const swiftggFloatBodyText = document.getElementById("swiftgg-float-body-text")
-  swiftggFloatBodyText.style.color = "#595959"
+  if (swiftggFloatBodyText) swiftggFloatBodyText.style.color = "#595959"
   const swiftggFloatCancelButton = document.getElementById("swiftgg-float-cancel")
-  swiftggFloatCancelButton.style.backgroundColor = "#FAFAFA"
-  swiftggFloatCancelButton.style.border = "2px solid #CCCCCC"
+  if (swiftggFloatCancelButton) swiftggFloatCancelButton.style.backgroundColor = "#FAFAFA"
+  if (swiftggFloatCancelButton) swiftggFloatCancelButton.style.border = "2px solid #CCCCCC"
   const swiftggFloatCancelText = document.getElementById("swiftgg-float-cancel-text")
-  swiftggFloatCancelText.style.color = "#A6A6A6"
+  if (swiftggFloatCancelText) swiftggFloatCancelText.style.color = "#A6A6A6"
   const swiftggFloatTranslateButton = document.getElementById("swiftgg-float-translate")
-  swiftggFloatTranslateButton.style.backgroundColor = "#FAFAFA"
-  swiftggFloatTranslateButton.style.border = "2px solid #00A0F0"
+  if (swiftggFloatTranslateButton) swiftggFloatTranslateButton.style.backgroundColor = "#FAFAFA"
+  if (swiftggFloatTranslateButton) swiftggFloatTranslateButton.style.border = "2px solid #00A0F0"
   const swiftggFloatTranslateText = document.getElementById("swiftgg-float-translate-text")
-  swiftggFloatTranslateText.style.color = "#00AAFF"
+  if (swiftggFloatTranslateText) swiftggFloatTranslateText.style.color = "#00AAFF"
 }
 
 function applyDarkSchemaToFloat() {
   const swiftggFloatDiv = document.getElementById("swiftgg-float")
-  swiftggFloatDiv.style.backgroundColor = "#1F1F1F"
+  if (swiftggFloatDiv) swiftggFloatDiv.style.backgroundColor = "#1F1F1F"
   const swiftggFloatHeaderText = document.getElementById("swiftgg-float-header-text")
-  swiftggFloatHeaderText.style.color = "#FFFFFF"
+  if (swiftggFloatHeaderText) swiftggFloatHeaderText.style.color = "#FFFFFF"
   const swiftggFloatBodyText = document.getElementById("swiftgg-float-body-text")
-  swiftggFloatBodyText.style.color = "#CCCCCC"
+  if (swiftggFloatBodyText) swiftggFloatBodyText.style.color = "#CCCCCC"
   const swiftggFloatCancelButton = document.getElementById("swiftgg-float-cancel")
-  swiftggFloatCancelButton.style.backgroundColor = "#1F1F1F"
-  swiftggFloatCancelButton.style.border = "2px solid #404040"
+  if (swiftggFloatCancelButton) swiftggFloatCancelButton.style.backgroundColor = "#1F1F1F"
+  if (swiftggFloatCancelButton) swiftggFloatCancelButton.style.border = "2px solid #404040"
   const swiftggFloatCancelText = document.getElementById("swiftgg-float-cancel-text")
-  swiftggFloatCancelText.style.color = "#878787"
+  if (swiftggFloatCancelText) swiftggFloatCancelText.style.color = "#878787"
   const swiftggFloatTranslateButton = document.getElementById("swiftgg-float-translate")
-  swiftggFloatTranslateButton.style.backgroundColor = "#1F1F1F"
-  swiftggFloatTranslateButton.style.border = "2px solid #006FA6"
+  if (swiftggFloatTranslateButton) swiftggFloatTranslateButton.style.backgroundColor = "#1F1F1F"
+  if (swiftggFloatTranslateButton) swiftggFloatTranslateButton.style.border = "2px solid #006FA6"
   const swiftggFloatTranslateText = document.getElementById("swiftgg-float-translate-text")
-  swiftggFloatTranslateText.style.color = "#01AAFF"
+  if (swiftggFloatTranslateText) swiftggFloatTranslateText.style.color = "#01AAFF"
 }
 
 function setFloatColorSchema() {
