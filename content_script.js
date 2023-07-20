@@ -1,6 +1,6 @@
 const isDebugMode = true;
 log("Plugin start");
-var json = {}
+let json = {}
 const initialRequestMethod = "shouldTranslate"
 const queryStatusRequestMethod = "queryStatus"
 const translatedRequestMethod = "translated"
@@ -120,19 +120,19 @@ function appendH2Nodes() {
   let h2Nodes = document.querySelectorAll("h2");
 
   Array.from(h2Nodes).filter((node) => Boolean(json[node.innerText])).forEach((node) => {
-    var parent = node.parentElement;
-    var newNode = document.createElement("h2");
-    var t = document.createTextNode(json[node.innerText].zh);
+    let parent = node.parentElement;
+    let newNode = document.createElement("h2");
+    let t = document.createTextNode(json[node.innerText].zh);
     newNode.appendChild(t);
     parent.insertBefore(newNode, node);
   })
 }
 
-function cloneNode() {
-  var div = document.querySelector("#introduction div.intro div.content");
-  var cloneNode = div.cloneNode(true);
-  div.append(cloneNode);
-}
+// function cloneNode() {
+//   let div = document.querySelector("#introduction div.intro div.content");
+//   let cloneNode = div.cloneNode(true);
+//   div.append(cloneNode);
+// }
 
 function appendPNodes() {
   var pNodes = document.querySelectorAll("p");
@@ -170,7 +170,6 @@ function isCategoryPage() {
   const currentURL = getCurrentURL()
   const pathArray = currentURL.pathname.split('/');
   const baseURL = "https://api.swift.gg/content/";
-  const url = baseURL + pathArray[pathArray.length-2] + '/' + pathArray[pathArray.length-1];
 
   const lastPath = pathArray[pathArray.length - 1] || pathArray[pathArray.length - 2];
   return endUpWhiteList.includes(lastPath)
@@ -246,7 +245,7 @@ async function startTranslate(shouldTranslate) {
     appendH2Nodes();
     appendPNodes();
     translated = true
-    await chrome.runtime.sendMessage({type: translatedRequestMethod}, (response) => {})
+    await chrome.runtime.sendMessage({type: translatedRequestMethod}, () => {})
   }
 }
 
@@ -261,6 +260,7 @@ async function injectFloat() {
   if (elementExists("swiftgg-float")) {
     return
   }
+
   const response = await fetch(chrome.runtime.getURL("float.html"))
   const floatContent = await response.text()
   console.log(floatContent)
@@ -268,6 +268,8 @@ async function injectFloat() {
   container.innerHTML = floatContent
   const bodyElement = document.body
   bodyElement.insertBefore(container, bodyElement.firstChild)
+
+  setFloatColorSchema()
   addListenerToFloatElement()
 }
 
@@ -284,43 +286,83 @@ function directRemoveElement(elementId) {
 function addListenerToFloatElement() {
   const cancelButton = document.getElementById("swiftgg-float-cancel")
 
-  cancelButton.addEventListener("mouseenter", function( event ) {
-    cancelButton.style.backgroundColor = "#292929"
+  cancelButton.addEventListener("mouseenter", function() {
+    if (checkColorSchema()) {
+      cancelButton.style.backgroundColor = "#292929"
+    } else {
+      cancelButton.style.backgroundColor = "#F0F0F0"
+    }
   }, false)
 
-  cancelButton.addEventListener("mouseleave", function( event ) {
-    cancelButton.style.backgroundColor = "#1F1F1F"
+  cancelButton.addEventListener("mouseleave", function() {
+    if (checkColorSchema()) {
+      cancelButton.style.backgroundColor = "#1F1F1F"
+    } else {
+      cancelButton.style.backgroundColor = "#FAFAFA"
+    }
   }, false)
 
-  cancelButton.addEventListener("mousedown", function (event) {
-    cancelButton.style.backgroundColor = "#333333"
+  cancelButton.addEventListener("mousedown", function () {
+    if (checkColorSchema()) {
+      cancelButton.style.backgroundColor = "#333333"
+    } else {
+      cancelButton.style.backgroundColor = "#E6E6E6"
+    }
   })
 
-  cancelButton.addEventListener("mouseup", function (event) {
-    cancelButton.style.backgroundColor = "#292929"
+  cancelButton.addEventListener("mouseup", function () {
+    if (checkColorSchema()) {
+      cancelButton.style.backgroundColor = "#292929"
+    } else {
+      cancelButton.style.backgroundColor = "#F0F0F0"
+    }
   })
 
   cancelButton.onclick = floatCancel
 
   const translateButton = document.getElementById("swiftgg-float-translate")
 
-  translateButton.addEventListener("mouseenter", function( event ) {
-    translateButton.style.backgroundColor = "#212629"
+  translateButton.addEventListener("mouseenter", function()  {
+    if (checkColorSchema()) {
+      translateButton.style.backgroundColor = "#212629"
+    } else {
+      translateButton.style.backgroundColor = "#D9F2FF"
+    }
   }, false)
 
-  translateButton.addEventListener("mouseleave", function( event ) {
-    translateButton.style.backgroundColor = "#1F1F1F"
+  translateButton.addEventListener("mouseleave", function() {
+    if (checkColorSchema()) {
+      translateButton.style.backgroundColor = "#1F1F1F"
+    } else {
+      translateButton.style.backgroundColor = "#FAFAFA"
+    }
   }, false)
 
-  translateButton.addEventListener("mousedown", function (event) {
-    translateButton.style.backgroundColor = "#223038"
+  translateButton.addEventListener("mousedown", function () {
+    if (checkColorSchema()) {
+      translateButton.style.backgroundColor = "#223038"
+    } else {
+      translateButton.style.backgroundColor = "#B8E0F5"
+    }
   })
 
-  translateButton.addEventListener("mouseup", function (event) {
-    translateButton.style.backgroundColor = "#212629"
+  translateButton.addEventListener("mouseup", function () {
+    if (checkColorSchema()) {
+      translateButton.style.backgroundColor = "#212629"
+    } else {
+      translateButton.style.backgroundColor = "#D9F2FF"
+    }
   })
 
   translateButton.onclick = floatTranslate
+
+  window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e) => {
+    if (e.matches) {
+      applyDarkSchemaToFloat()
+    } else {
+      applyLightSchemaToFloat()
+    }
+  });
 }
 
 function floatCancel() {
@@ -345,4 +387,58 @@ function removeFadeOut(el, speed) {
   setTimeout(function() {
     el.parentNode.removeChild(el);
   }, speed);
+}
+
+function applyLightSchemaToFloat() {
+  const swiftggFloatDiv = document.getElementById("swiftgg-float")
+  swiftggFloatDiv.style.backgroundColor = "#FAFAFA"
+  swiftggFloatDiv.style.setProperty("box-shadow", "0 0 15px  rgba(0,0,0,0.10)")
+  swiftggFloatDiv.style.setProperty("-moz-box-shadow", "0 0 15px  rgba(0,0,0,0.10)")
+  swiftggFloatDiv.style.setProperty("-webkit-box-shadow", "0 0 15px  rgba(0,0,0,0.10)")
+  swiftggFloatDiv.style.setProperty("-o-box-shadow", "0 0 15px  rgba(0,0,0,0.10)")
+  const swiftggFloatHeaderText = document.getElementById("swiftgg-float-header-text")
+  swiftggFloatHeaderText.style.color = "#000000"
+  const swiftggFloatBodyText = document.getElementById("swiftgg-float-body-text")
+  swiftggFloatBodyText.style.color = "#595959"
+  const swiftggFloatCancelButton = document.getElementById("swiftgg-float-cancel")
+  swiftggFloatCancelButton.style.backgroundColor = "#FAFAFA"
+  swiftggFloatCancelButton.style.border = "2px solid #CCCCCC"
+  const swiftggFloatCancelText = document.getElementById("swiftgg-float-cancel-text")
+  swiftggFloatCancelText.style.color = "#A6A6A6"
+  const swiftggFloatTranslateButton = document.getElementById("swiftgg-float-translate")
+  swiftggFloatTranslateButton.style.backgroundColor = "#FAFAFA"
+  swiftggFloatTranslateButton.style.border = "2px solid #00A0F0"
+  const swiftggFloatTranslateText = document.getElementById("swiftgg-float-translate-text")
+  swiftggFloatTranslateText.style.color = "#00AAFF"
+}
+
+function applyDarkSchemaToFloat() {
+  const swiftggFloatDiv = document.getElementById("swiftgg-float")
+  swiftggFloatDiv.style.backgroundColor = "#1F1F1F"
+  const swiftggFloatHeaderText = document.getElementById("swiftgg-float-header-text")
+  swiftggFloatHeaderText.style.color = "#FFFFFF"
+  const swiftggFloatBodyText = document.getElementById("swiftgg-float-body-text")
+  swiftggFloatBodyText.style.color = "#CCCCCC"
+  const swiftggFloatCancelButton = document.getElementById("swiftgg-float-cancel")
+  swiftggFloatCancelButton.style.backgroundColor = "#1F1F1F"
+  swiftggFloatCancelButton.style.border = "2px solid #404040"
+  const swiftggFloatCancelText = document.getElementById("swiftgg-float-cancel-text")
+  swiftggFloatCancelText.style.color = "#878787"
+  const swiftggFloatTranslateButton = document.getElementById("swiftgg-float-translate")
+  swiftggFloatTranslateButton.style.backgroundColor = "#1F1F1F"
+  swiftggFloatTranslateButton.style.border = "2px solid #006FA6"
+  const swiftggFloatTranslateText = document.getElementById("swiftgg-float-translate-text")
+  swiftggFloatTranslateText.style.color = "#01AAFF"
+}
+
+function setFloatColorSchema() {
+  if (checkColorSchema()) {
+    applyDarkSchemaToFloat()
+  } else {
+    applyLightSchemaToFloat()
+  }
+}
+
+function checkColorSchema() {
+  return (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches)
 }
