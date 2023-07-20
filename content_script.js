@@ -1,6 +1,11 @@
 const isDebugMode = true;
 log("Plugin start");
+
+/**
+ * @param {{zh:string}} json
+ */
 let json = {}
+
 const initialRequestMethod = "shouldTranslate"
 const queryStatusRequestMethod = "queryStatus"
 const translatedRequestMethod = "translated"
@@ -61,7 +66,7 @@ function waitPage() {
   const flagElement = isCategoryPage() ? ".title" : "div.headline h1";
   log(`Plugin ${flagElement}`);
   log("Plugin waiting");
-  return new Promise((resolve, reject) => {
+  return new Promise((resolve) => {
     const interval = setInterval(function() {
       log("Plugin retry");
       let asyncElement = document.querySelector(flagElement);
@@ -104,15 +109,15 @@ function updateAHerfToAbsolutURL() {
 }
 
 function addTitleNode() {
-  var title = document.querySelector("div.headline h1");
+  let title = document.querySelector("div.headline h1");
   let titleText = json[title.innerText.trim()].zh;
   if (!titleText || titleText === "") {
     return;
   }
-  var newNode = document.createElement("h3");
-  var text = document.createTextNode(titleText);
+  let newNode = document.createElement("h3");
+  let text = document.createTextNode(titleText);
   newNode.appendChild(text);
-  var parent = title.parentElement;
+  let parent = title.parentElement;
   parent.insertBefore(newNode, title);
 }
 
@@ -135,29 +140,14 @@ function appendH2Nodes() {
 // }
 
 function appendPNodes() {
-  var pNodes = document.querySelectorAll("p");
+  let pNodes = document.querySelectorAll("p");
   Array.from(pNodes).filter((node) => Boolean(json[node.innerText])).forEach((node) => {
-    var parent = node.parentElement;
-    var newNode = document.createElement("p");
-    var t = document.createTextNode(json[node.innerText].zh);
+    let parent = node.parentElement;
+    let newNode = document.createElement("p");
+    let t = document.createTextNode(json[node.innerText].zh);
     newNode.appendChild(t);
     parent.insertBefore(newNode, node);
   })
-}
-
-function insertAfter(newElement, targetElement) {
-  var parent = targetElement.parentElement;
-  if (parent.lastChild === targetElement) {
-    parent.appendChild(newElement);
-  } else {
-    parent.insertBefore(newElement, targetElement.nextSibline);
-  }
-}
-
-function delay(i) {
-  setTimeout(() => {
-    console.log(i);
-  }, i * 1000);
 }
 
 function log(message) {
@@ -169,7 +159,6 @@ function log(message) {
 function isCategoryPage() {
   const currentURL = getCurrentURL()
   const pathArray = currentURL.pathname.split('/');
-  const baseURL = "https://api.swift.gg/content/";
 
   const lastPath = pathArray[pathArray.length - 1] || pathArray[pathArray.length - 2];
   return endUpWhiteList.includes(lastPath)
@@ -204,7 +193,7 @@ async function tabURLUpdated(shouldTranslate) {
   if (currentTranslatedURL) {
     if (currentURL.toString() === currentTranslatedURL.toString()) {
       if (isCategoryPage() === false && isSupportedPage() === true) {
-        chrome.runtime.sendMessage({type: translatedRequestMethod}, (response) => {})
+        chrome.runtime.sendMessage({type: translatedRequestMethod}, () => {})
       }
       return;
     }
@@ -383,7 +372,7 @@ function removeFadeOut(el, speed) {
   let seconds = speed/1000;
   el.style.transition = "opacity "+seconds+"s ease";
 
-  el.style.opacity = 0;
+  el.style.opacity = "0";
   setTimeout(function() {
     el.parentNode.removeChild(el);
   }, speed);
