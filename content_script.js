@@ -48,9 +48,7 @@ chrome.runtime.onMessage.addListener(
             if (request.shouldTranslate && !translated && !noDisturb) {
               await injectFloat()
             } else if (!request.shouldTranslate) {
-              if (elementExists("swiftgg-float")) {
-                directRemoveElement("swiftgg-float")
-              }
+              removeFloatElement()
             }
           }
 
@@ -236,6 +234,8 @@ async function startTranslate(shouldTranslate) {
     translated = true
     await chrome.runtime.sendMessage({type: translatedRequestMethod}, () => {})
   }
+
+  removeFloatElement()
 }
 
 function getCurrentURL() {
@@ -430,4 +430,10 @@ function setFloatColorSchema() {
 
 function checkColorSchema() {
   return (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches)
+}
+
+function removeFloatElement() {
+  if (elementExists("swiftgg-float")) {
+    directRemoveElement("swiftgg-float")
+  }
 }
