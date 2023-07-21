@@ -132,16 +132,16 @@ async function updateLogo(active) {
 }
 
 function detectBrowser() {
-    const isChrome = typeof chrome !== 'undefined' && typeof chrome.runtime !== 'undefined';
-    const isFirefox = typeof browser !== 'undefined' && typeof browser.runtime !== 'undefined';
-    const isSafari = typeof safari !== 'undefined' && typeof safari.extension !== 'undefined';
+    const isChrome = typeof chrome !== 'undefined'
+    const isFirefox = typeof browser !== 'undefined'
+    const isSafari = typeof safari !== 'undefined'
 
-    if (isChrome) {
+    if (isSafari) {
+        return BrowserType.safari
+    } else if (isChrome) {
         return BrowserType.chrome
     } else if (isFirefox) {
         return BrowserType.firefox
-    } else if (isSafari) {
-        return BrowserType.safari
     } else {
         return BrowserType.unknown
     }
