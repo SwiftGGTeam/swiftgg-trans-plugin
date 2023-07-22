@@ -30,9 +30,7 @@ document.addEventListener("DOMContentLoaded", function () {
     label.classList.remove("disable-animation");
     checkbox.checked = !checkbox.checked
     document.getElementById('current-switch').setAttribute('class', checkbox.checked ? 'on' : 'off')
-    chrome.storage.local.set({ pluginFlag: checkbox.checked }).then(() => {
-      chrome.runtime.sendMessage({type: updateCurrentRequestMethod, data: checkbox.checked}).then();
-    });
+    chrome.runtime.sendMessage({type: updateCurrentRequestMethod, data: checkbox.checked}).then();
   });
 });
 

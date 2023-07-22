@@ -2,9 +2,10 @@ const pluginFlag = "pluginFlag"
 let autoTranslate = null
 let initialRequestMethod = "shouldTranslate"
 let updateRequestMethod = "updateShouldTranslate"
+const removeTranslateRequestMethod = "removeTranslate"
 const queryStatusRequestMethod = "queryStatus"
 const tabActiveRequestMethod = "tabActive"
-let translatedRequestMethod = "translated"
+const translatedRequestMethod = "translated"
 const pageSwitchedRequestMethod = "pageSwitched"
 const queryCurrentRequestMethod = "queryTranslateCurrent"
 const updateCurrentRequestMethod = "updateTranslateCurrent"
@@ -68,11 +69,6 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
     } else if (request.type === updateCurrentRequestMethod) {
         (async () => {
             const activeTab = await queryActiveTab()
-            if (activeTab.url.includes("developer.apple.com")) {
-                await updateLogo(true, true)
-            } else {
-                await updateLogo(false)
-            }
 
             if (request.data) {
                 try {
@@ -84,7 +80,20 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
                     console.log(error)
                 }
             } else {
-                await chrome.tabs.reload(activeTab.id)
+                try {
+                    await chrome.tabs.sendMessage(activeTab.id, {
+                        message: removeTranslateRequestMethod,
+                        url: activeTab.url
+                    })
+                } catch (error) {
+                    console.log(error)
+                }
+            }
+
+            if (activeTab.url.includes("developer.apple.com")) {
+                await updateLogo(true, true)
+            } else {
+                await updateLogo(false)
             }
 
             sendResponse()
@@ -92,19 +101,19 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
     }
 });
 
-function delay(i) {
-    setTimeout(() => {
-    }, i * 1000);
-}
-
-chrome.tabs.onUpdated.addListener(function(tabId, info, tab) {
+chrome.tabs.onUpdated.addListener(function() {
     (async () => {
+        const previousActiveTab = globalActiveTab
         const activeTab = await queryActiveTab()
 
         if (activeTab.url.includes("developer.apple.com")) {
             await updateLogo(true)
         } else {
             await updateLogo(false)
+        }
+
+        if (previousActiveTab.url === activeTab.url) {
+            return
         }
 
         try {
@@ -148,18 +157,18 @@ async function updateLogo(active, current = false) {
         const activeTabStatus = await queryActiveTabStatus()
         if (autoTranslate || activeTabStatus || current) {
             if (activeTabStatus) {
-                setIcon("/source/intro/swiftLogo-translating.png")
+                await setIcon("/source/intro/swiftLogo-translating.png")
             } else {
-                setIcon("/source/intro/swiftLogo-running.png")
+                await setIcon("/source/intro/swiftLogo-running.png")
             }
         } else {
-            setIcon("/source/intro/swiftLogo-closed.png")
+            await setIcon("/source/intro/swiftLogo-closed.png")
         }
     } else {
         if (autoTranslate) {
-            setIcon("/source/intro/swiftLogo.png")
+            await setIcon("/source/intro/swiftLogo.png")
         } else {
-            setIcon("/source/intro/swiftLogo-closed.png")
+            await setIcon("/source/intro/swiftLogo-closed.png")
         }
     }
 }
@@ -180,16 +189,16 @@ function detectBrowser() {
     }
 }
 
-function setIcon(path) {
+async function setIcon(path) {
     switch (detectBrowser()) {
         case BrowserType.chrome:
-            chrome.action.setIcon({ path: { "128": path} }).then(r => {})
+            await chrome.action.setIcon({ path: { "128": path} })
             break
         case BrowserType.firefox:
-            browser.browserAction.setIcon({ path: { "128": path} }).then()
+            await browser.browserAction.setIcon({ path: { "128": path} })
             break
         case BrowserType.safari:
-            browser.browserAction.setIcon({ path: { "128": path} }).then()
+            await browser.browserAction.setIcon({ path: { "128": path} })
             break
         case BrowserType.unknown:
             break
@@ -209,15 +218,6 @@ async function queryActiveTab() {
     return activeTab || globalActiveTab
 }
 
-function isSupportedPage(url) {
-    const currentURL = new URL(url)
-    const pathArray = currentURL.pathname.split('/').filter(function (el){
-        return el !== ""
-    })
-
-    return endUpWhiteList.includes(pathArray[pathArray.length-2]) || endUpWhiteList.includes(pathArray[pathArray.length-1])
-}
-
 async function retrieveShouldTranslate() {
     if (autoTranslate) {
         return autoTranslate
@@ -227,7 +227,7 @@ async function retrieveShouldTranslate() {
     autoTranslate = result.pluginFlag || false
     if (previousShouldTranslate == null) {
         if (!autoTranslate) {
-            chrome.action.setIcon({ path: { "128": "/source/intro/swiftLogo-closed.png"} }).then(r => {})
+            await chrome.action.setIcon({ path: { "128": "/source/intro/swiftLogo-closed.png"} })
         }
     }
     return result.pluginFlag || false

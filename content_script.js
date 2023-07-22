@@ -7,6 +7,7 @@ log("Plugin start");
 let json = {}
 
 const initialRequestMethod = "shouldTranslate"
+const removeTranslateRequestMethod = "removeTranslate"
 const queryStatusRequestMethod = "queryStatus"
 const translatedRequestMethod = "translated"
 const pageSwitchedRequestMethod = "pageSwitched"
@@ -68,6 +69,9 @@ chrome.runtime.onMessage.addListener(
           sendResponse()
         })()
         return true
+      } else if (request.message === removeTranslateRequestMethod) {
+        removeTranslate()
+        sendResponse()
       }
     }
 );
@@ -260,6 +264,31 @@ async function translate() {
   }
 
   removeFloatElement()
+}
+
+function removeTranslate() {
+  const body = document.body;
+  let allElements = [];
+
+  // Recursively iterate through the body and its children's children
+  function iterate(element) {
+    allElements.push(element);
+
+    for (const child of element.children) {
+      iterate(child);
+    }
+  }
+
+  iterate(body);
+
+  for (const element of allElements) {
+    if (isInjectedElement(element)) {
+      element.remove()
+    }
+  }
+
+  currentTranslatedURL = null
+  translated = false
 }
 
 function getCurrentURL() {
