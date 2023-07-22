@@ -416,9 +416,10 @@ function floatCancel() {
 function floatTranslate() {
   const floatElement = document.getElementById("swiftgg-float")
   removeFadeOut(floatElement, 600);
+  shouldTranslate = true;
 
   (async () => {
-    await startTranslate(true)
+    await startTranslate()
   })()
 }
 function removeFadeOut(el, speed) {
