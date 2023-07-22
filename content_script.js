@@ -40,10 +40,12 @@ chrome.runtime.onMessage.addListener(
         (async () => {
           if (request.url.includes("developer.apple.com")) {
             const response = await chrome.runtime.sendMessage({type: initialRequestMethod})
-            shouldTranslate = response.shouldTranslate
-            translated = false
+
             if (globalCurrentURL) {
               if (globalCurrentURL.toString() !== getCurrentURL().toString()) {
+                shouldTranslate = response.shouldTranslate
+                translated = false
+
                 await startTranslate()
               }
             }

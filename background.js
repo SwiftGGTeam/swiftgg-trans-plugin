@@ -93,6 +93,8 @@ chrome.tabs.onUpdated.addListener(function() {
         } catch (error) {
             console.log(error)
         }
+
+        await updateLogo()
     })()
 });
 
@@ -113,6 +115,8 @@ chrome.tabs.onActivated.addListener(function() {
         } catch (error) {
             console.log(error)
         }
+
+        await updateLogo()
     })()
 });
 
