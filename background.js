@@ -37,7 +37,7 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
             for (let tab of allTabs) {
                 if (tab.url.includes("developer.apple.com")) {
                     if (isCategoryPage(tab.url)) {
-                        await chrome.tabs.reload(tab.id)
+                        await requestTranslate(request.data, tab)
                     }
                 }
             }
@@ -70,28 +70,10 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
         (async () => {
             const activeTab = await queryActiveTab()
 
-            if (request.data) {
-                try {
-                    await chrome.tabs.sendMessage(activeTab.id, {
-                        message: translateCurrentRequestMethod,
-                        url: activeTab.url
-                    })
-                } catch (error) {
-                    console.log(error)
-                }
-            } else {
-                try {
-                    await chrome.tabs.sendMessage(activeTab.id, {
-                        message: removeTranslateRequestMethod,
-                        url: activeTab.url
-                    })
-                } catch (error) {
-                    console.log(error)
-                }
-            }
+            await requestTranslate(request.data, activeTab)
 
             if (activeTab.url.includes("developer.apple.com")) {
-                await updateLogo(true, true)
+                await updateLogo(true)
             } else {
                 await updateLogo(false)
             }
@@ -112,7 +94,7 @@ chrome.tabs.onUpdated.addListener(function() {
             await updateLogo(false)
         }
 
-        if (previousActiveTab.url === activeTab.url) {
+        if (previousActiveTab && activeTab && previousActiveTab.url === activeTab.url) {
             return
         }
 
@@ -152,10 +134,32 @@ chrome.tabs.onActivated.addListener(function(activeInfo) {
     })()
 });
 
-async function updateLogo(active, current = false) {
+async function requestTranslate(translate, tab) {
+    if (translate) {
+        try {
+            await chrome.tabs.sendMessage(tab.id, {
+                message: translateCurrentRequestMethod,
+                url: tab.url
+            })
+        } catch (error) {
+            console.log(error)
+        }
+    } else {
+        try {
+            await chrome.tabs.sendMessage(tab.id, {
+                message: removeTranslateRequestMethod,
+                url: tab.url
+            })
+        } catch (error) {
+            console.log(error)
+        }
+    }
+}
+
+async function updateLogo(active) {
     if (active) {
         const activeTabStatus = await queryActiveTabStatus()
-        if (autoTranslate || activeTabStatus || current) {
+        if (autoTranslate || activeTabStatus) {
             if (activeTabStatus) {
                 await setIcon("/source/intro/swiftLogo-translating.png")
             } else {
