@@ -1,11 +1,14 @@
 const pluginFlag = "pluginFlag"
-let shouldTranslate = null
+let autoTranslate = null
 let initialRequestMethod = "shouldTranslate"
 let updateRequestMethod = "updateShouldTranslate"
 const queryStatusRequestMethod = "queryStatus"
 const tabActiveRequestMethod = "tabActive"
 let translatedRequestMethod = "translated"
 const pageSwitchedRequestMethod = "pageSwitched"
+const queryCurrentRequestMethod = "queryTranslateCurrent"
+const updateCurrentRequestMethod = "updateTranslateCurrent"
+const translateCurrentRequestMethod = "translateCurrent"
 const endUpWhiteList = ["swiftui","swiftui/","sample-apps","sample-apps/","swiftui-concepts","swiftui-concepts/"];
 let globalActiveTab = null
 
@@ -21,8 +24,7 @@ retrieveShouldTranslate().then()
 chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
     if (request.type === updateRequestMethod) {
         (async () => {
-            shouldTranslate = request.data;
-            needAlertTabs = []
+            autoTranslate = request.data;
             const allTabs = await queryAllTabs()
             const activeTab = await queryActiveTab()
             if (activeTab.url.includes("developer.apple.com")) {
@@ -33,7 +35,7 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
 
             for (let tab of allTabs) {
                 if (tab.url.includes("developer.apple.com")) {
-                    if (isCategoryPage(tab.url) || tab.id === activeTab.id) {
+                    if (isCategoryPage(tab.url)) {
                         await chrome.tabs.reload(tab.id)
                     }
                 }
@@ -57,6 +59,36 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
         })()
 
         return true
+    } else if (request.type === queryCurrentRequestMethod) {
+        (async () => {
+            sendResponse({status: await queryActiveTabStatus()})
+        })()
+
+        return true
+    } else if (request.type === updateCurrentRequestMethod) {
+        (async () => {
+            const activeTab = await queryActiveTab()
+            if (activeTab.url.includes("developer.apple.com")) {
+                await updateLogo(true, true)
+            } else {
+                await updateLogo(false)
+            }
+
+            if (request.data) {
+                try {
+                    await chrome.tabs.sendMessage(activeTab.id, {
+                        message: translateCurrentRequestMethod,
+                        url: activeTab.url
+                    })
+                } catch (error) {
+                    console.log(error)
+                }
+            } else {
+                await chrome.tabs.reload(activeTab.id)
+            }
+
+            sendResponse()
+        })();
     }
 });
 
@@ -102,7 +134,7 @@ chrome.tabs.onActivated.addListener(function(activeInfo) {
                 await chrome.tabs.sendMessage(activeTab.id, {
                     message: tabActiveRequestMethod,
                     url: activeTab.url,
-                    shouldTranslate: shouldTranslate,
+                    shouldTranslate: autoTranslate,
                 })
             }
         } catch (error) {
@@ -111,10 +143,11 @@ chrome.tabs.onActivated.addListener(function(activeInfo) {
     })()
 });
 
-async function updateLogo(active) {
+async function updateLogo(active, current = false) {
     if (active) {
-        if (shouldTranslate) {
-            if ((await queryActiveTabStatus())) {
+        const activeTabStatus = await queryActiveTabStatus()
+        if (autoTranslate || activeTabStatus || current) {
+            if (activeTabStatus) {
                 setIcon("/source/intro/swiftLogo-translating.png")
             } else {
                 setIcon("/source/intro/swiftLogo-running.png")
@@ -123,7 +156,7 @@ async function updateLogo(active) {
             setIcon("/source/intro/swiftLogo-closed.png")
         }
     } else {
-        if (shouldTranslate) {
+        if (autoTranslate) {
             setIcon("/source/intro/swiftLogo.png")
         } else {
             setIcon("/source/intro/swiftLogo-closed.png")
@@ -163,7 +196,7 @@ function setIcon(path) {
     }
 }
 
-async function queryAllTabs(callback) {
+async function queryAllTabs() {
     return await chrome.tabs.query({})
 }
 
@@ -186,14 +219,14 @@ function isSupportedPage(url) {
 }
 
 async function retrieveShouldTranslate() {
-    if (shouldTranslate) {
-        return shouldTranslate
+    if (autoTranslate) {
+        return autoTranslate
     }
     const result = await chrome.storage.local.get(pluginFlag)
-    const previousShouldTranslate = shouldTranslate
-    shouldTranslate = result.pluginFlag || false
+    const previousShouldTranslate = autoTranslate
+    autoTranslate = result.pluginFlag || false
     if (previousShouldTranslate == null) {
-        if (!shouldTranslate) {
+        if (!autoTranslate) {
             chrome.action.setIcon({ path: { "128": "/source/intro/swiftLogo-closed.png"} }).then(r => {})
         }
     }

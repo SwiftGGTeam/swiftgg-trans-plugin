@@ -55,6 +55,12 @@ select {
     margin-bottom: 14px;
 }
 
+.translate-current {
+    padding-top: 10px;
+    padding-bottom: 10px;
+    margin-bottom: 14px;
+}
+
 
 .tool li a img {
     width: 22px;

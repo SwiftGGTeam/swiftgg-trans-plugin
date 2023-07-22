@@ -45,6 +45,43 @@
             width: 1px !important;
         }
 
+        #current-switch {
+            position: relative;
+        }
+
+        #current-switch .labelBox {
+            background: #409eff;
+            border-radius: 40px;
+            width: 42px;
+            position: relative;
+            height: 22px;
+        }
+
+        #current-switch.off .labelBox {
+            background: #cacaca;
+        }
+
+        #current-switch .check {
+            display: block;
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            background: #fff;
+            /* border: 1px solid #e5e5e5; */
+            position: absolute;
+            top: 0px;
+            left: 0px;
+        }
+
+        #current-switch input[type=checkbox] {
+            border: 0 none !important;
+            clip: rect(1px, 1px, 1px, 1px);
+            height: 1px !important;
+            overflow: hidden !important;
+            position: absolute !important;
+            width: 1px !important;
+        }
+
         @keyframes labelON {
             0% {
                 top: 2px;
@@ -89,6 +126,26 @@
             animation: labelOFF 0.2s ease-in 0s 1;
         }
 
+        #current-switch input[type=checkbox]:checked+label.check {
+            top: 2px;
+            left: 22px;
+            -webkit-animation: labelON 0.2s ease-in 0s 1;
+            -moz-animation: labelON 0.2s ease-in 0s 1;
+            -o-animation: labelON 0.2s ease-in 0s 1;
+            -ms-animation: labelON 0.2s ease-in 0s 1;
+            animation: labelON 0.2s ease-in 0s 1;
+        }
+
+        #current-switch input[type=checkbox]+label.check {
+            top: 2px;
+            left: 2px;
+            -webkit-animation: labelOFF 0.2s ease-in 0s 1;
+            -moz-animation: labelOFF 0.2s ease-in 0s 1;
+            -o-animation: labelOFF 0.2s ease-in 0s 1;
+            -ms-animation: labelOFF 0.2s ease-in 0s 1;
+            animation: labelOFF 0.2s ease-in 0s 1;
+        }
+
         .disable-animation {
           animation: none !important;
           -webkit-animation: none !important;
@@ -123,11 +180,22 @@
                 </div>
             </li>
 
+            <li class="translate">
+                <span>翻译当前页面</span>
+
+                <div id="current-switch" >
+                    <div class="labelBox">
+                        <input type="checkbox" id="current-checkbox" />
+                        <label for="current-checkbox" class="check"></label>
+                    </div>
+                </div>
+            </li>
+
             <li class="project">
                 <span>
                     项目地址
                 </span>
-                <a href="https://github.com/SwiftGGTeam/swiftgg-trans-plugin" target="__blank"><img src="/source/intro/project.svg" class="gh-image"></a>
+                <a href="https://github.com/SwiftGGTeam/swiftgg-trans-plugin" target="__blank"><img src="/source/intro/project.svg" class="gh-image" alt=""></a>
             </li>
         </ul>
 

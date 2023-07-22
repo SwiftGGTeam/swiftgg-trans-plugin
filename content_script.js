@@ -10,19 +10,22 @@ const initialRequestMethod = "shouldTranslate"
 const queryStatusRequestMethod = "queryStatus"
 const translatedRequestMethod = "translated"
 const pageSwitchedRequestMethod = "pageSwitched"
+const translateCurrentRequestMethod = "translateCurrent"
 const endUpWhiteList = ["swiftui","swiftui/","sample-apps","sample-apps/","swiftui-concepts","swiftui-concepts/"];
 let currentTranslatedURL = null
 let translated = false
 const tabActiveRequestMethod = "tabActive"
 let noDisturb = false
+let shouldTranslate = false
 
 log("Plugin start request flag");
 
 (async () => {
   const response = await chrome.runtime.sendMessage({type: initialRequestMethod});
   log(`Flag status: ${response.shouldTranslate}`);
+  shouldTranslate = response.shouldTranslate
 
-  await startTranslate(response.shouldTranslate)
+  await startTranslate()
 
   log("Plugin wait page loaded");
 })()
@@ -33,7 +36,8 @@ chrome.runtime.onMessage.addListener(
         (async () => {
           if (request.url.includes("developer.apple.com")) {
             const response = await chrome.runtime.sendMessage({type: initialRequestMethod})
-            await tabURLUpdated(response.shouldTranslate)
+            shouldTranslate = response.shouldTranslate
+            await startTranslate()
 
             sendResponse()
           }
@@ -55,6 +59,14 @@ chrome.runtime.onMessage.addListener(
           sendResponse()
         })()
 
+        return true
+      } else if (request.message === translateCurrentRequestMethod) {
+        (async () => {
+          shouldTranslate = true
+          await startTranslate()
+
+          sendResponse()
+        })()
         return true
       }
     }
@@ -185,7 +197,7 @@ function isSupportedPage() {
   return endUpWhiteList.includes(pathArray[pathArray.length-2]) || endUpWhiteList.includes(pathArray[pathArray.length-1])
 }
 
-async function tabURLUpdated(shouldTranslate) {
+async function startTranslate() {
   const currentURL = getCurrentURL()
 
   if (currentTranslatedURL) {
@@ -197,12 +209,11 @@ async function tabURLUpdated(shouldTranslate) {
     }
   }
 
-  await startTranslate(shouldTranslate)
+  await translate()
 }
 
-async function startTranslate(shouldTranslate) {
+async function translate() {
   const currentURL = getCurrentURL()
-  currentTranslatedURL = currentURL
   const pathArray = currentURL.pathname.split('/');
   const baseURL = "https://api.swift.gg/content/";
   const url = baseURL + pathArray[pathArray.length-2] + '/' + pathArray[pathArray.length-1];
@@ -214,6 +225,8 @@ async function startTranslate(shouldTranslate) {
   if (isSupportedPage() === false) {
     return;
   }
+
+  currentTranslatedURL = currentURL
 
   if (isCategoryPage() === false) {
     await fetchRelatedData(url)
