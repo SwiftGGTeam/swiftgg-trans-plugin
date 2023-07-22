@@ -45,7 +45,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
   const activeTab = await queryActiveTab()
 
-  if (isSupportedPage(activeTab.url)) {
+  if (isSupportedPage(activeTab.url) && !isCategoryPage(activeTab.url)) {
     const response = await chrome.runtime.sendMessage({type: queryCurrentRequestMethod})
     document.getElementById("current-checkbox").checked = response.status;
     document.getElementById('current-switch').setAttribute('class', response.status ? 'on' : 'off')
@@ -73,4 +73,14 @@ function isSupportedPage(url) {
   })
 
   return endUpWhiteList.includes(pathArray[pathArray.length-2]) || endUpWhiteList.includes(pathArray[pathArray.length-1])
+}
+
+function isCategoryPage(url) {
+  const currentURL = new URL(url)
+  currentURL.hash = ""
+  currentURL.search = ""
+  const pathArray = currentURL.pathname.split('/');
+
+  const lastPath = pathArray[pathArray.length - 1] || pathArray[pathArray.length - 2];
+  return endUpWhiteList.includes(lastPath)
 }
