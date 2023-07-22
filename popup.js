@@ -2,6 +2,7 @@ const pluginFlag = "pluginFlag"
 const updateRequestMethod = "updateShouldTranslate"
 const updateCurrentRequestMethod = "updateTranslateCurrent"
 const queryCurrentRequestMethod = "queryTranslateCurrent"
+const endUpWhiteList = ["swiftui","swiftui/","sample-apps","sample-apps/","swiftui-concepts","swiftui-concepts/"];
 
 document.addEventListener("DOMContentLoaded", function () {
   const switchButton = document.querySelector("#switch");
@@ -42,9 +43,16 @@ document.addEventListener("DOMContentLoaded", function () {
   document.getElementById("checkbox").checked = shouldTranslate;
   document.getElementById('switch').setAttribute('class', shouldTranslate ? 'on' : 'off')
 
-  const response = await chrome.runtime.sendMessage({type: queryCurrentRequestMethod})
-  document.getElementById("current-checkbox").checked = response.status;
-  document.getElementById('current-switch').setAttribute('class', response.status ? 'on' : 'off')
+  const activeTab = await queryActiveTab()
+
+  if (isSupportedPage(activeTab.url)) {
+    const response = await chrome.runtime.sendMessage({type: queryCurrentRequestMethod})
+    document.getElementById("current-checkbox").checked = response.status;
+    document.getElementById('current-switch').setAttribute('class', response.status ? 'on' : 'off')
+  } else {
+    const element = document.getElementById("translate-current")
+    element.remove()
+  }
 })()
 
 document.addEventListener('change', function(event) {
@@ -53,3 +61,16 @@ document.addEventListener('change', function(event) {
     chrome.tabs.create({url: target.value}).then();
   }
 });
+
+async function queryActiveTab() {
+  return (await chrome.tabs.query({ active: true, currentWindow: true }))[0]
+}
+
+function isSupportedPage(url) {
+  const currentURL = new URL(url)
+  const pathArray = currentURL.pathname.split('/').filter(function (el){
+    return el !== ""
+  })
+
+  return endUpWhiteList.includes(pathArray[pathArray.length-2]) || endUpWhiteList.includes(pathArray[pathArray.length-1])
+}

@@ -200,7 +200,7 @@ async function queryAllTabs() {
     return await chrome.tabs.query({})
 }
 
-async function queryActiveTab(callback) {
+async function queryActiveTab() {
     const activeTab = (await chrome.tabs.query({ active: true, currentWindow: true }))[0]
     if (activeTab) {
         globalActiveTab = activeTab
