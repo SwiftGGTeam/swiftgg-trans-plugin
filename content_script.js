@@ -18,10 +18,13 @@ let translated = false
 const tabActiveRequestMethod = "tabActive"
 let noDisturb = false
 let shouldTranslate = false
+let globalCurrentURL = null
 
 log("Plugin start request flag");
 
 (async () => {
+  getCurrentURL()
+
   const response = await chrome.runtime.sendMessage({type: initialRequestMethod});
   log(`Flag status: ${response.shouldTranslate}`);
   shouldTranslate = response.shouldTranslate
@@ -38,7 +41,11 @@ chrome.runtime.onMessage.addListener(
           if (request.url.includes("developer.apple.com")) {
             const response = await chrome.runtime.sendMessage({type: initialRequestMethod})
             shouldTranslate = response.shouldTranslate
-            await startTranslate()
+            if (globalCurrentURL) {
+              if (globalCurrentURL.toString() !== getCurrentURL().toString()) {
+                await startTranslate()
+              }
+            }
 
             sendResponse()
           }
@@ -295,6 +302,9 @@ function getCurrentURL() {
   const currentURL = new URL(document.URL)
   currentURL.hash = ""
   currentURL.search = ""
+
+  globalCurrentURL = currentURL
+
   return currentURL
 }
 
@@ -417,6 +427,7 @@ function floatTranslate() {
   const floatElement = document.getElementById("swiftgg-float")
   removeFadeOut(floatElement, 600);
   shouldTranslate = true;
+  translated = true;
 
   (async () => {
     await startTranslate()
@@ -428,7 +439,7 @@ function removeFadeOut(el, speed) {
 
   el.style.opacity = "0";
   setTimeout(function() {
-    el.parentNode.removeChild(el);
+    el.remove()
   }, speed);
 }
 
