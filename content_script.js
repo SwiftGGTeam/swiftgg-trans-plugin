@@ -126,9 +126,15 @@ function addTitleNode() {
   }
   let newNode = document.createElement("h3");
   let text = document.createTextNode(titleText);
+  newNode.dataset.tag = "swiftgg"
   newNode.appendChild(text);
   let parent = title.parentElement;
   parent.insertBefore(newNode, title);
+}
+
+function isInjectedElement(element) {
+  // Check if the element has a "data-tag" attribute and its value is "swiftgg"
+  return element.hasAttribute('data-tag') && element.getAttribute('data-tag') === 'swiftgg';
 }
 
 function appendH2Nodes() {
@@ -138,6 +144,7 @@ function appendH2Nodes() {
     let parent = node.parentElement;
     let newNode = document.createElement("h2");
     let t = document.createTextNode(json[node.innerText].zh);
+    newNode.dataset.tag = "swiftgg"
     newNode.appendChild(t);
     parent.insertBefore(newNode, node);
   })
@@ -155,6 +162,7 @@ function appendPNodes() {
     let parent = node.parentElement;
     let newNode = document.createElement("p");
     let t = document.createTextNode(json[node.innerText].zh);
+    newNode.dataset.tag = "swiftgg"
     newNode.appendChild(t);
     parent.insertBefore(newNode, node);
   })
@@ -181,6 +189,9 @@ function addInstructionToCategoryPage() {
   let pElement = document.createElement("p")
   pElement.classList.add("indicator")
   pElement.textContent = "⬆️ SwiftGG 正在运行，请点击上方按钮开始学习 ⬆️"
+  spaceElement.dataset.tag = "swiftgg"
+  spaceElement2.dataset.tag = "swiftgg"
+  pElement.dataset.tag = "swiftgg"
   contentDiv.appendChild(spaceElement)
   contentDiv.appendChild(spaceElement2)
   contentDiv.appendChild(pElement)
