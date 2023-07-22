@@ -27,12 +27,7 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
         (async () => {
             autoTranslate = request.data;
             const allTabs = await queryAllTabs()
-            const activeTab = await queryActiveTab()
-            if (activeTab.url.includes("developer.apple.com")) {
-                await updateLogo(true)
-            } else {
-                await updateLogo(false)
-            }
+            await updateLogo()
 
             for (let tab of allTabs) {
                 if (tab.url.includes("developer.apple.com")) {
@@ -55,7 +50,7 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
         return true
     } else if (request.type === translatedRequestMethod) {
         (async () => {
-            await updateLogo(true)
+            await updateLogo()
             sendResponse()
         })()
 
@@ -72,11 +67,7 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
 
             await requestTranslate(request.data, activeTab)
 
-            if (activeTab.url.includes("developer.apple.com")) {
-                await updateLogo(true)
-            } else {
-                await updateLogo(false)
-            }
+            await updateLogo()
 
             sendResponse()
         })();
@@ -88,11 +79,7 @@ chrome.tabs.onUpdated.addListener(function() {
         const previousActiveTab = globalActiveTab
         const activeTab = await queryActiveTab()
 
-        if (activeTab.url.includes("developer.apple.com")) {
-            await updateLogo(true)
-        } else {
-            await updateLogo(false)
-        }
+        await updateLogo()
 
         if (previousActiveTab && activeTab && previousActiveTab.url === activeTab.url) {
             return
@@ -109,16 +96,11 @@ chrome.tabs.onUpdated.addListener(function() {
     })()
 });
 
-chrome.tabs.onActivated.addListener(function(activeInfo) {
+chrome.tabs.onActivated.addListener(function() {
     (async () => {
-        const tab = await chrome.tabs.get(activeInfo.tabId)
         const activeTab = await queryActiveTab()
 
-        if (tab.url && !(tab.url.includes('developer.apple.com'))) {
-            await updateLogo(false)
-        } else if (tab.url && (tab.url.includes('developer.apple.com'))) {
-            await updateLogo(true)
-        }
+        await updateLogo()
 
         try {
             if (activeTab.id && activeTab.url.includes("developer.apple.com")) {
@@ -156,21 +138,32 @@ async function requestTranslate(translate, tab) {
     }
 }
 
-async function updateLogo(active) {
-    if (active) {
-        const activeTabStatus = await queryActiveTabStatus()
-        if (autoTranslate || activeTabStatus) {
-            if (activeTabStatus) {
-                await setIcon("/source/intro/swiftLogo-translating.png")
+async function updateLogo() {
+    const activeTab = await queryActiveTab()
+
+    if (activeTab) {} else return
+
+    if (autoTranslate) {
+        if (activeTab.url.includes("developer.apple.com")) {
+            if (isSupportedPage(activeTab.url.toString()) && !isCategoryPage(activeTab.url.toString())) {
+                if (await queryActiveTabStatus()) {
+                    await setIcon("/source/intro/swiftLogo-translating.png")
+                } else {
+                    await setIcon("/source/intro/swiftLogo-translating-pause.png")
+                }
             } else {
                 await setIcon("/source/intro/swiftLogo-running.png")
             }
         } else {
-            await setIcon("/source/intro/swiftLogo-closed.png")
+            await setIcon("/source/intro/swiftLogo.png")
         }
     } else {
-        if (autoTranslate) {
-            await setIcon("/source/intro/swiftLogo.png")
+        if (activeTab.url.includes("developer.apple.com")) {
+            if (await queryActiveTabStatus()) {
+                await setIcon("/source/intro/swiftLogo-translating.png")
+            } else {
+                await setIcon("/source/intro/swiftLogo-closed.png")
+            }
         } else {
             await setIcon("/source/intro/swiftLogo-closed.png")
         }
@@ -258,4 +251,16 @@ function isCategoryPage(url) {
 
     const lastPath = pathArray[pathArray.length - 1] || pathArray[pathArray.length - 2];
     return endUpWhiteList.includes(lastPath)
+}
+
+function isSupportedPage(url) {
+    const currentURL = new URL(url)
+    currentURL.hash = ""
+    currentURL.search = ""
+
+    const pathArray = currentURL.pathname.split('/').filter(function (el){
+        return el !== ""
+    })
+
+    return endUpWhiteList.includes(pathArray[pathArray.length-2]) || endUpWhiteList.includes(pathArray[pathArray.length-1])
 }
