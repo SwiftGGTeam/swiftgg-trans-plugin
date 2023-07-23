@@ -1,3 +1,7 @@
+:root {
+    color-scheme: light dark;
+}
+
 * {
     padding: 0;
     margin: 0;
@@ -48,6 +52,12 @@ select {
 }
 
 .tool .translate {
+    margin-bottom: 14px;
+}
+
+.translate-current {
+    padding-top: 10px;
+    padding-bottom: 10px;
     margin-bottom: 14px;
 }
 

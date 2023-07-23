@@ -7,22 +7,29 @@ log("Plugin start");
 let json = {}
 
 const initialRequestMethod = "shouldTranslate"
+const removeTranslateRequestMethod = "removeTranslate"
 const queryStatusRequestMethod = "queryStatus"
 const translatedRequestMethod = "translated"
 const pageSwitchedRequestMethod = "pageSwitched"
+const translateCurrentRequestMethod = "translateCurrent"
 const endUpWhiteList = ["swiftui","swiftui/","sample-apps","sample-apps/","swiftui-concepts","swiftui-concepts/"];
 let currentTranslatedURL = null
 let translated = false
 const tabActiveRequestMethod = "tabActive"
 let noDisturb = false
+let shouldTranslate = false
+let globalCurrentURL = null
 
 log("Plugin start request flag");
 
 (async () => {
+  getCurrentURL()
+
   const response = await chrome.runtime.sendMessage({type: initialRequestMethod});
   log(`Flag status: ${response.shouldTranslate}`);
+  shouldTranslate = response.shouldTranslate
 
-  await startTranslate(response.shouldTranslate)
+  await startTranslate()
 
   log("Plugin wait page loaded");
 })()
@@ -33,7 +40,15 @@ chrome.runtime.onMessage.addListener(
         (async () => {
           if (request.url.includes("developer.apple.com")) {
             const response = await chrome.runtime.sendMessage({type: initialRequestMethod})
-            await tabURLUpdated(response.shouldTranslate)
+
+            if (globalCurrentURL) {
+              if (globalCurrentURL.toString() !== getCurrentURL().toString()) {
+                shouldTranslate = response.shouldTranslate
+                translated = false
+
+                await startTranslate()
+              }
+            }
 
             sendResponse()
           }
@@ -48,9 +63,7 @@ chrome.runtime.onMessage.addListener(
             if (request.shouldTranslate && !translated && !noDisturb) {
               await injectFloat()
             } else if (!request.shouldTranslate) {
-              if (elementExists("swiftgg-float")) {
-                directRemoveElement("swiftgg-float")
-              }
+              removeFloatElement()
             }
           }
 
@@ -58,6 +71,17 @@ chrome.runtime.onMessage.addListener(
         })()
 
         return true
+      } else if (request.message === translateCurrentRequestMethod) {
+        (async () => {
+          shouldTranslate = true
+          await startTranslate()
+
+          sendResponse()
+        })()
+        return true
+      } else if (request.message === removeTranslateRequestMethod) {
+        removeTranslate()
+        sendResponse()
       }
     }
 );
@@ -116,9 +140,15 @@ function addTitleNode() {
   }
   let newNode = document.createElement("h3");
   let text = document.createTextNode(titleText);
+  newNode.dataset.tag = "swiftgg"
   newNode.appendChild(text);
   let parent = title.parentElement;
   parent.insertBefore(newNode, title);
+}
+
+function isInjectedElement(element) {
+  // Check if the element has a "data-tag" attribute and its value is "swiftgg"
+  return element.hasAttribute('data-tag') && element.getAttribute('data-tag') === 'swiftgg';
 }
 
 function appendH2Nodes() {
@@ -128,6 +158,7 @@ function appendH2Nodes() {
     let parent = node.parentElement;
     let newNode = document.createElement("h2");
     let t = document.createTextNode(json[node.innerText].zh);
+    newNode.dataset.tag = "swiftgg"
     newNode.appendChild(t);
     parent.insertBefore(newNode, node);
   })
@@ -145,6 +176,7 @@ function appendPNodes() {
     let parent = node.parentElement;
     let newNode = document.createElement("p");
     let t = document.createTextNode(json[node.innerText].zh);
+    newNode.dataset.tag = "swiftgg"
     newNode.appendChild(t);
     parent.insertBefore(newNode, node);
   })
@@ -171,6 +203,9 @@ function addInstructionToCategoryPage() {
   let pElement = document.createElement("p")
   pElement.classList.add("indicator")
   pElement.textContent = "⬆️ SwiftGG 正在运行，请点击上方按钮开始学习 ⬆️"
+  spaceElement.dataset.tag = "swiftgg"
+  spaceElement2.dataset.tag = "swiftgg"
+  pElement.dataset.tag = "swiftgg"
   contentDiv.appendChild(spaceElement)
   contentDiv.appendChild(spaceElement2)
   contentDiv.appendChild(pElement)
@@ -187,7 +222,7 @@ function isSupportedPage() {
   return endUpWhiteList.includes(pathArray[pathArray.length-2]) || endUpWhiteList.includes(pathArray[pathArray.length-1])
 }
 
-async function tabURLUpdated(shouldTranslate) {
+async function startTranslate() {
   const currentURL = getCurrentURL()
 
   if (currentTranslatedURL) {
@@ -199,12 +234,11 @@ async function tabURLUpdated(shouldTranslate) {
     }
   }
 
-  await startTranslate(shouldTranslate)
+  await translate()
 }
 
-async function startTranslate(shouldTranslate) {
+async function translate() {
   const currentURL = getCurrentURL()
-  currentTranslatedURL = currentURL
   const pathArray = currentURL.pathname.split('/');
   const baseURL = "https://api.swift.gg/content/";
   const url = baseURL + pathArray[pathArray.length-2] + '/' + pathArray[pathArray.length-1];
@@ -216,6 +250,8 @@ async function startTranslate(shouldTranslate) {
   if (isSupportedPage() === false) {
     return;
   }
+
+  currentTranslatedURL = currentURL
 
   if (isCategoryPage() === false) {
     await fetchRelatedData(url)
@@ -236,12 +272,42 @@ async function startTranslate(shouldTranslate) {
     translated = true
     await chrome.runtime.sendMessage({type: translatedRequestMethod}, () => {})
   }
+
+  removeFloatElement()
+}
+
+function removeTranslate() {
+  const body = document.body;
+  let allElements = [];
+
+  // Recursively iterate through the body and its children's children
+  function iterate(element) {
+    allElements.push(element);
+
+    for (const child of element.children) {
+      iterate(child);
+    }
+  }
+
+  iterate(body);
+
+  for (const element of allElements) {
+    if (isInjectedElement(element)) {
+      element.remove()
+    }
+  }
+
+  currentTranslatedURL = null
+  translated = false
 }
 
 function getCurrentURL() {
   const currentURL = new URL(document.URL)
   currentURL.hash = ""
   currentURL.search = ""
+
+  globalCurrentURL = currentURL
+
   return currentURL
 }
 
@@ -363,9 +429,11 @@ function floatCancel() {
 function floatTranslate() {
   const floatElement = document.getElementById("swiftgg-float")
   removeFadeOut(floatElement, 600);
+  shouldTranslate = true;
+  translated = true;
 
   (async () => {
-    await startTranslate(true)
+    await startTranslate()
   })()
 }
 function removeFadeOut(el, speed) {
@@ -374,7 +442,7 @@ function removeFadeOut(el, speed) {
 
   el.style.opacity = "0";
   setTimeout(function() {
-    el.parentNode.removeChild(el);
+    el.remove()
   }, speed);
 }
 
@@ -430,4 +498,10 @@ function setFloatColorSchema() {
 
 function checkColorSchema() {
   return (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches)
+}
+
+function removeFloatElement() {
+  if (elementExists("swiftgg-float")) {
+    directRemoveElement("swiftgg-float")
+  }
 }
