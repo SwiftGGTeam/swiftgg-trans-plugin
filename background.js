@@ -22,6 +22,12 @@ const BrowserType = {
 
 retrieveShouldTranslate().then()
 
+detectBrowser().then((type) => {
+    if (type === BrowserType.firefox) {
+        disableCSP().then()
+    }
+})
+
 chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
     if (request.type === updateRequestMethod) {
         (async () => {
@@ -71,6 +77,8 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
 
             sendResponse()
         })();
+
+        return true
     }
 });
 
@@ -174,9 +182,10 @@ async function updateLogo() {
     }
 }
 
-function detectBrowser() {
-    const isChrome = typeof chrome !== 'undefined'
-    const isFirefox = typeof browser !== 'undefined'
+async function detectBrowser() {
+    const info = await browser.runtime.getBrowserInfo()
+    const isChrome = typeof chrome !== 'undefined' && info.name === "Chrome"
+    const isFirefox = typeof browser !== 'undefined' && info.name === "Firefox"
     const isSafari = typeof safari !== 'undefined'
 
     if (isSafari) {
@@ -191,12 +200,12 @@ function detectBrowser() {
 }
 
 async function setIcon(path) {
-    switch (detectBrowser()) {
+    switch (await detectBrowser()) {
         case BrowserType.chrome:
             await chrome.action.setIcon({ path: { "128": path} })
             break
         case BrowserType.firefox:
-            await browser.browserAction.setIcon({ path: { "128": path} })
+            await chrome.action.setIcon({ path: { "128": path} })
             break
         case BrowserType.safari:
             await browser.browserAction.setIcon({ path: { "128": path} })
@@ -267,4 +276,25 @@ function isSupportedPage(url) {
     })
 
     return endUpWhiteList.includes(pathArray[pathArray.length-2]) || endUpWhiteList.includes(pathArray[pathArray.length-1])
+}
+
+async function disableCSP() {
+    let addRules = [],
+        removeRuleIds = []
+
+    const id = 724
+
+    addRules.push({
+        id,
+        priority: 9999999999,
+        action: {
+            type: 'modifyHeaders',
+            responseHeaders: [{ header: 'Content-Security-Policy', operation: 'set', value: 'default-src * \'unsafe-inline\' \'unsafe-eval\' data: blob:; ' }]
+        },
+        condition: {urlFilter: "||developer.apple.com*", resourceTypes: ['main_frame', 'sub_frame']}
+    })
+
+    chrome.browsingData.remove({}, { serviceWorkers: true }, () => {})
+
+    await chrome.declarativeNetRequest.updateSessionRules({addRules, removeRuleIds})
 }
