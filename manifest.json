@@ -17,10 +17,13 @@
     },
     "permissions": [
         "tabs",
-        "storage"
+        "storage",
+        "declarativeNetRequest",
+        "browsingData"
     ],
     "host_permissions": [
-        "https://developer.apple.com/*"
+        "https://developer.apple.com/*",
+        "*://developer.apple.com/*"
     ],
     "content_scripts": [
         {
