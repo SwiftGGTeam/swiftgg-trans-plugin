@@ -1,0 +1,50 @@
+{
+    "name": "Twine by SwiftGG",
+    "description": "Apple document",
+    "version": "0.1.0",
+    "manifest_version": 3,
+    "background": {
+        "service_worker": "./background.js"
+    },
+    "action": {
+        "default_popup": "./popup.html",
+        "default_icon": {
+            "128": "/source/intro/swiftLogo.png"
+        }
+    },
+    "icons": {
+        "128": "/source/intro/swiftLogo.png"
+    },
+    "permissions": [
+        "tabs",
+        "storage",
+        "declarativeNetRequest",
+        "browsingData"
+    ],
+    "host_permissions": [
+        "https://developer.apple.com/*",
+        "*://developer.apple.com/*"
+    ],
+    "content_scripts": [
+        {
+            "matches": [
+                "https://developer.apple.com/*",
+                "*://developer.apple.com/*"
+            ],
+            "css": [
+                "content_script.css"
+            ],
+            "js": [
+                "content_script.js"
+            ],
+            "run_at": "document_end"
+        }
+    ],
+    "web_accessible_resources": [{
+        "resources": ["float.html"],
+        "matches": [
+            "https://developer.apple.com/*",
+            "*://developer.apple.com/*"
+        ]
+    }]
+}

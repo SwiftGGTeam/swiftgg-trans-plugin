@@ -1,0 +1,212 @@
+:root {
+    color-scheme: light dark;
+}
+
+* {
+    padding: 0;
+    margin: 0;
+}
+
+.popup {
+    background-color: #FFFFFF;
+    width: 280px;
+    padding: 0;
+}
+
+header {
+    background-color: #FAFAFA;
+    width: 100%;
+    height: 64px;
+    display: flex;
+    align-items: center;
+    padding: 0 20px;
+    font-size: 16px;
+    font-weight: 600;
+    box-sizing: border-box;
+}
+
+header img {
+    height: 24px;
+    margin-right: 4px;
+}
+
+body {
+    font-family: Roboto, 'Segoe UI', Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', -apple-system, BlinkMacSystemFont,  sans-serif;
+}
+
+select {
+    font-family: inherit;
+}
+
+.tool {
+    padding: 30px 20px;
+}
+
+.tool li {
+    height: 22px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.tool .translate {
+    margin-bottom: 14px;
+}
+
+.translate-current {
+    padding-top: 10px;
+    padding-bottom: 10px;
+    margin-bottom: 14px;
+}
+
+
+.tool li a img {
+    width: 22px;
+    height: 22px;
+}
+
+.divider {
+    width: 100%;
+    height: 1px;
+    background-color: #f0f0f0;
+}
+
+.course {
+    padding: 30px 20px;
+}
+
+.course-title {
+    padding-bottom: 15px;
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.course li {
+    height: 22px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 12px;
+    margin-top: 12px;
+}
+
+.course li a img {
+    width: 20px;
+    height: 20px;
+}
+
+.course select {
+    border: none;
+    outline: none;
+    background-color: transparent;
+    width: 100%;
+    
+    margin-top: 10px;
+    padding-right: 20px;
+
+    appearance: none;
+    font-weight: 600;
+    color: #2cade6;
+
+    /* Custom arrow style */
+    background: url('/source/intro/disclosure-indicator.png') no-repeat right center;
+    background-size: 14px 8px;
+}
+
+footer {
+    padding: 12px 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 14px;
+    color: #999999;
+}
+
+footer a {
+    border: none;
+    background-color: transparent;
+    color: #FF6A46;
+}
+
+span.header-text {
+    padding-left: 6px;
+}
+
+img.gh-image {
+
+}
+
+img.header-image {
+
+}
+
+select.display-method {
+    border: none;
+    outline: none;
+    background-color: transparent;
+    width: 100%;
+
+    padding-right: 28px;
+    text-align-last: right;
+
+    appearance: none;
+    font-weight: 600;
+    color: #2cade6;
+
+    /* Custom arrow style */
+    background: url('/source/intro/disclosure-indicator.png') no-repeat right center;
+    background-size: 14px 8px;
+    font-size: 14px;
+}
+
+.display-method::after {
+    content: "\25BC"; /* Unicode for a downward-pointing arrow */
+    display: inline-block;
+    position: absolute;
+    top: 50%; /* Vertically center the arrow */
+    right: 10px; /* Adjust the right distance of the arrow from the right edge */
+    transform: translateY(-50%); /* Vertically center the arrow */
+    font-size: 12px; /* Adjust the font size of the arrow */
+    pointer-events: none; /* Make sure the arrow does not interfere with clicks */
+}
+
+
+@media (prefers-color-scheme: dark) {
+    .popup {
+        background-color: #1F1F1F;
+    }
+
+    header {
+        background-color: #1C1C1C;
+    }
+
+    span {
+        color: white;
+    }
+
+    img.gh-image {
+        filter: invert(1);
+    }
+
+    .course-title {
+        color: white;
+    }
+
+    img.header-image {
+        filter: brightness(120%);
+    }
+
+    .course select {
+        color: #31C0FF;
+    }
+
+    .divider {
+        background-color: #2E2E2E;
+    }
+
+    select.display-method {
+        color: #31C0FF;
+    }
+}
