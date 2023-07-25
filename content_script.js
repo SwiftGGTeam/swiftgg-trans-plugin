@@ -34,10 +34,6 @@ log("Plugin start request flag");
 
   await startTranslate()
 
-  const displayMethod = await chrome.runtime.sendMessage({type: queryDisplayMethodRequestMethod});
-
-  changeDisplayMethod(displayMethod)
-
   log("Plugin wait page loaded");
 })()
 
@@ -299,6 +295,9 @@ async function translate() {
   }
 
   removeFloatElement()
+
+  const displayMethod = await chrome.runtime.sendMessage({type: queryDisplayMethodRequestMethod});
+  changeDisplayMethod(displayMethod)
 }
 
 function removeTranslate() {
