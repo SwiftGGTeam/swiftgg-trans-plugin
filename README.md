@@ -1,4 +1,4 @@
-![logo.png](./source/intro/logo.png)
+![logo.png](./Twine by Swiftgg plugin/source/intro/logo.png)
 
 Twine by SwiftGG 是一款浏览器插件，旨在帮助 iOS 开发者更轻松地学习和理解 Apple 官方文档。只需安装此插件，即可在浏览器中自动对照翻译 SwiftUI 官方教程页面。同时，插件提供翻译开关，方便用户根据需要进行切换。
 
@@ -23,7 +23,7 @@ Apple 为了让初学者能够很好的学习 iOS 开发知识，提供了易于
 - [Learning SwiftUI](https://developer.apple.com/tutorials/swiftui-concepts/)
 - [Exploring SwiftUI Sample Apps](https://developer.apple.com/tutorials/sample-apps)
 
-![screenshot.png](./source/intro/screenshot.png)
+![screenshot.png](./Twine by Swiftgg plugin/source/intro/screenshot.png)
 
 ### 安装
 - [Chrome 下载](https://chrome.google.com/webstore/category/extensions)  [待上架]
