@@ -1,4 +1,5 @@
 const pluginFlag = "pluginFlag"
+const displayMethodFlag = "displayMethodFlag"
 let autoTranslate = null
 let initialRequestMethod = "shouldTranslate"
 let updateRequestMethod = "updateShouldTranslate"
@@ -10,6 +11,7 @@ const pageSwitchedRequestMethod = "pageSwitched"
 const queryCurrentRequestMethod = "queryTranslateCurrent"
 const updateCurrentRequestMethod = "updateTranslateCurrent"
 const translateCurrentRequestMethod = "translateCurrent"
+const queryDisplayMethodRequestMethod = "queryDisplayMethod"
 const endUpWhiteList = ["swiftui","swiftui/","sample-apps","sample-apps/","swiftui-concepts","swiftui-concepts/"];
 let globalActiveTab = null
 
@@ -77,6 +79,13 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
 
             sendResponse()
         })();
+
+        return true
+    } else if (request.type === queryDisplayMethodRequestMethod) {
+        (async () => {
+            const displayMethodResult = await chrome.storage.local.get(displayMethodFlag)
+            sendResponse(displayMethodResult.displayMethodFlag || "auto")
+        })()
 
         return true
     }
@@ -183,17 +192,16 @@ async function updateLogo() {
 }
 
 async function detectBrowser() {
-    const info = await browser.runtime.getBrowserInfo()
-    const isChrome = typeof chrome !== 'undefined' && info.name === "Chrome"
-    const isFirefox = typeof browser !== 'undefined' && info.name === "Firefox"
+    const isChrome = typeof chrome !== 'undefined'
+    const isFirefox = typeof browser !== 'undefined' && (await browser.runtime.getBrowserInfo()).name === "Firefox"
     const isSafari = typeof safari !== 'undefined'
 
     if (isSafari) {
         return BrowserType.safari
-    } else if (isChrome) {
-        return BrowserType.chrome
     } else if (isFirefox) {
         return BrowserType.firefox
+    } else if (isChrome) {
+        return BrowserType.chrome
     } else {
         return BrowserType.unknown
     }

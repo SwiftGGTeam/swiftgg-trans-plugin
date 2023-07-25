@@ -142,6 +142,37 @@ img.header-image {
 
 }
 
+select.display-method {
+    border: none;
+    outline: none;
+    background-color: transparent;
+    width: 100%;
+
+    padding-right: 28px;
+    text-align-last: right;
+
+    appearance: none;
+    font-weight: 600;
+    color: #2cade6;
+
+    /* Custom arrow style */
+    background: url('/source/intro/disclosure-indicator.png') no-repeat right center;
+    background-size: 14px 8px;
+    font-size: 14px;
+}
+
+.display-method::after {
+    content: "\25BC"; /* Unicode for a downward-pointing arrow */
+    display: inline-block;
+    position: absolute;
+    top: 50%; /* Vertically center the arrow */
+    right: 10px; /* Adjust the right distance of the arrow from the right edge */
+    transform: translateY(-50%); /* Vertically center the arrow */
+    font-size: 12px; /* Adjust the font size of the arrow */
+    pointer-events: none; /* Make sure the arrow does not interfere with clicks */
+}
+
+
 @media (prefers-color-scheme: dark) {
     .popup {
         background-color: #1F1F1F;
@@ -173,5 +204,9 @@ img.header-image {
 
     .divider {
         background-color: #2E2E2E;
+    }
+
+    select.display-method {
+        color: #31C0FF;
     }
 }
