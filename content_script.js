@@ -302,6 +302,10 @@ async function translate() {
 }
 
 function removeTranslate() {
+  rollBackRemovedElement()
+  rollbackWeakenOriginal()
+  rollbackAutoWeaken()
+
   removeTranslatedNode()
 
   currentTranslatedURL = null
