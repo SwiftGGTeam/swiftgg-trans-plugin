@@ -1,0 +1,986 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 56;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		17CE90682A65959B00E4C4DA /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17CE90672A65959B00E4C4DA /* AppDelegate.swift */; };
+		17CE906A2A65959B00E4C4DA /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17CE90692A65959B00E4C4DA /* SceneDelegate.swift */; };
+		17CE906D2A65959B00E4C4DA /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 17CE906B2A65959B00E4C4DA /* LaunchScreen.storyboard */; };
+		17CE90702A65959B00E4C4DA /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 17CE906E2A65959B00E4C4DA /* Main.storyboard */; };
+		17CE90792A65959B00E4C4DA /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17CE90782A65959B00E4C4DA /* AppDelegate.swift */; };
+		17CE907C2A65959B00E4C4DA /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 17CE907A2A65959B00E4C4DA /* Main.storyboard */; };
+		17CE90842A65959B00E4C4DA /* Twine by SwiftGG Extension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 17CE90832A65959B00E4C4DA /* Twine by SwiftGG Extension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		17CE908E2A65959B00E4C4DA /* Twine by SwiftGG Extension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 17CE908D2A65959B00E4C4DA /* Twine by SwiftGG Extension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		17CE90942A65959B00E4C4DA /* Main.html in Resources */ = {isa = PBXBuildFile; fileRef = 17CE90572A65959A00E4C4DA /* Main.html */; };
+		17CE90952A65959B00E4C4DA /* Main.html in Resources */ = {isa = PBXBuildFile; fileRef = 17CE90572A65959A00E4C4DA /* Main.html */; };
+		17CE90962A65959B00E4C4DA /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 17CE90592A65959A00E4C4DA /* Icon.png */; };
+		17CE90972A65959B00E4C4DA /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 17CE90592A65959A00E4C4DA /* Icon.png */; };
+		17CE90982A65959B00E4C4DA /* Style.css in Resources */ = {isa = PBXBuildFile; fileRef = 17CE905A2A65959A00E4C4DA /* Style.css */; };
+		17CE90992A65959B00E4C4DA /* Style.css in Resources */ = {isa = PBXBuildFile; fileRef = 17CE905A2A65959A00E4C4DA /* Style.css */; };
+		17CE909A2A65959B00E4C4DA /* Script.js in Resources */ = {isa = PBXBuildFile; fileRef = 17CE905B2A65959A00E4C4DA /* Script.js */; };
+		17CE909B2A65959B00E4C4DA /* Script.js in Resources */ = {isa = PBXBuildFile; fileRef = 17CE905B2A65959A00E4C4DA /* Script.js */; };
+		17CE909C2A65959B00E4C4DA /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17CE905C2A65959A00E4C4DA /* ViewController.swift */; };
+		17CE909D2A65959B00E4C4DA /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17CE905C2A65959A00E4C4DA /* ViewController.swift */; };
+		17CE909E2A65959B00E4C4DA /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 17CE905D2A65959B00E4C4DA /* Assets.xcassets */; };
+		17CE909F2A65959B00E4C4DA /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 17CE905D2A65959B00E4C4DA /* Assets.xcassets */; };
+		17CE90A02A65959B00E4C4DA /* SafariWebExtensionHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17CE905F2A65959B00E4C4DA /* SafariWebExtensionHandler.swift */; };
+		17CE90A12A65959B00E4C4DA /* SafariWebExtensionHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17CE905F2A65959B00E4C4DA /* SafariWebExtensionHandler.swift */; };
+		17CE90BF2A65959C00E4C4DA /* content_script.css in Resources */ = {isa = PBXBuildFile; fileRef = 17CE90B42A65959C00E4C4DA /* content_script.css */; };
+		17CE90C02A65959C00E4C4DA /* popup.js in Resources */ = {isa = PBXBuildFile; fileRef = 17CE90B52A65959C00E4C4DA /* popup.js */; };
+		17CE90C12A65959C00E4C4DA /* background.js in Resources */ = {isa = PBXBuildFile; fileRef = 17CE90B62A65959C00E4C4DA /* background.js */; };
+		17CE90C22A65959C00E4C4DA /* popup.html in Resources */ = {isa = PBXBuildFile; fileRef = 17CE90B72A65959C00E4C4DA /* popup.html */; };
+		17CE90C32A65959C00E4C4DA /* source in Resources */ = {isa = PBXBuildFile; fileRef = 17CE90B82A65959C00E4C4DA /* source */; };
+		17CE90C52A65959C00E4C4DA /* content_script.js in Resources */ = {isa = PBXBuildFile; fileRef = 17CE90BA2A65959C00E4C4DA /* content_script.js */; };
+		17CE90C62A65959C00E4C4DA /* manifest.json in Resources */ = {isa = PBXBuildFile; fileRef = 17CE90BB2A65959C00E4C4DA /* manifest.json */; };
+		17CE90C72A65959C00E4C4DA /* options.html in Resources */ = {isa = PBXBuildFile; fileRef = 17CE90BC2A65959C00E4C4DA /* options.html */; };
+		17CE90C82A65959C00E4C4DA /* popup.css in Resources */ = {isa = PBXBuildFile; fileRef = 17CE90BD2A65959C00E4C4DA /* popup.css */; };
+		17CE90CA2A65959C00E4C4DA /* content_script.css in Resources */ = {isa = PBXBuildFile; fileRef = 17CE90B42A65959C00E4C4DA /* content_script.css */; };
+		17CE90CB2A65959C00E4C4DA /* popup.js in Resources */ = {isa = PBXBuildFile; fileRef = 17CE90B52A65959C00E4C4DA /* popup.js */; };
+		17CE90CC2A65959C00E4C4DA /* background.js in Resources */ = {isa = PBXBuildFile; fileRef = 17CE90B62A65959C00E4C4DA /* background.js */; };
+		17CE90CD2A65959C00E4C4DA /* popup.html in Resources */ = {isa = PBXBuildFile; fileRef = 17CE90B72A65959C00E4C4DA /* popup.html */; };
+		17CE90CE2A65959C00E4C4DA /* source in Resources */ = {isa = PBXBuildFile; fileRef = 17CE90B82A65959C00E4C4DA /* source */; };
+		17CE90D02A65959C00E4C4DA /* content_script.js in Resources */ = {isa = PBXBuildFile; fileRef = 17CE90BA2A65959C00E4C4DA /* content_script.js */; };
+		17CE90D12A65959C00E4C4DA /* manifest.json in Resources */ = {isa = PBXBuildFile; fileRef = 17CE90BB2A65959C00E4C4DA /* manifest.json */; };
+		17CE90D22A65959C00E4C4DA /* options.html in Resources */ = {isa = PBXBuildFile; fileRef = 17CE90BC2A65959C00E4C4DA /* options.html */; };
+		17CE90D32A65959C00E4C4DA /* popup.css in Resources */ = {isa = PBXBuildFile; fileRef = 17CE90BD2A65959C00E4C4DA /* popup.css */; };
+		17FC52D22A6D56C000367D01 /* float.html in Resources */ = {isa = PBXBuildFile; fileRef = 17FC52D12A6D56C000367D01 /* float.html */; };
+		17FC52D32A6D56C000367D01 /* float.html in Resources */ = {isa = PBXBuildFile; fileRef = 17FC52D12A6D56C000367D01 /* float.html */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		17CE90852A65959B00E4C4DA /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 17CE90512A65959900E4C4DA /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 17CE90822A65959B00E4C4DA;
+			remoteInfo = "Twine by SwiftGG Extension (iOS)";
+		};
+		17CE908F2A65959B00E4C4DA /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 17CE90512A65959900E4C4DA /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 17CE908C2A65959B00E4C4DA;
+			remoteInfo = "Twine by SwiftGG Extension (macOS)";
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		17CE90A72A65959B00E4C4DA /* Embed Foundation Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				17CE90842A65959B00E4C4DA /* Twine by SwiftGG Extension.appex in Embed Foundation Extensions */,
+			);
+			name = "Embed Foundation Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		17CE90AE2A65959B00E4C4DA /* Embed Foundation Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				17CE908E2A65959B00E4C4DA /* Twine by SwiftGG Extension.appex in Embed Foundation Extensions */,
+			);
+			name = "Embed Foundation Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		17CE90582A65959A00E4C4DA /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.html; name = Base; path = ../Base.lproj/Main.html; sourceTree = "<group>"; };
+		17CE90592A65959A00E4C4DA /* Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Icon.png; sourceTree = "<group>"; };
+		17CE905A2A65959A00E4C4DA /* Style.css */ = {isa = PBXFileReference; lastKnownFileType = text.css; path = Style.css; sourceTree = "<group>"; };
+		17CE905B2A65959A00E4C4DA /* Script.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = Script.js; sourceTree = "<group>"; };
+		17CE905C2A65959A00E4C4DA /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		17CE905D2A65959B00E4C4DA /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		17CE905F2A65959B00E4C4DA /* SafariWebExtensionHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SafariWebExtensionHandler.swift; sourceTree = "<group>"; };
+		17CE90642A65959B00E4C4DA /* Twine by SwiftGG.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Twine by SwiftGG.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		17CE90672A65959B00E4C4DA /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		17CE90692A65959B00E4C4DA /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
+		17CE906C2A65959B00E4C4DA /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		17CE906F2A65959B00E4C4DA /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		17CE90712A65959B00E4C4DA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		17CE90762A65959B00E4C4DA /* Twine by SwiftGG.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Twine by SwiftGG.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		17CE90782A65959B00E4C4DA /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		17CE907B2A65959B00E4C4DA /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		17CE907D2A65959B00E4C4DA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		17CE907E2A65959B00E4C4DA /* Twine by SwiftGG.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Twine by SwiftGG.entitlements"; sourceTree = "<group>"; };
+		17CE90832A65959B00E4C4DA /* Twine by SwiftGG Extension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = "Twine by SwiftGG Extension.appex"; sourceTree = BUILT_PRODUCTS_DIR; };
+		17CE90882A65959B00E4C4DA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		17CE908D2A65959B00E4C4DA /* Twine by SwiftGG Extension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = "Twine by SwiftGG Extension.appex"; sourceTree = BUILT_PRODUCTS_DIR; };
+		17CE90922A65959B00E4C4DA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		17CE90932A65959B00E4C4DA /* Twine by SwiftGG.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Twine by SwiftGG.entitlements"; sourceTree = "<group>"; };
+		17CE90B42A65959C00E4C4DA /* content_script.css */ = {isa = PBXFileReference; lastKnownFileType = text.css; name = content_script.css; path = "../../Twine by SwiftGG plugin/content_script.css"; sourceTree = "<group>"; };
+		17CE90B52A65959C00E4C4DA /* popup.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; name = popup.js; path = "../../Twine by SwiftGG plugin/popup.js"; sourceTree = "<group>"; };
+		17CE90B62A65959C00E4C4DA /* background.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; name = background.js; path = "../../Twine by SwiftGG plugin/background.js"; sourceTree = "<group>"; };
+		17CE90B72A65959C00E4C4DA /* popup.html */ = {isa = PBXFileReference; lastKnownFileType = text.html; name = popup.html; path = "../../Twine by SwiftGG plugin/popup.html"; sourceTree = "<group>"; };
+		17CE90B82A65959C00E4C4DA /* source */ = {isa = PBXFileReference; lastKnownFileType = folder; name = source; path = "../../Twine by SwiftGG plugin/source"; sourceTree = "<group>"; };
+		17CE90BA2A65959C00E4C4DA /* content_script.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; name = content_script.js; path = "../../Twine by SwiftGG plugin/content_script.js"; sourceTree = "<group>"; };
+		17CE90BB2A65959C00E4C4DA /* manifest.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; name = manifest.json; path = "../../Twine by SwiftGG plugin/manifest.json"; sourceTree = "<group>"; };
+		17CE90BC2A65959C00E4C4DA /* options.html */ = {isa = PBXFileReference; lastKnownFileType = text.html; name = options.html; path = "../../Twine by SwiftGG plugin/options.html"; sourceTree = "<group>"; };
+		17CE90BD2A65959C00E4C4DA /* popup.css */ = {isa = PBXFileReference; lastKnownFileType = text.css; name = popup.css; path = "../../Twine by SwiftGG plugin/popup.css"; sourceTree = "<group>"; };
+		17FC52D12A6D56C000367D01 /* float.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; name = float.html; path = "../../Twine by SwiftGG plugin/float.html"; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		17CE90612A65959B00E4C4DA /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		17CE90732A65959B00E4C4DA /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		17CE90802A65959B00E4C4DA /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		17CE908A2A65959B00E4C4DA /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		17CE90502A65959900E4C4DA = {
+			isa = PBXGroup;
+			children = (
+				17CE90552A65959900E4C4DA /* Shared (App) */,
+				17CE905E2A65959B00E4C4DA /* Shared (Extension) */,
+				17CE90662A65959B00E4C4DA /* iOS (App) */,
+				17CE90772A65959B00E4C4DA /* macOS (App) */,
+				17CE90872A65959B00E4C4DA /* iOS (Extension) */,
+				17CE90912A65959B00E4C4DA /* macOS (Extension) */,
+				17CE90652A65959B00E4C4DA /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		17CE90552A65959900E4C4DA /* Shared (App) */ = {
+			isa = PBXGroup;
+			children = (
+				17CE905C2A65959A00E4C4DA /* ViewController.swift */,
+				17CE905D2A65959B00E4C4DA /* Assets.xcassets */,
+				17CE90562A65959A00E4C4DA /* Resources */,
+			);
+			path = "Shared (App)";
+			sourceTree = "<group>";
+		};
+		17CE90562A65959A00E4C4DA /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				17CE90572A65959A00E4C4DA /* Main.html */,
+				17CE90592A65959A00E4C4DA /* Icon.png */,
+				17CE905A2A65959A00E4C4DA /* Style.css */,
+				17CE905B2A65959A00E4C4DA /* Script.js */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		17CE905E2A65959B00E4C4DA /* Shared (Extension) */ = {
+			isa = PBXGroup;
+			children = (
+				17CE90B22A65959C00E4C4DA /* Resources */,
+				17CE905F2A65959B00E4C4DA /* SafariWebExtensionHandler.swift */,
+			);
+			path = "Shared (Extension)";
+			sourceTree = "<group>";
+		};
+		17CE90652A65959B00E4C4DA /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				17CE90642A65959B00E4C4DA /* Twine by SwiftGG.app */,
+				17CE90762A65959B00E4C4DA /* Twine by SwiftGG.app */,
+				17CE90832A65959B00E4C4DA /* Twine by SwiftGG Extension.appex */,
+				17CE908D2A65959B00E4C4DA /* Twine by SwiftGG Extension.appex */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		17CE90662A65959B00E4C4DA /* iOS (App) */ = {
+			isa = PBXGroup;
+			children = (
+				17CE90672A65959B00E4C4DA /* AppDelegate.swift */,
+				17CE90692A65959B00E4C4DA /* SceneDelegate.swift */,
+				17CE906B2A65959B00E4C4DA /* LaunchScreen.storyboard */,
+				17CE906E2A65959B00E4C4DA /* Main.storyboard */,
+				17CE90712A65959B00E4C4DA /* Info.plist */,
+			);
+			path = "iOS (App)";
+			sourceTree = "<group>";
+		};
+		17CE90772A65959B00E4C4DA /* macOS (App) */ = {
+			isa = PBXGroup;
+			children = (
+				17CE90782A65959B00E4C4DA /* AppDelegate.swift */,
+				17CE907A2A65959B00E4C4DA /* Main.storyboard */,
+				17CE907D2A65959B00E4C4DA /* Info.plist */,
+				17CE907E2A65959B00E4C4DA /* Twine by SwiftGG.entitlements */,
+			);
+			path = "macOS (App)";
+			sourceTree = "<group>";
+		};
+		17CE90872A65959B00E4C4DA /* iOS (Extension) */ = {
+			isa = PBXGroup;
+			children = (
+				17CE90882A65959B00E4C4DA /* Info.plist */,
+			);
+			path = "iOS (Extension)";
+			sourceTree = "<group>";
+		};
+		17CE90912A65959B00E4C4DA /* macOS (Extension) */ = {
+			isa = PBXGroup;
+			children = (
+				17CE90922A65959B00E4C4DA /* Info.plist */,
+				17CE90932A65959B00E4C4DA /* Twine by SwiftGG.entitlements */,
+			);
+			path = "macOS (Extension)";
+			sourceTree = "<group>";
+		};
+		17CE90B22A65959C00E4C4DA /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				17FC52D12A6D56C000367D01 /* float.html */,
+				17CE90B42A65959C00E4C4DA /* content_script.css */,
+				17CE90B52A65959C00E4C4DA /* popup.js */,
+				17CE90B62A65959C00E4C4DA /* background.js */,
+				17CE90B72A65959C00E4C4DA /* popup.html */,
+				17CE90B82A65959C00E4C4DA /* source */,
+				17CE90BA2A65959C00E4C4DA /* content_script.js */,
+				17CE90BB2A65959C00E4C4DA /* manifest.json */,
+				17CE90BC2A65959C00E4C4DA /* options.html */,
+				17CE90BD2A65959C00E4C4DA /* popup.css */,
+			);
+			name = Resources;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		17CE90632A65959B00E4C4DA /* Twine by SwiftGG (iOS) */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 17CE90A82A65959B00E4C4DA /* Build configuration list for PBXNativeTarget "Twine by SwiftGG (iOS)" */;
+			buildPhases = (
+				17CE90602A65959B00E4C4DA /* Sources */,
+				17CE90612A65959B00E4C4DA /* Frameworks */,
+				17CE90622A65959B00E4C4DA /* Resources */,
+				17CE90A72A65959B00E4C4DA /* Embed Foundation Extensions */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				17CE90862A65959B00E4C4DA /* PBXTargetDependency */,
+			);
+			name = "Twine by SwiftGG (iOS)";
+			productName = "Twine by SwiftGG (iOS)";
+			productReference = 17CE90642A65959B00E4C4DA /* Twine by SwiftGG.app */;
+			productType = "com.apple.product-type.application";
+		};
+		17CE90752A65959B00E4C4DA /* Twine by SwiftGG (macOS) */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 17CE90AF2A65959B00E4C4DA /* Build configuration list for PBXNativeTarget "Twine by SwiftGG (macOS)" */;
+			buildPhases = (
+				17CE90722A65959B00E4C4DA /* Sources */,
+				17CE90732A65959B00E4C4DA /* Frameworks */,
+				17CE90742A65959B00E4C4DA /* Resources */,
+				17CE90AE2A65959B00E4C4DA /* Embed Foundation Extensions */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				17CE90902A65959B00E4C4DA /* PBXTargetDependency */,
+			);
+			name = "Twine by SwiftGG (macOS)";
+			productName = "Twine by SwiftGG (macOS)";
+			productReference = 17CE90762A65959B00E4C4DA /* Twine by SwiftGG.app */;
+			productType = "com.apple.product-type.application";
+		};
+		17CE90822A65959B00E4C4DA /* Twine by SwiftGG Extension (iOS) */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 17CE90A42A65959B00E4C4DA /* Build configuration list for PBXNativeTarget "Twine by SwiftGG Extension (iOS)" */;
+			buildPhases = (
+				17CE907F2A65959B00E4C4DA /* Sources */,
+				17CE90802A65959B00E4C4DA /* Frameworks */,
+				17CE90812A65959B00E4C4DA /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "Twine by SwiftGG Extension (iOS)";
+			productName = "Twine by SwiftGG Extension (iOS)";
+			productReference = 17CE90832A65959B00E4C4DA /* Twine by SwiftGG Extension.appex */;
+			productType = "com.apple.product-type.app-extension";
+		};
+		17CE908C2A65959B00E4C4DA /* Twine by SwiftGG Extension (macOS) */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 17CE90AB2A65959B00E4C4DA /* Build configuration list for PBXNativeTarget "Twine by SwiftGG Extension (macOS)" */;
+			buildPhases = (
+				17CE90892A65959B00E4C4DA /* Sources */,
+				17CE908A2A65959B00E4C4DA /* Frameworks */,
+				17CE908B2A65959B00E4C4DA /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "Twine by SwiftGG Extension (macOS)";
+			productName = "Twine by SwiftGG Extension (macOS)";
+			productReference = 17CE908D2A65959B00E4C4DA /* Twine by SwiftGG Extension.appex */;
+			productType = "com.apple.product-type.app-extension";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		17CE90512A65959900E4C4DA /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = 1;
+				LastSwiftUpdateCheck = 1410;
+				LastUpgradeCheck = 1410;
+				TargetAttributes = {
+					17CE90632A65959B00E4C4DA = {
+						CreatedOnToolsVersion = 14.1;
+					};
+					17CE90752A65959B00E4C4DA = {
+						CreatedOnToolsVersion = 14.1;
+					};
+					17CE90822A65959B00E4C4DA = {
+						CreatedOnToolsVersion = 14.1;
+					};
+					17CE908C2A65959B00E4C4DA = {
+						CreatedOnToolsVersion = 14.1;
+					};
+				};
+			};
+			buildConfigurationList = 17CE90542A65959900E4C4DA /* Build configuration list for PBXProject "Twine by SwiftGG" */;
+			compatibilityVersion = "Xcode 14.0";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 17CE90502A65959900E4C4DA;
+			productRefGroup = 17CE90652A65959B00E4C4DA /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				17CE90632A65959B00E4C4DA /* Twine by SwiftGG (iOS) */,
+				17CE90752A65959B00E4C4DA /* Twine by SwiftGG (macOS) */,
+				17CE90822A65959B00E4C4DA /* Twine by SwiftGG Extension (iOS) */,
+				17CE908C2A65959B00E4C4DA /* Twine by SwiftGG Extension (macOS) */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		17CE90622A65959B00E4C4DA /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				17CE90962A65959B00E4C4DA /* Icon.png in Resources */,
+				17CE906D2A65959B00E4C4DA /* LaunchScreen.storyboard in Resources */,
+				17CE90942A65959B00E4C4DA /* Main.html in Resources */,
+				17CE909A2A65959B00E4C4DA /* Script.js in Resources */,
+				17CE909E2A65959B00E4C4DA /* Assets.xcassets in Resources */,
+				17CE90702A65959B00E4C4DA /* Main.storyboard in Resources */,
+				17CE90982A65959B00E4C4DA /* Style.css in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		17CE90742A65959B00E4C4DA /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				17CE90972A65959B00E4C4DA /* Icon.png in Resources */,
+				17CE90992A65959B00E4C4DA /* Style.css in Resources */,
+				17CE907C2A65959B00E4C4DA /* Main.storyboard in Resources */,
+				17CE909B2A65959B00E4C4DA /* Script.js in Resources */,
+				17CE909F2A65959B00E4C4DA /* Assets.xcassets in Resources */,
+				17CE90952A65959B00E4C4DA /* Main.html in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		17CE90812A65959B00E4C4DA /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				17CE90D32A65959C00E4C4DA /* popup.css in Resources */,
+				17CE90CC2A65959C00E4C4DA /* background.js in Resources */,
+				17CE90CD2A65959C00E4C4DA /* popup.html in Resources */,
+				17CE90CA2A65959C00E4C4DA /* content_script.css in Resources */,
+				17CE90D02A65959C00E4C4DA /* content_script.js in Resources */,
+				17CE90D12A65959C00E4C4DA /* manifest.json in Resources */,
+				17CE90CB2A65959C00E4C4DA /* popup.js in Resources */,
+				17FC52D22A6D56C000367D01 /* float.html in Resources */,
+				17CE90D22A65959C00E4C4DA /* options.html in Resources */,
+				17CE90CE2A65959C00E4C4DA /* source in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		17CE908B2A65959B00E4C4DA /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				17CE90C82A65959C00E4C4DA /* popup.css in Resources */,
+				17CE90C12A65959C00E4C4DA /* background.js in Resources */,
+				17CE90C22A65959C00E4C4DA /* popup.html in Resources */,
+				17CE90BF2A65959C00E4C4DA /* content_script.css in Resources */,
+				17CE90C52A65959C00E4C4DA /* content_script.js in Resources */,
+				17CE90C62A65959C00E4C4DA /* manifest.json in Resources */,
+				17CE90C02A65959C00E4C4DA /* popup.js in Resources */,
+				17FC52D32A6D56C000367D01 /* float.html in Resources */,
+				17CE90C72A65959C00E4C4DA /* options.html in Resources */,
+				17CE90C32A65959C00E4C4DA /* source in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		17CE90602A65959B00E4C4DA /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				17CE909C2A65959B00E4C4DA /* ViewController.swift in Sources */,
+				17CE90682A65959B00E4C4DA /* AppDelegate.swift in Sources */,
+				17CE906A2A65959B00E4C4DA /* SceneDelegate.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		17CE90722A65959B00E4C4DA /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				17CE909D2A65959B00E4C4DA /* ViewController.swift in Sources */,
+				17CE90792A65959B00E4C4DA /* AppDelegate.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		17CE907F2A65959B00E4C4DA /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				17CE90A02A65959B00E4C4DA /* SafariWebExtensionHandler.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		17CE90892A65959B00E4C4DA /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				17CE90A12A65959B00E4C4DA /* SafariWebExtensionHandler.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		17CE90862A65959B00E4C4DA /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 17CE90822A65959B00E4C4DA /* Twine by SwiftGG Extension (iOS) */;
+			targetProxy = 17CE90852A65959B00E4C4DA /* PBXContainerItemProxy */;
+		};
+		17CE90902A65959B00E4C4DA /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 17CE908C2A65959B00E4C4DA /* Twine by SwiftGG Extension (macOS) */;
+			targetProxy = 17CE908F2A65959B00E4C4DA /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		17CE90572A65959A00E4C4DA /* Main.html */ = {
+			isa = PBXVariantGroup;
+			children = (
+				17CE90582A65959A00E4C4DA /* Base */,
+			);
+			name = Main.html;
+			sourceTree = "<group>";
+		};
+		17CE906B2A65959B00E4C4DA /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				17CE906C2A65959B00E4C4DA /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+		17CE906E2A65959B00E4C4DA /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				17CE906F2A65959B00E4C4DA /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		17CE907A2A65959B00E4C4DA /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				17CE907B2A65959B00E4C4DA /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		17CE90A22A65959B00E4C4DA /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		17CE90A32A65959B00E4C4DA /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+			};
+			name = Release;
+		};
+		17CE90A52A65959B00E4C4DA /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 4B97U7G8A7;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "iOS (Extension)/Info.plist";
+				INFOPLIST_KEY_CFBundleDisplayName = "Twine by SwiftGG Extension";
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				OTHER_LDFLAGS = (
+					"-framework",
+					SafariServices,
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "com.swiftgg.Twine-by-SwiftGG.Extension";
+				PRODUCT_NAME = "Twine by SwiftGG Extension";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		17CE90A62A65959B00E4C4DA /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 4B97U7G8A7;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "iOS (Extension)/Info.plist";
+				INFOPLIST_KEY_CFBundleDisplayName = "Twine by SwiftGG Extension";
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				OTHER_LDFLAGS = (
+					"-framework",
+					SafariServices,
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "com.swiftgg.Twine-by-SwiftGG.Extension";
+				PRODUCT_NAME = "Twine by SwiftGG Extension";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		17CE90A92A65959B00E4C4DA /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 3;
+				DEVELOPMENT_TEAM = 4B97U7G8A7;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "iOS (App)/Info.plist";
+				INFOPLIST_KEY_CFBundleDisplayName = "Twine by SwiftGG";
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.developer-tools";
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
+				INFOPLIST_KEY_UIMainStoryboardFile = Main;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				OTHER_LDFLAGS = (
+					"-framework",
+					SafariServices,
+					"-framework",
+					WebKit,
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "com.swiftgg.Twine-by-SwiftGG";
+				PRODUCT_NAME = "Twine by SwiftGG";
+				SDKROOT = iphoneos;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		17CE90AA2A65959B00E4C4DA /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 3;
+				DEVELOPMENT_TEAM = 4B97U7G8A7;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "iOS (App)/Info.plist";
+				INFOPLIST_KEY_CFBundleDisplayName = "Twine by SwiftGG";
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.developer-tools";
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
+				INFOPLIST_KEY_UIMainStoryboardFile = Main;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				OTHER_LDFLAGS = (
+					"-framework",
+					SafariServices,
+					"-framework",
+					WebKit,
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "com.swiftgg.Twine-by-SwiftGG";
+				PRODUCT_NAME = "Twine by SwiftGG";
+				SDKROOT = iphoneos;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		17CE90AC2A65959B00E4C4DA /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = "macOS (Extension)/Twine by SwiftGG.entitlements";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 4B97U7G8A7;
+				ENABLE_HARDENED_RUNTIME = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "macOS (Extension)/Info.plist";
+				INFOPLIST_KEY_CFBundleDisplayName = "Twine by SwiftGG Extension";
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@executable_path/../../../../Frameworks",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 10.14;
+				MARKETING_VERSION = 1.0;
+				OTHER_LDFLAGS = (
+					"-framework",
+					SafariServices,
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "com.swiftgg.Twine-by-SwiftGG.Extension";
+				PRODUCT_NAME = "Twine by SwiftGG Extension";
+				SDKROOT = macosx;
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+			};
+			name = Debug;
+		};
+		17CE90AD2A65959B00E4C4DA /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = "macOS (Extension)/Twine by SwiftGG.entitlements";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 4B97U7G8A7;
+				ENABLE_HARDENED_RUNTIME = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "macOS (Extension)/Info.plist";
+				INFOPLIST_KEY_CFBundleDisplayName = "Twine by SwiftGG Extension";
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@executable_path/../../../../Frameworks",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 10.14;
+				MARKETING_VERSION = 1.0;
+				OTHER_LDFLAGS = (
+					"-framework",
+					SafariServices,
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "com.swiftgg.Twine-by-SwiftGG.Extension";
+				PRODUCT_NAME = "Twine by SwiftGG Extension";
+				SDKROOT = macosx;
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+			};
+			name = Release;
+		};
+		17CE90B02A65959B00E4C4DA /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = "macOS (App)/Twine by SwiftGG.entitlements";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 4;
+				DEVELOPMENT_TEAM = 4B97U7G8A7;
+				ENABLE_HARDENED_RUNTIME = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "macOS (App)/Info.plist";
+				INFOPLIST_KEY_CFBundleDisplayName = "Twine by SwiftGG";
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.developer-tools";
+				INFOPLIST_KEY_NSMainStoryboardFile = Main;
+				INFOPLIST_KEY_NSPrincipalClass = NSApplication;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 10.14;
+				MARKETING_VERSION = 1.0;
+				OTHER_LDFLAGS = (
+					"-framework",
+					SafariServices,
+					"-framework",
+					WebKit,
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "com.swiftgg.Twine-by-SwiftGG";
+				PRODUCT_NAME = "Twine by SwiftGG";
+				SDKROOT = macosx;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+			};
+			name = Debug;
+		};
+		17CE90B12A65959B00E4C4DA /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = "macOS (App)/Twine by SwiftGG.entitlements";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 4;
+				DEVELOPMENT_TEAM = 4B97U7G8A7;
+				ENABLE_HARDENED_RUNTIME = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "macOS (App)/Info.plist";
+				INFOPLIST_KEY_CFBundleDisplayName = "Twine by SwiftGG";
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.developer-tools";
+				INFOPLIST_KEY_NSMainStoryboardFile = Main;
+				INFOPLIST_KEY_NSPrincipalClass = NSApplication;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 10.14;
+				MARKETING_VERSION = 1.0;
+				OTHER_LDFLAGS = (
+					"-framework",
+					SafariServices,
+					"-framework",
+					WebKit,
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "com.swiftgg.Twine-by-SwiftGG";
+				PRODUCT_NAME = "Twine by SwiftGG";
+				SDKROOT = macosx;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		17CE90542A65959900E4C4DA /* Build configuration list for PBXProject "Twine by SwiftGG" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				17CE90A22A65959B00E4C4DA /* Debug */,
+				17CE90A32A65959B00E4C4DA /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		17CE90A42A65959B00E4C4DA /* Build configuration list for PBXNativeTarget "Twine by SwiftGG Extension (iOS)" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				17CE90A52A65959B00E4C4DA /* Debug */,
+				17CE90A62A65959B00E4C4DA /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		17CE90A82A65959B00E4C4DA /* Build configuration list for PBXNativeTarget "Twine by SwiftGG (iOS)" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				17CE90A92A65959B00E4C4DA /* Debug */,
+				17CE90AA2A65959B00E4C4DA /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		17CE90AB2A65959B00E4C4DA /* Build configuration list for PBXNativeTarget "Twine by SwiftGG Extension (macOS)" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				17CE90AC2A65959B00E4C4DA /* Debug */,
+				17CE90AD2A65959B00E4C4DA /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		17CE90AF2A65959B00E4C4DA /* Build configuration list for PBXNativeTarget "Twine by SwiftGG (macOS)" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				17CE90B02A65959B00E4C4DA /* Debug */,
+				17CE90B12A65959B00E4C4DA /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 17CE90512A65959900E4C4DA /* Project object */;
+}
