@@ -1,5 +1,5 @@
 <div style="text-align: center;">
-    <img src="./Twine%20by%20SwiftGG%20plugin/source/intro/logo.png" alt="logo" style="display: block; margin: auto; width: 150px;">
+    <img src="./Twine%20by%20SwiftGG%20plugin/source/intro/logo.png" alt="logo" style="display: block; margin: auto; max-width: 100%; height: auto;">
 </div>
 
 Twine by SwiftGG 是一款浏览器插件，旨在帮助 iOS 开发者更轻松地学习和理解 Apple 官方文档。以社区提供的本地化内容为基础，可以识别 Apple 文档中的英文内容进行双语翻译，进而帮助开发者完成学习任务。
