@@ -488,6 +488,8 @@ function rollBackRemovedElement() {
       element.parent.appendChild(element.node)
     }
   }
+
+  removedElement = []
 }
 
 function getCurrentURL() {
