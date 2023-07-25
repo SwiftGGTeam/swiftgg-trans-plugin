@@ -42,7 +42,6 @@ Apple 为了让初学者能够很好的学习 iOS 开发知识，提供了易于
 目前你可以在以下几个浏览器扩展商店中下载这款插件
 - [Chrome 下载](https://chrome.google.com/webstore/detail/twine-by-swiftgg/kelkibamnlfhadhkaonlpplfiidhbofk) 
 
-
 **手动安装**
 1. 克隆此仓库到本地：
     ```
@@ -117,3 +116,5 @@ SwiftGG 是一个致力于为 Swift 语言和 iOS 开发者提供高质量中文
 - [JacobMao](https://github.com/JacobMao)
 - [RyanZhu](https://github.com/underthestars-zhy)
 - [FrankChu](https://github.com/yongfrank)
+
+

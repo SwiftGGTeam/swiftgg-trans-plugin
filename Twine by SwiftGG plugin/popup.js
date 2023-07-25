@@ -76,7 +76,7 @@ document.addEventListener("DOMContentLoaded", function () {
     document.getElementById('current-switch').setAttribute('class', response.status ? 'on' : 'off')
   } else {
     document.getElementById("translate-current").remove()
-    document.getElementById("display-method").remove()
+    document.getElementById("display-method-item").remove()
   }
 
 
