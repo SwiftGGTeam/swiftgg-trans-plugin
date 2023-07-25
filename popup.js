@@ -3,6 +3,7 @@ const displayMethodFlag = "displayMethodFlag"
 const updateRequestMethod = "updateShouldTranslate"
 const updateCurrentRequestMethod = "updateTranslateCurrent"
 const queryCurrentRequestMethod = "queryTranslateCurrent"
+const displayMethodRequestMethod = "displayMethod"
 const endUpWhiteList = ["swiftui","swiftui/","sample-apps","sample-apps/","swiftui-concepts","swiftui-concepts/"];
 
 document.addEventListener("DOMContentLoaded", function () {
@@ -22,6 +23,9 @@ document.addEventListener("DOMContentLoaded", function () {
 
 document.addEventListener("DOMContentLoaded", function () {
   const switchButton = document.querySelector("#current-switch");
+
+  if (!switchButton) return
+
   const label = switchButton.querySelector("label.check");
   const checkbox = document.getElementById("current-checkbox");
   checkbox.checked = false
@@ -38,9 +42,19 @@ document.addEventListener("DOMContentLoaded", function () {
 document.addEventListener("DOMContentLoaded", function () {
   const displaySelect = document.getElementById("display-method")
 
+  if (!displaySelect) return
+
   displaySelect.addEventListener("change", (event) => {
     event.stopPropagation()
-    chrome.storage.local.set({ displayMethodFlag: displaySelect.value }).then()
+    chrome.storage.local.set({ displayMethodFlag: displaySelect.value }).then(() => {
+      queryActiveTab().then((tab) => {
+        chrome.tabs.sendMessage(tab.id, {
+          message: displayMethodRequestMethod,
+          url: true.url,
+          data: displaySelect.value
+        }).then().catch((e) => {console.log(e)})
+      })
+    })
   })
 });
 
@@ -61,8 +75,8 @@ document.addEventListener("DOMContentLoaded", function () {
     document.getElementById("current-checkbox").checked = response.status;
     document.getElementById('current-switch').setAttribute('class', response.status ? 'on' : 'off')
   } else {
-    const element = document.getElementById("translate-current")
-    element.remove()
+    document.getElementById("translate-current").remove()
+    document.getElementById("display-method").remove()
   }
 
 

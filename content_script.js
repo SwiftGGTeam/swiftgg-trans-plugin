@@ -12,6 +12,8 @@ const queryStatusRequestMethod = "queryStatus"
 const translatedRequestMethod = "translated"
 const pageSwitchedRequestMethod = "pageSwitched"
 const translateCurrentRequestMethod = "translateCurrent"
+const displayMethodRequestMethod = "displayMethod"
+const queryDisplayMethodRequestMethod = "queryDisplayMethod"
 const endUpWhiteList = ["swiftui","swiftui/","sample-apps","sample-apps/","swiftui-concepts","swiftui-concepts/"];
 let currentTranslatedURL = null
 let translated = false
@@ -30,6 +32,10 @@ log("Plugin start request flag");
   shouldTranslate = response.shouldTranslate
 
   await startTranslate()
+
+  const displayMethod = await chrome.runtime.sendMessage({type: queryDisplayMethodRequestMethod});
+
+  changeDisplayMethod(displayMethod)
 
   log("Plugin wait page loaded");
 })()
@@ -81,6 +87,9 @@ chrome.runtime.onMessage.addListener(
         return true
       } else if (request.message === removeTranslateRequestMethod) {
         removeTranslate()
+        sendResponse()
+      } else if (request.message === displayMethodRequestMethod) {
+        changeDisplayMethod(request.data)
         sendResponse()
       }
     }
@@ -140,7 +149,10 @@ function addTitleNode() {
   }
   let newNode = document.createElement("h3");
   let text = document.createTextNode(titleText);
-  newNode.dataset.tag = "swiftgg"
+
+  newNode.dataset.tag = "swiftgg:translated"
+  title.dataset.tag = "swiftgg:original"
+
   newNode.appendChild(text);
   let parent = title.parentElement;
   parent.insertBefore(newNode, title);
@@ -148,8 +160,14 @@ function addTitleNode() {
 
 function isInjectedElement(element) {
   // Check if the element has a "data-tag" attribute and its value is "swiftgg"
-  return element.hasAttribute('data-tag') && element.getAttribute('data-tag') === 'swiftgg';
+  return element.hasAttribute('data-tag') && element.getAttribute('data-tag') === 'swiftgg:translated';
 }
+
+function isOriginalElement(element) {
+  // Check if the element has a "data-tag" attribute and its value is "swiftgg"
+  return element.hasAttribute('data-tag') && element.getAttribute('data-tag') === 'swiftgg:original';
+}
+
 
 function appendH2Nodes() {
   let h2Nodes = document.querySelectorAll("h2");
@@ -158,7 +176,10 @@ function appendH2Nodes() {
     let parent = node.parentElement;
     let newNode = document.createElement("h2");
     let t = document.createTextNode(json[node.innerText].zh);
-    newNode.dataset.tag = "swiftgg"
+
+    newNode.dataset.tag = "swiftgg:translated"
+    node.dataset.tag = "swiftgg:original"
+
     newNode.appendChild(t);
     parent.insertBefore(newNode, node);
   })
@@ -176,7 +197,10 @@ function appendPNodes() {
     let parent = node.parentElement;
     let newNode = document.createElement("p");
     let t = document.createTextNode(json[node.innerText].zh);
-    newNode.dataset.tag = "swiftgg"
+
+    newNode.dataset.tag = "swiftgg:translated"
+    node.dataset.tag = "swiftgg:original"
+
     newNode.appendChild(t);
     parent.insertBefore(newNode, node);
   })
@@ -203,9 +227,9 @@ function addInstructionToCategoryPage() {
   let pElement = document.createElement("p")
   pElement.classList.add("indicator")
   pElement.textContent = "⬆️ SwiftGG 正在运行，请点击上方按钮开始学习 ⬆️"
-  spaceElement.dataset.tag = "swiftgg"
-  spaceElement2.dataset.tag = "swiftgg"
-  pElement.dataset.tag = "swiftgg"
+  spaceElement.dataset.tag = "swiftgg:translated"
+  spaceElement2.dataset.tag = "swiftgg:translated"
+  pElement.dataset.tag = "swiftgg:translated"
   contentDiv.appendChild(spaceElement)
   contentDiv.appendChild(spaceElement2)
   contentDiv.appendChild(pElement)
@@ -299,6 +323,28 @@ function removeTranslate() {
 
   currentTranslatedURL = null
   translated = false
+}
+
+function removeOriginal() {
+  const body = document.body;
+  let allElements = [];
+
+  // Recursively iterate through the body and its children's children
+  function iterate(element) {
+    allElements.push(element);
+
+    for (const child of element.children) {
+      iterate(child);
+    }
+  }
+
+  iterate(body);
+
+  for (const element of allElements) {
+    if (isOriginalElement(element)) {
+      element.remove()
+    }
+  }
 }
 
 function getCurrentURL() {
@@ -503,5 +549,13 @@ function checkColorSchema() {
 function removeFloatElement() {
   if (elementExists("swiftgg-float")) {
     directRemoveElement("swiftgg-float")
+  }
+}
+
+function changeDisplayMethod(method) {
+  if (method === "auto") {
+
+  } else if (method === "chinese") {
+    removeOriginal()
   }
 }
