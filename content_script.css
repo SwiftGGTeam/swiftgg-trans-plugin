@@ -159,12 +159,12 @@ span.swiftgg-float-button-translate-text {
 }
 
 .grey-text {
-    color: gray;
+    color: gray !important;
 }
 
 @media (prefers-color-scheme: dark) {
     .grey-text {
-        color: darkgray;
+        color: darkgray !important;
     }
 }
 

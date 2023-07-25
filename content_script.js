@@ -379,7 +379,7 @@ function weakenOriginal() {
 
   for (const element of allElements) {
     if (isOriginalElement(element)) {
-      element.classList.add("grey-text")
+      addClassAtBeginning(element, "grey-text")
     }
   }
 }
@@ -457,7 +457,13 @@ function autoWeaken(event) {
 }
 
 function autoCancelWeaken(event) {
-  event.currentTarget.classList.add("grey-text")
+  addClassAtBeginning(event.currentTarget, "grey-text")
+}
+
+function addClassAtBeginning(element, newClass) {
+  const currentClasses = Array.from(element.classList);
+  currentClasses.unshift(newClass);
+  element.className = currentClasses.join(' ');
 }
 
 function getElementAfter(element) {
