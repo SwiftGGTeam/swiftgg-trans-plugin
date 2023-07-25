@@ -1,35 +1,46 @@
-![logo.png](./Twine%20by%20SwiftGG%20plugin/source/intro/logo.png)
+<div style="text-align: center;">
+    <img src="./Twine%20by%20SwiftGG%20plugin/source/intro/logo.png" alt="logo" style="display: block; margin: auto; width: 150px;">
+</div>
 
-Twine by SwiftGG 是一款浏览器插件，旨在帮助 iOS 开发者更轻松地学习和理解 Apple 官方文档。只需安装此插件，即可在浏览器中自动对照翻译 SwiftUI 官方教程页面。同时，插件提供翻译开关，方便用户根据需要进行切换。
+Twine by SwiftGG 是一款浏览器插件，旨在帮助 iOS 开发者更轻松地学习和理解 Apple 官方文档。以社区提供的本地化内容为基础，可以识别 Apple 文档中的英文内容进行双语翻译，进而帮助开发者完成学习任务。
 
 ## 目录
 1. 初衷
-2. 功能及使用
-3. 上线时间
+2. 项目方案
+3. 功能及使用
 4. 常见问题与解答
-5. 相关链接
+5. 功能计划
 6. 关于我们
 
 ## 初衷
 Apple 为了让初学者能够很好的学习 iOS 开发知识，提供了易于理解带有交互效果的学习教程，很多初学者通过这些教程顺利学会了 iOS 开发，创造出了独特且出色的产品。官方文档的质量非常高，但依然会有一些不完美的地方，例如不支持中文，不能及时更新到最新版本等，这也导致会有一部分初学者在学习的时候会遇到一些问题和困惑。
 
-我们创建这款插件的初衷便是帮助 iOS 开发者更容易地学习和理解 SwiftUI 官方文档。我们希望这个插件能够降低学习难度，让更多的人加入到 iOS 开发的行列中。同时我们也期待社区的力量，共同参与到插件和翻译的开发与完善中，让这个插件不断成长，更好地为大家服务。
+我们创建这款插件的初衷便是帮助 iOS 开发者更容易地学习和理解 SwiftUI 官方文档。我们希望这个工具能够降低学习难度，让更多的人加入到 iOS 开发的行列中。同时我们也期待社区的力量，共同参与到插件和翻译的开发与完善中，让这个插件不断成长，更好地为大家服务。
 
 在未来，我们希望 Twine by SwiftGG 成为初学者和资深开发者的得力助手，不仅涵盖 SwiftUI，还能扩展到其他 Apple 官方文档。我们期待与社区成员一起为开源做出贡献，共同推进技术的发展。
 
+## 项目方案
+![flow.png](./Twine%20by%20SwiftGG%20plugin/source/intro/Flow.png)
+在用户体验上，我们采用了类似沉浸式翻译的方式，中英文参照排列，同时你也可以自定义显示模式。这个方案保留了沉浸式的用户体验，还融入了社区的力量，能让更多的人参与进来，这也意味着社区的力量会产生更多的语言版本，更高效的迭代速度和更有意思的交流与沟通。
+
+目前，Twine by SwiftGG 是一个完全开源的项目，由 3 个仓库构成，分别是:
+- 浏览器插件仓库：https://github.com/SwiftGGTeam/swiftgg-trans-plugin
+- 数据后台仓库：https://github.com/SwiftGGTeam/swiftui-trans-api
+- 本地化文件库：https://github.com/SwiftGGTeam/swiftui-tutorial-chinese
+
 ## 功能及使用
-目前支持的 Apple 官方教程：
+目前我们支持了三个互动式的教学文档，它们分别是：
 - [Introducing SwiftUI](https://developer.apple.com/tutorials/swiftui)
 - [Learning SwiftUI](https://developer.apple.com/tutorials/swiftui-concepts/)
 - [Exploring SwiftUI Sample Apps](https://developer.apple.com/tutorials/sample-apps)
 
 ![screenshot.png](./Twine%20by%20SwiftGG%20plugin/source/intro/screenshot.png)
 
+使用非常简单，点击插件，打开自动翻译，进入到对应的教程页面即可自动翻译，可以根据你的喜好切换翻译展示方式，如果需要暂时不显示翻译，可以通过开关暂时关闭当前页面的翻译。只需要打开即可轻松上手。
+
 ### 安装
-- [Chrome 下载](https://chrome.google.com/webstore/category/extensions)  [待上架]
-- [edge 下载](https://microsoftedge.microsoft.com/addons/Microsoft-Edge-Extensions-Home) [待上架]
-- [firefox 下载](https://addons.mozilla.org/zh-CN/firefox/extensions/) [待上架]
-- [safari 下载](https://apps.apple.com/cn/story/id1503038495)  [待上架]
+目前你可以在以下几个浏览器扩展商店中下载这款插件
+- [Chrome 下载](https://chrome.google.com/webstore/detail/twine-by-swiftgg/kelkibamnlfhadhkaonlpplfiidhbofk) 
 
 **手动安装**
 1. 克隆此仓库到本地：
@@ -61,10 +72,8 @@ Apple 为了让初学者能够很好的学习 iOS 开发知识，提供了易于
     2. 选择 Safari > 偏好设置。
     3. 选择扩展，在列表中找到我们的扩展，选中启用。
 
-## 上线时间
-我们计划在 2023 年 4 月中旬正式发布 swiftgg-trans-plugin 插件。在正式上线前，我们会不断优化功能和完善翻译。欢迎大家提前尝试开发版本，为我们提供宝贵的反馈和建议。
 
-## 相关问题与解答
+## 常见问题与解答
 ### 如何给插件提 bug/feature？
 如果您在使用过程中遇到问题，或者有新的功能需求，欢迎通过 **[GitHub Issues](https://github.com/SwiftGGTeam/swiftgg-trans-plugin/issues)** 向我们反馈。在创建 Issue 时，请尽量详细描述问题或需求，以便我们更快地解决。
 
@@ -77,8 +86,17 @@ Apple 为了让初学者能够很好的学习 iOS 开发知识，提供了易于
 ### 其他问题
 如果您有其他问题或建议，请随时通过 **[GitHub Issues](https://github.com/SwiftGGTeam/swiftgg-trans-plugin/issues)** 与我们联系。我们将尽快回复并解决您的问题。
 
-## 相关链接
-[SwiftUI-Tutorial-Chinese](https://github.com/SwiftGGTeam/swiftui-tutorial-chinese) 存放翻译文件的仓库。
+## 功能计划
+下一阶段，我们要做的事情有：
+- 浏览器插件方面
+  - 支持多语言
+  - 支持 iOS 版本 Safari 浏览器
+- 数据后台仓库：
+  - 使用 vapor 对后台进行重构
+  - 优化网页里英文内容的匹配规则，支持更多的页面
+- 本地化文件库
+  - 提供更多学习资料的本地化文档
+  - 优化翻译文档的格式和内容编辑体验
 
 ## 关于我们
 SwiftGG 是一个致力于为 Swift 语言和 iOS 开发者提供高质量中文技术文章的社区。我们热衷于分享技术知识和经验，我们希望通过这个插件，以及社区的其他活动和项目，帮助更多的开发者更好地学习和了解 Swift 和 iOS 开发。
@@ -95,5 +113,8 @@ SwiftGG 是一个致力于为 Swift 语言和 iOS 开发者提供高质量中文
 - [IanIsMyUsername](https://github.com/IanIsMyUsername)
 - [hiETsang](https://github.com/hiETsang)
 - [Ryan-BetterMe](https://github.com/Ryan-BetterMe)
-- [underthestars-zhy](https://github.com/underthestars-zhy)
-- [yongfrank](https://github.com/yongfrank)
+- [JacobMao](https://github.com/JacobMao)
+- [RyanZhu](https://github.com/underthestars-zhy)
+- [FrankChu](https://github.com/yongfrank)
+
+
