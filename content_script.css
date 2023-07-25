@@ -158,6 +158,16 @@ span.swiftgg-float-button-translate-text {
     word-wrap: break-word;
 }
 
+.grey-text {
+    color: gray;
+}
+
+@media (prefers-color-scheme: dark) {
+    .grey-text {
+        color: darkgray;
+    }
+}
+
 @media screen { @media (min-width: 0px) {
     button.swiftgg-float-button-translate {
         font-size: 15px

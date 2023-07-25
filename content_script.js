@@ -21,6 +21,7 @@ const tabActiveRequestMethod = "tabActive"
 let noDisturb = false
 let shouldTranslate = false
 let globalCurrentURL = null
+let removedElement = []
 
 log("Plugin start request flag");
 
@@ -301,6 +302,13 @@ async function translate() {
 }
 
 function removeTranslate() {
+  removeTranslatedNode()
+
+  currentTranslatedURL = null
+  translated = false
+}
+
+function removeTranslatedNode() {
   const body = document.body;
   let allElements = [];
 
@@ -320,12 +328,11 @@ function removeTranslate() {
       element.remove()
     }
   }
-
-  currentTranslatedURL = null
-  translated = false
 }
 
 function removeOriginal() {
+  removedElement = []
+
   const body = document.body;
   let allElements = [];
 
@@ -342,7 +349,134 @@ function removeOriginal() {
 
   for (const element of allElements) {
     if (isOriginalElement(element)) {
+      removedElement.push({
+        parent: element.parentNode,
+        node: element,
+        afterNode: getElementAfter(element)
+      })
       element.remove()
+    }
+  }
+}
+
+function weakenOriginal() {
+  const body = document.body;
+  let allElements = [];
+
+  // Recursively iterate through the body and its children's children
+  function iterate(element) {
+    allElements.push(element);
+
+    for (const child of element.children) {
+      iterate(child);
+    }
+  }
+
+  iterate(body);
+
+  for (const element of allElements) {
+    if (isOriginalElement(element)) {
+      element.classList.add("grey-text")
+    }
+  }
+}
+
+function rollbackWeakenOriginal() {
+  const body = document.body;
+  let allElements = [];
+
+  // Recursively iterate through the body and its children's children
+  function iterate(element) {
+    allElements.push(element);
+
+    for (const child of element.children) {
+      iterate(child);
+    }
+  }
+
+  iterate(body);
+
+  for (const element of allElements) {
+    if (isOriginalElement(element)) {
+      element.classList.remove("grey-text")
+    }
+  }
+}
+
+function addAutoWeaken() {
+  const body = document.body;
+  let allElements = [];
+
+  // Recursively iterate through the body and its children's children
+  function iterate(element) {
+    allElements.push(element);
+
+    for (const child of element.children) {
+      iterate(child);
+    }
+  }
+
+  iterate(body);
+
+  for (const element of allElements) {
+    if (isOriginalElement(element)) {
+      element.addEventListener("mouseenter", autoWeaken, false)
+      element.addEventListener("mouseleave", autoCancelWeaken, false)
+    }
+  }
+}
+
+function rollbackAutoWeaken() {
+  const body = document.body;
+  let allElements = [];
+
+  // Recursively iterate through the body and its children's children
+  function iterate(element) {
+    allElements.push(element);
+
+    for (const child of element.children) {
+      iterate(child);
+    }
+  }
+
+  iterate(body);
+
+  for (const element of allElements) {
+    if (isOriginalElement(element)) {
+      element.removeEventListener("mouseenter", autoWeaken, false)
+      element.removeEventListener("mouseleave", autoCancelWeaken, false)
+    }
+  }
+}
+
+function autoWeaken(event) {
+  event.currentTarget.classList.remove("grey-text")
+}
+
+function autoCancelWeaken(event) {
+  event.currentTarget.classList.add("grey-text")
+}
+
+function getElementAfter(element) {
+  const parent = element.parentNode;
+  let nextElement = parent.firstChild;
+  while (nextElement !== null && nextElement !== element) {
+    nextElement = nextElement.nextSibling;
+  }
+
+  if (nextElement) {
+    return nextElement.nextSibling;
+  } else {
+    return null
+  }
+}
+
+function rollBackRemovedElement() {
+  for (let element of removedElement.reverse()) {
+    if (element.afterNode) {
+      element.parent.insertBefore(element.node, element.afterNode)
+    } else {
+      element.parent.appendChild(element.node)
     }
   }
 }
@@ -553,9 +687,18 @@ function removeFloatElement() {
 }
 
 function changeDisplayMethod(method) {
-  if (method === "auto") {
+  rollBackRemovedElement()
+  rollbackWeakenOriginal()
+  rollbackAutoWeaken()
 
+  if (method === "auto") {
+    weakenOriginal()
+    addAutoWeaken()
   } else if (method === "chinese") {
     removeOriginal()
+  } else if (method === "highlight") {
+
+  } else if (method === "weaken") {
+    weakenOriginal()
   }
 }
