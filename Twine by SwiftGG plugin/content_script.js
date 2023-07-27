@@ -387,9 +387,9 @@ function removeWrapperNode() {
 
   for (const element of allElements) {
     if (isWrapperElement(element)) {
-      element.forEach((el) => {
+      for (let el of element.children) {
         element.parentNode.insertBefore(el, element)
-      })
+      }
 
       element.remove()
     }
