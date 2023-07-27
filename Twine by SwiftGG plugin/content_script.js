@@ -594,6 +594,52 @@ function rollbackFloatListener() {
   }
 }
 
+function addReplaceListener() {
+  const body = document.body;
+  let allElements = [];
+
+  // Recursively iterate through the body and its children's children
+  function iterate(element) {
+    allElements.push(element);
+
+    for (const child of element.children) {
+      iterate(child);
+    }
+  }
+
+  iterate(body);
+
+  for (const element of allElements) {
+    if (isWrapperElement(element)) {
+      element.addEventListener("mouseenter", addReplaceTranslate, false)
+      element.addEventListener("mouseleave", cancelReplaceTranslate, false)
+    }
+  }
+}
+
+function rollbackReplaceListener() {
+  const body = document.body;
+  let allElements = [];
+
+  // Recursively iterate through the body and its children's children
+  function iterate(element) {
+    allElements.push(element);
+
+    for (const child of element.children) {
+      iterate(child);
+    }
+  }
+
+  iterate(body);
+
+  for (const element of allElements) {
+    if (isWrapperElement(element)) {
+      element.removeEventListener("mouseenter", addReplaceTranslate, false)
+      element.removeEventListener("mouseleave", cancelReplaceTranslate, false)
+    }
+  }
+}
+
 function hideAllTranslation() {
   const body = document.body;
   let allElements = [];
@@ -653,6 +699,18 @@ function addFloatTranslate(event) {
 
 function cancelFloatTranslate(event) {
   event.currentTarget.children[1].classList.add("swiftgg-hide")
+}
+
+function addReplaceTranslate(event) {
+  const temp = event.currentTarget.children[0].innerText
+  event.currentTarget.children[0].innerText  = event.currentTarget.children[1].innerText
+  event.currentTarget.children[1].innerText = temp
+}
+
+function cancelReplaceTranslate(event) {
+  const temp = event.currentTarget.children[1].innerText
+  event.currentTarget.children[1].innerText  = event.currentTarget.children[0].innerText
+  event.currentTarget.children[0].innerText = temp
 }
 
 function addClassAtBeginning(element, newClass) {
@@ -897,6 +955,7 @@ function changeDisplayMethod(method) {
   rollbackWeakenOriginal()
   rollbackAutoWeaken()
   rollbackFloatListener()
+  rollbackReplaceListener()
 
   hideAllTranslation()
 
@@ -912,5 +971,8 @@ function changeDisplayMethod(method) {
   } else if (method === "float") {
     removeTranslated()
     addFloatListener()
+  } else if (method === "replace") {
+    removeTranslated()
+    addReplaceListener()
   }
 }
