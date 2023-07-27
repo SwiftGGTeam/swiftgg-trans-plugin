@@ -704,17 +704,17 @@ function cancelFloatTranslate(event) {
 function addReplaceTranslate(event) {
   const first = event.currentTarget.children[0]
   const second = event.currentTarget.children[1]
-  const temp = first.innerText
-  first.innerText  = second.innerText
-  second.innerText = temp
+  const temp = first.textContent
+  first.textContent  = second.textContent
+  second.textContent = temp
 }
 
 function cancelReplaceTranslate(event) {
   const first = event.currentTarget.children[0]
   const second = event.currentTarget.children[1]
-  const temp = second.innerText
-  second.innerText = first.innerText
-  first.innerText = temp
+  const temp = second.textContent
+  second.textContent = first.textContent
+  first.textContent = temp
 }
 
 function addClassAtBeginning(element, newClass) {
