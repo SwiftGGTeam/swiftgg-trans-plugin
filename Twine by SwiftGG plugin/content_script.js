@@ -145,6 +145,9 @@ function addTitleNode() {
     return;
   }
   let newNode = document.createElement("h3");
+  [...title.attributes].forEach((a) => {
+    newNode.setAttribute(a.nodeName, a.nodeValue)
+  })
   let text = document.createTextNode(titleText);
 
   let wrapper = document.createElement("div")
