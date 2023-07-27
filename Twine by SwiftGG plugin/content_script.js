@@ -204,6 +204,9 @@ function appendH2Nodes() {
   Array.from(h2Nodes).filter((node) => Boolean(json[node.innerText])).forEach((node) => {
     let parent = node.parentNode;
     let newNode = document.createElement("h2");
+    [...node.attributes].forEach((a) => {
+      newNode.setAttribute(a.nodeName, a.nodeValue)
+    })
     let t = document.createTextNode(json[node.innerText].zh);
 
     let wrapper = document.createElement("div")
@@ -239,6 +242,9 @@ function appendPNodes() {
   Array.from(pNodes).filter((node) => Boolean(json[node.innerText])).forEach((node) => {
     let parent = node.parentNode;
     let newNode = document.createElement("p");
+    [...node.attributes].forEach((a) => {
+      newNode.setAttribute(a.nodeName, a.nodeValue)
+    })
     let t = document.createTextNode(json[node.innerText].zh);
 
     let wrapper = document.createElement("div")
