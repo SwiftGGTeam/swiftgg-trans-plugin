@@ -153,18 +153,32 @@ function addTitleNode() {
   newNode.dataset.tag = "swiftgg:translated"
   title.dataset.tag = "swiftgg:original"
 
+  let space = document.createElement("p")
+  space.dataset.tag = "swiftgg:space"
+
   newNode.appendChild(text);
+
+  let hideNewNode = newNode.cloneNode(true)
+  hideNewNode.dataset.tag = "swiftgg:hide-translate"
+
   let parent = title.parentNode;
   parent.insertBefore(wrapper, title);
   wrapper.appendChild(newNode)
   wrapper.appendChild(title)
-  wrapper.appendChild(document.createElement("p"))
+  wrapper.appendChild(hideNewNode)
+  wrapper.appendChild(space)
 }
 
 function isInjectedElement(element) {
   // Check if the element has a "data-tag" attribute and its value is "swiftgg"
   return element.hasAttribute('data-tag') && element.getAttribute('data-tag') === 'swiftgg:translated';
 }
+
+function isHideInjectedElement(element) {
+  // Check if the element has a "data-tag" attribute and its value is "swiftgg"
+  return element.hasAttribute('data-tag') && element.getAttribute('data-tag') === 'swiftgg:hide-translate';
+}
+
 
 function isOriginalElement(element) {
   // Check if the element has a "data-tag" attribute and its value is "swiftgg"
@@ -174,6 +188,11 @@ function isOriginalElement(element) {
 function isWrapperElement(element) {
   // Check if the element has a "data-tag" attribute and its value is "swiftgg"
   return element.hasAttribute('data-tag') && element.getAttribute('data-tag') === 'swiftgg:wrapper';
+}
+
+function isSpaceElement(element) {
+  // Check if the element has a "data-tag" attribute and its value is "swiftgg"
+  return element.hasAttribute('data-tag') && element.getAttribute('data-tag') === 'swiftgg:space';
 }
 
 function appendH2Nodes() {
@@ -190,11 +209,19 @@ function appendH2Nodes() {
     newNode.dataset.tag = "swiftgg:translated"
     node.dataset.tag = "swiftgg:original"
 
+    let space = document.createElement("p")
+    space.dataset.tag = "swiftgg:space"
+
     newNode.appendChild(t);
+
+    let hideNewNode = newNode.cloneNode(true)
+    hideNewNode.dataset.tag = "swiftgg:hide-translate"
+
     parent.insertBefore(wrapper, node);
     wrapper.appendChild(newNode)
     wrapper.appendChild(node)
-    wrapper.appendChild(document.createElement("p"))
+    wrapper.appendChild(hideNewNode)
+    wrapper.appendChild(space)
   })
 }
 
@@ -217,11 +244,19 @@ function appendPNodes() {
     newNode.dataset.tag = "swiftgg:translated"
     node.dataset.tag = "swiftgg:original"
 
+    let space = document.createElement("p")
+    space.dataset.tag = "swiftgg:space"
+
     newNode.appendChild(t);
+
+    let hideNewNode = newNode.cloneNode(true)
+    hideNewNode.dataset.tag = "swiftgg:hide-translate"
+
     parent.insertBefore(wrapper, node);
     wrapper.appendChild(newNode)
     wrapper.appendChild(node)
-    wrapper.appendChild(document.createElement("p"))
+    wrapper.appendChild(hideNewNode)
+    wrapper.appendChild(space)
   })
 }
 
@@ -358,6 +393,10 @@ function removeWrapperNode() {
 
       element.remove()
     }
+
+    if (isSpaceElement(element)) {
+      element.remove()
+    }
   }
 }
 
@@ -378,7 +417,7 @@ function removeTranslatedNode() {
   iterate(body);
 
   for (const element of allElements) {
-    if (isInjectedElement(element)) {
+    if (isInjectedElement(element) || isHideInjectedElement(element)) {
       element.remove()
     }
   }
@@ -403,6 +442,35 @@ function removeOriginal() {
 
   for (const element of allElements) {
     if (isOriginalElement(element)) {
+      removedElement.push({
+        parent: element.parentNode,
+        node: element,
+        afterNode: getElementAfter(element)
+      })
+      element.remove()
+    }
+  }
+}
+
+function removeTranslated() {
+  removedElement = []
+
+  const body = document.body;
+  let allElements = [];
+
+  // Recursively iterate through the body and its children's children
+  function iterate(element) {
+    allElements.push(element);
+
+    for (const child of element.children) {
+      iterate(child);
+    }
+  }
+
+  iterate(body);
+
+  for (const element of allElements) {
+    if (isInjectedElement(element)) {
       removedElement.push({
         parent: element.parentNode,
         node: element,
@@ -542,7 +610,7 @@ function hideAllTranslation() {
   iterate(body);
 
   for (const element of allElements) {
-    if (isInjectedElement(element)) {
+    if (isHideInjectedElement(element)) {
       element.classList.add("swiftgg-hide")
     }
   }
@@ -580,11 +648,11 @@ function autoCancelWeaken(event) {
 }
 
 function addFloatTranslate(event) {
-  event.currentTarget.children[0].classList.remove("swiftgg-hide")
+  event.currentTarget.children[1].classList.remove("swiftgg-hide")
 }
 
 function cancelFloatTranslate(event) {
-  event.currentTarget.children[0].classList.add("swiftgg-hide")
+  event.currentTarget.children[1].classList.add("swiftgg-hide")
 }
 
 function addClassAtBeginning(element, newClass) {
@@ -830,6 +898,8 @@ function changeDisplayMethod(method) {
   rollbackAutoWeaken()
   rollbackFloatListener()
 
+  hideAllTranslation()
+
   if (method === "auto") {
     weakenOriginal()
     addAutoWeaken()
@@ -840,7 +910,7 @@ function changeDisplayMethod(method) {
   } else if (method === "weaken") {
     weakenOriginal()
   } else if (method === "float") {
-    hideAllTranslation()
+    removeTranslated()
     addFloatListener()
   }
 }
