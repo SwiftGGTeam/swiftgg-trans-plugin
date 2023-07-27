@@ -702,15 +702,19 @@ function cancelFloatTranslate(event) {
 }
 
 function addReplaceTranslate(event) {
-  const temp = event.currentTarget.children[0].innerText
-  event.currentTarget.children[0].innerText  = event.currentTarget.children[1].innerText
-  event.currentTarget.children[1].innerText = temp
+  const first = event.currentTarget.children[0]
+  const second = event.currentTarget.children[1]
+  const temp = first.innerText
+  first.innerText  = second.innerText
+  second.innerText = temp
 }
 
 function cancelReplaceTranslate(event) {
-  const temp = event.currentTarget.children[1].innerText
-  event.currentTarget.children[1].innerText  = event.currentTarget.children[0].innerText
-  event.currentTarget.children[0].innerText = temp
+  const first = event.currentTarget.children[0]
+  const second = event.currentTarget.children[1]
+  const temp = second.innerText
+  second.innerText = first.innerText
+  first.innerText = temp
 }
 
 function addClassAtBeginning(element, newClass) {
