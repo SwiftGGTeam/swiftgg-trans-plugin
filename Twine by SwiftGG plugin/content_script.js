@@ -147,12 +147,26 @@ function addTitleNode() {
   let newNode = document.createElement("h3");
   let text = document.createTextNode(titleText);
 
+  let wrapper = document.createElement("div")
+  wrapper.dataset.tag = "swiftgg:wrapper"
+
   newNode.dataset.tag = "swiftgg:translated"
   title.dataset.tag = "swiftgg:original"
 
+  let space = document.createElement("p")
+  space.dataset.tag = "swiftgg:space"
+
   newNode.appendChild(text);
-  let parent = title.parentElement;
-  parent.insertBefore(newNode, title);
+
+  let hideNewNode = newNode.cloneNode(true)
+  hideNewNode.dataset.tag = "swiftgg:hide-translate"
+
+  let parent = title.parentNode;
+  parent.insertBefore(wrapper, title);
+  wrapper.appendChild(newNode)
+  wrapper.appendChild(title)
+  wrapper.appendChild(hideNewNode)
+  wrapper.appendChild(space)
 }
 
 function isInjectedElement(element) {
@@ -160,25 +174,54 @@ function isInjectedElement(element) {
   return element.hasAttribute('data-tag') && element.getAttribute('data-tag') === 'swiftgg:translated';
 }
 
+function isHideInjectedElement(element) {
+  // Check if the element has a "data-tag" attribute and its value is "swiftgg"
+  return element.hasAttribute('data-tag') && element.getAttribute('data-tag') === 'swiftgg:hide-translate';
+}
+
+
 function isOriginalElement(element) {
   // Check if the element has a "data-tag" attribute and its value is "swiftgg"
   return element.hasAttribute('data-tag') && element.getAttribute('data-tag') === 'swiftgg:original';
 }
 
+function isWrapperElement(element) {
+  // Check if the element has a "data-tag" attribute and its value is "swiftgg"
+  return element.hasAttribute('data-tag') && element.getAttribute('data-tag') === 'swiftgg:wrapper';
+}
+
+function isSpaceElement(element) {
+  // Check if the element has a "data-tag" attribute and its value is "swiftgg"
+  return element.hasAttribute('data-tag') && element.getAttribute('data-tag') === 'swiftgg:space';
+}
 
 function appendH2Nodes() {
   let h2Nodes = document.querySelectorAll("h2");
 
   Array.from(h2Nodes).filter((node) => Boolean(json[node.innerText])).forEach((node) => {
-    let parent = node.parentElement;
+    let parent = node.parentNode;
     let newNode = document.createElement("h2");
     let t = document.createTextNode(json[node.innerText].zh);
+
+    let wrapper = document.createElement("div")
+    wrapper.dataset.tag = "swiftgg:wrapper"
 
     newNode.dataset.tag = "swiftgg:translated"
     node.dataset.tag = "swiftgg:original"
 
+    let space = document.createElement("p")
+    space.dataset.tag = "swiftgg:space"
+
     newNode.appendChild(t);
-    parent.insertBefore(newNode, node);
+
+    let hideNewNode = newNode.cloneNode(true)
+    hideNewNode.dataset.tag = "swiftgg:hide-translate"
+
+    parent.insertBefore(wrapper, node);
+    wrapper.appendChild(newNode)
+    wrapper.appendChild(node)
+    wrapper.appendChild(hideNewNode)
+    wrapper.appendChild(space)
   })
 }
 
@@ -191,15 +234,29 @@ function appendH2Nodes() {
 function appendPNodes() {
   let pNodes = document.querySelectorAll("p");
   Array.from(pNodes).filter((node) => Boolean(json[node.innerText])).forEach((node) => {
-    let parent = node.parentElement;
+    let parent = node.parentNode;
     let newNode = document.createElement("p");
     let t = document.createTextNode(json[node.innerText].zh);
+
+    let wrapper = document.createElement("div")
+    wrapper.dataset.tag = "swiftgg:wrapper"
 
     newNode.dataset.tag = "swiftgg:translated"
     node.dataset.tag = "swiftgg:original"
 
+    let space = document.createElement("p")
+    space.dataset.tag = "swiftgg:space"
+
     newNode.appendChild(t);
-    parent.insertBefore(newNode, node);
+
+    let hideNewNode = newNode.cloneNode(true)
+    hideNewNode.dataset.tag = "swiftgg:hide-translate"
+
+    parent.insertBefore(wrapper, node);
+    wrapper.appendChild(newNode)
+    wrapper.appendChild(node)
+    wrapper.appendChild(hideNewNode)
+    wrapper.appendChild(space)
   })
 }
 
@@ -307,9 +364,42 @@ function removeTranslate() {
 
   removeTranslatedNode()
 
+  removeWrapperNode()
+
   currentTranslatedURL = null
   translated = false
 }
+
+function removeWrapperNode() {
+  const body = document.body;
+  let allElements = [];
+
+  // Recursively iterate through the body and its children's children
+  function iterate(element) {
+    allElements.push(element);
+
+    for (const child of element.children) {
+      iterate(child);
+    }
+  }
+
+  iterate(body);
+
+  for (const element of allElements) {
+    if (isWrapperElement(element)) {
+      for (let el of element.children) {
+        element.parentNode.insertBefore(el, element)
+      }
+
+      element.remove()
+    }
+
+    if (isSpaceElement(element)) {
+      element.remove()
+    }
+  }
+}
+
 
 function removeTranslatedNode() {
   const body = document.body;
@@ -327,7 +417,7 @@ function removeTranslatedNode() {
   iterate(body);
 
   for (const element of allElements) {
-    if (isInjectedElement(element)) {
+    if (isInjectedElement(element) || isHideInjectedElement(element)) {
       element.remove()
     }
   }
@@ -352,6 +442,35 @@ function removeOriginal() {
 
   for (const element of allElements) {
     if (isOriginalElement(element)) {
+      removedElement.push({
+        parent: element.parentNode,
+        node: element,
+        afterNode: getElementAfter(element)
+      })
+      element.remove()
+    }
+  }
+}
+
+function removeTranslated() {
+  removedElement = []
+
+  const body = document.body;
+  let allElements = [];
+
+  // Recursively iterate through the body and its children's children
+  function iterate(element) {
+    allElements.push(element);
+
+    for (const child of element.children) {
+      iterate(child);
+    }
+  }
+
+  iterate(body);
+
+  for (const element of allElements) {
+    if (isInjectedElement(element)) {
       removedElement.push({
         parent: element.parentNode,
         node: element,
@@ -429,6 +548,120 @@ function addAutoWeaken() {
   }
 }
 
+function addFloatListener() {
+  const body = document.body;
+  let allElements = [];
+
+  // Recursively iterate through the body and its children's children
+  function iterate(element) {
+    allElements.push(element);
+
+    for (const child of element.children) {
+      iterate(child);
+    }
+  }
+
+  iterate(body);
+
+  for (const element of allElements) {
+    if (isWrapperElement(element)) {
+      element.addEventListener("mouseenter", addFloatTranslate, false)
+      element.addEventListener("mouseleave", cancelFloatTranslate, false)
+    }
+  }
+}
+
+function rollbackFloatListener() {
+  const body = document.body;
+  let allElements = [];
+
+  // Recursively iterate through the body and its children's children
+  function iterate(element) {
+    allElements.push(element);
+
+    for (const child of element.children) {
+      iterate(child);
+    }
+  }
+
+  iterate(body);
+
+  for (const element of allElements) {
+    if (isWrapperElement(element)) {
+      element.removeEventListener("mouseenter", addFloatTranslate, false)
+      element.removeEventListener("mouseleave", cancelFloatTranslate, false)
+    }
+  }
+}
+
+function addReplaceListener() {
+  const body = document.body;
+  let allElements = [];
+
+  // Recursively iterate through the body and its children's children
+  function iterate(element) {
+    allElements.push(element);
+
+    for (const child of element.children) {
+      iterate(child);
+    }
+  }
+
+  iterate(body);
+
+  for (const element of allElements) {
+    if (isWrapperElement(element)) {
+      element.addEventListener("mouseenter", addReplaceTranslate, false)
+      element.addEventListener("mouseleave", cancelReplaceTranslate, false)
+    }
+  }
+}
+
+function rollbackReplaceListener() {
+  const body = document.body;
+  let allElements = [];
+
+  // Recursively iterate through the body and its children's children
+  function iterate(element) {
+    allElements.push(element);
+
+    for (const child of element.children) {
+      iterate(child);
+    }
+  }
+
+  iterate(body);
+
+  for (const element of allElements) {
+    if (isWrapperElement(element)) {
+      element.removeEventListener("mouseenter", addReplaceTranslate, false)
+      element.removeEventListener("mouseleave", cancelReplaceTranslate, false)
+    }
+  }
+}
+
+function hideAllTranslation() {
+  const body = document.body;
+  let allElements = [];
+
+  // Recursively iterate through the body and its children's children
+  function iterate(element) {
+    allElements.push(element);
+
+    for (const child of element.children) {
+      iterate(child);
+    }
+  }
+
+  iterate(body);
+
+  for (const element of allElements) {
+    if (isHideInjectedElement(element)) {
+      element.classList.add("swiftgg-hide")
+    }
+  }
+}
+
 function rollbackAutoWeaken() {
   const body = document.body;
   let allElements = [];
@@ -458,6 +691,30 @@ function autoWeaken(event) {
 
 function autoCancelWeaken(event) {
   addClassAtBeginning(event.currentTarget, "grey-text")
+}
+
+function addFloatTranslate(event) {
+  event.currentTarget.children[1].classList.remove("swiftgg-hide")
+}
+
+function cancelFloatTranslate(event) {
+  event.currentTarget.children[1].classList.add("swiftgg-hide")
+}
+
+function addReplaceTranslate(event) {
+  const first = event.currentTarget.children[0]
+  const second = event.currentTarget.children[1]
+  const temp = first.textContent
+  first.textContent  = second.textContent
+  second.textContent = temp
+}
+
+function cancelReplaceTranslate(event) {
+  const first = event.currentTarget.children[0]
+  const second = event.currentTarget.children[1]
+  const temp = second.textContent
+  second.textContent = first.textContent
+  first.textContent = temp
 }
 
 function addClassAtBeginning(element, newClass) {
@@ -701,6 +958,10 @@ function changeDisplayMethod(method) {
   rollBackRemovedElement()
   rollbackWeakenOriginal()
   rollbackAutoWeaken()
+  rollbackFloatListener()
+  rollbackReplaceListener()
+
+  hideAllTranslation()
 
   if (method === "auto") {
     weakenOriginal()
@@ -711,5 +972,11 @@ function changeDisplayMethod(method) {
 
   } else if (method === "weaken") {
     weakenOriginal()
+  } else if (method === "float") {
+    removeTranslated()
+    addFloatListener()
+  } else if (method === "replace") {
+    removeTranslated()
+    addReplaceListener()
   }
 }

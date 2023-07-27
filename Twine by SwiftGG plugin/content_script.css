@@ -162,6 +162,10 @@ span.swiftgg-float-button-translate-text {
     color: gray !important;
 }
 
+.swiftgg-hide {
+    display: none !important;
+}
+
 @media (prefers-color-scheme: dark) {
     .grey-text {
         color: darkgray !important;
