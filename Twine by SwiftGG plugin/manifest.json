@@ -1,7 +1,7 @@
 {
     "name": "Twine by SwiftGG",
     "description": "Apple document",
-    "version": "0.1.0",
+    "version": "0.2.0",
     "manifest_version": 3,
     "background": {
         "service_worker": "./background.js"
@@ -17,9 +17,7 @@
     },
     "permissions": [
         "tabs",
-        "storage",
-        "declarativeNetRequest",
-        "browsingData"
+        "storage"
     ],
     "host_permissions": [
         "https://developer.apple.com/*",
