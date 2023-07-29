@@ -11,6 +11,8 @@ import SwiftUIX
 import SafariServices
 
 struct HomeView: View {
+    @State var state = ExtensionState.unknown
+    
     var body: some View {
         ZStack {
             Color.white
@@ -38,12 +40,12 @@ struct HomeView: View {
                     .lineSpacing(10)
                     .padding(.top, 5)
 
-                Text("Twine by SwiftGG's extension is currently on. You can turn it off in the Extensions section of Safari Settings.")
+                Text(state.text)
                     .multilineTextAlignment(.center)
                     .font(.system(size: 18, weight: .bold))
                     .padding(.top, 40)
                     .lineSpacing(8)
-                    .frame(width: 500)
+                    .frame(width: 550)
                 
                 Button {
                     openSafariPreferences()
@@ -72,6 +74,20 @@ struct HomeView: View {
             .padding(55)
         }
         .ignoresSafeArea()
+        .onAppear {
+            SFSafariExtensionManager.getStateOfSafariExtension(withIdentifier: extensionBundleIdentifier) { (state, error) in
+                guard let state = state, error == nil else {
+                    // Insert code to inform the user that something went wrong.
+                    return
+                }
+
+                if state.isEnabled {
+                    self.state = .on
+                } else {
+                    self.state = .off
+                }
+            }
+        }
     }
     
     func openSafariPreferences() {
