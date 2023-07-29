@@ -32,12 +32,12 @@ struct HomeView: View {
             .background(Color(NSColor.quaternaryLabelColor))
             
             VStack {
-                Text("Welcome To\nTwine By SwiftGG")
+                Text("Welcome To\nTwine by SwiftGG")
                     .multilineTextAlignment(.center)
                     .font(.system(size: 38, weight: .heavy))
                     .lineSpacing(10)
-                    .padding(.top, 20)
-                
+                    .padding(.top, 5)
+
                 Text("Twine by SwiftGG's extension is currently on. You can turn it off in the Extensions section of Safari Settings.")
                     .multilineTextAlignment(.center)
                     .font(.system(size: 18, weight: .bold))
@@ -48,12 +48,21 @@ struct HomeView: View {
                 Button {
                     openSafariPreferences()
                 } label: {
-                    Text("Quit and Open Safari Settings...")
-                        .font(.system(size: 14, weight: .medium))
-                        .padding(10)
-                        .padding(.horizontal, 6)
-                        .background(Color(NSColor.controlBackgroundColor))
-                        .cornerRadius(10)
+                    if #available(macOS 12.0, *) {
+                        Text("Quit and Open Safari Settings...")
+                            .font(.system(size: 14, weight: .medium))
+                            .padding(10)
+                            .padding(.horizontal, 6)
+                            .background(.regularMaterial)
+                            .cornerRadius(10)
+                    } else {
+                        Text("Quit and Open Safari Settings...")
+                            .font(.system(size: 14, weight: .medium))
+                            .padding(10)
+                            .padding(.horizontal, 6)
+                            .background(.black.opacity(0.4))
+                            .cornerRadius(10)
+                    }
                 }
                 .buttonStyle(PlainButtonStyle())
                 .padding(.top, 80)
