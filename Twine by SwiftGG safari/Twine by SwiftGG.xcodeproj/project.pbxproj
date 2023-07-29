@@ -49,6 +49,12 @@
 		17CE90D12A65959C00E4C4DA /* manifest.json in Resources */ = {isa = PBXBuildFile; fileRef = 17CE90BB2A65959C00E4C4DA /* manifest.json */; };
 		17CE90D22A65959C00E4C4DA /* options.html in Resources */ = {isa = PBXBuildFile; fileRef = 17CE90BC2A65959C00E4C4DA /* options.html */; };
 		17CE90D32A65959C00E4C4DA /* popup.css in Resources */ = {isa = PBXBuildFile; fileRef = 17CE90BD2A65959C00E4C4DA /* popup.css */; };
+		17D243F32A7549EF00120AD1 /* FluidGradient in Frameworks */ = {isa = PBXBuildFile; productRef = 17D243F22A7549EF00120AD1 /* FluidGradient */; };
+		17D243F62A754ACB00120AD1 /* SwiftUIX in Frameworks */ = {isa = PBXBuildFile; productRef = 17D243F52A754ACB00120AD1 /* SwiftUIX */; };
+		17D243F82A754FFA00120AD1 /* UIViewControllerExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17D243F72A754FFA00120AD1 /* UIViewControllerExtensions.swift */; };
+		17D243F92A754FFA00120AD1 /* UIViewControllerExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17D243F72A754FFA00120AD1 /* UIViewControllerExtensions.swift */; };
+		17D243FB2A75504C00120AD1 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17D243FA2A75504C00120AD1 /* HomeView.swift */; };
+		17D243FC2A75504C00120AD1 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17D243FA2A75504C00120AD1 /* HomeView.swift */; };
 		17FC52D22A6D56C000367D01 /* float.html in Resources */ = {isa = PBXBuildFile; fileRef = 17FC52D12A6D56C000367D01 /* float.html */; };
 		17FC52D32A6D56C000367D01 /* float.html in Resources */ = {isa = PBXBuildFile; fileRef = 17FC52D12A6D56C000367D01 /* float.html */; };
 /* End PBXBuildFile section */
@@ -129,6 +135,8 @@
 		17CE90BB2A65959C00E4C4DA /* manifest.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; name = manifest.json; path = "../../Twine by SwiftGG plugin/manifest.json"; sourceTree = "<group>"; };
 		17CE90BC2A65959C00E4C4DA /* options.html */ = {isa = PBXFileReference; lastKnownFileType = text.html; name = options.html; path = "../../Twine by SwiftGG plugin/options.html"; sourceTree = "<group>"; };
 		17CE90BD2A65959C00E4C4DA /* popup.css */ = {isa = PBXFileReference; lastKnownFileType = text.css; name = popup.css; path = "../../Twine by SwiftGG plugin/popup.css"; sourceTree = "<group>"; };
+		17D243F72A754FFA00120AD1 /* UIViewControllerExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIViewControllerExtensions.swift; sourceTree = "<group>"; };
+		17D243FA2A75504C00120AD1 /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
 		17FC52D12A6D56C000367D01 /* float.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; name = float.html; path = "../../Twine by SwiftGG plugin/float.html"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -144,6 +152,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				17D243F32A7549EF00120AD1 /* FluidGradient in Frameworks */,
+				17D243F62A754ACB00120AD1 /* SwiftUIX in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -180,7 +190,9 @@
 		17CE90552A65959900E4C4DA /* Shared (App) */ = {
 			isa = PBXGroup;
 			children = (
+				17D243FD2A75626D00120AD1 /* Extensions */,
 				17CE905C2A65959A00E4C4DA /* ViewController.swift */,
+				17D243FA2A75504C00120AD1 /* HomeView.swift */,
 				17CE905D2A65959B00E4C4DA /* Assets.xcassets */,
 				17CE90562A65959A00E4C4DA /* Resources */,
 			);
@@ -276,6 +288,14 @@
 			name = Resources;
 			sourceTree = "<group>";
 		};
+		17D243FD2A75626D00120AD1 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				17D243F72A754FFA00120AD1 /* UIViewControllerExtensions.swift */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -313,6 +333,10 @@
 				17CE90902A65959B00E4C4DA /* PBXTargetDependency */,
 			);
 			name = "Twine by SwiftGG (macOS)";
+			packageProductDependencies = (
+				17D243F22A7549EF00120AD1 /* FluidGradient */,
+				17D243F52A754ACB00120AD1 /* SwiftUIX */,
+			);
 			productName = "Twine by SwiftGG (macOS)";
 			productReference = 17CE90762A65959B00E4C4DA /* Twine by SwiftGG.app */;
 			productType = "com.apple.product-type.application";
@@ -384,6 +408,10 @@
 				Base,
 			);
 			mainGroup = 17CE90502A65959900E4C4DA;
+			packageReferences = (
+				17D243F12A7549EF00120AD1 /* XCRemoteSwiftPackageReference "FluidGradient" */,
+				17D243F42A754ACB00120AD1 /* XCRemoteSwiftPackageReference "SwiftUIX" */,
+			);
 			productRefGroup = 17CE90652A65959B00E4C4DA /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -467,8 +495,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				17D243F82A754FFA00120AD1 /* UIViewControllerExtensions.swift in Sources */,
 				17CE909C2A65959B00E4C4DA /* ViewController.swift in Sources */,
 				17CE90682A65959B00E4C4DA /* AppDelegate.swift in Sources */,
+				17D243FB2A75504C00120AD1 /* HomeView.swift in Sources */,
 				17CE906A2A65959B00E4C4DA /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -478,6 +508,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				17CE909D2A65959B00E4C4DA /* ViewController.swift in Sources */,
+				17D243FC2A75504C00120AD1 /* HomeView.swift in Sources */,
+				17D243F92A754FFA00120AD1 /* UIViewControllerExtensions.swift in Sources */,
 				17CE90792A65959B00E4C4DA /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -674,7 +706,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 1.0;
+				MARKETING_VERSION = 1.0.1;
 				OTHER_LDFLAGS = (
 					"-framework",
 					SafariServices,
@@ -705,7 +737,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 1.0;
+				MARKETING_VERSION = 1.0.1;
 				OTHER_LDFLAGS = (
 					"-framework",
 					SafariServices,
@@ -744,7 +776,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0;
+				MARKETING_VERSION = 1.0.2;
 				OTHER_LDFLAGS = (
 					"-framework",
 					SafariServices,
@@ -783,7 +815,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0;
+				MARKETING_VERSION = 1.0.2;
 				OTHER_LDFLAGS = (
 					"-framework",
 					SafariServices,
@@ -818,7 +850,7 @@
 					"@executable_path/../../../../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.14;
-				MARKETING_VERSION = 1.0;
+				MARKETING_VERSION = 1.0.1;
 				OTHER_LDFLAGS = (
 					"-framework",
 					SafariServices,
@@ -850,7 +882,7 @@
 					"@executable_path/../../../../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.14;
-				MARKETING_VERSION = 1.0;
+				MARKETING_VERSION = 1.0.1;
 				OTHER_LDFLAGS = (
 					"-framework",
 					SafariServices,
@@ -885,8 +917,8 @@
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
-				MACOSX_DEPLOYMENT_TARGET = 10.14;
-				MARKETING_VERSION = 1.0.1;
+				MACOSX_DEPLOYMENT_TARGET = 11.0;
+				MARKETING_VERSION = 1.0.2;
 				OTHER_LDFLAGS = (
 					"-framework",
 					SafariServices,
@@ -922,8 +954,8 @@
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
-				MACOSX_DEPLOYMENT_TARGET = 10.14;
-				MARKETING_VERSION = 1.0.1;
+				MACOSX_DEPLOYMENT_TARGET = 11.0;
+				MARKETING_VERSION = 1.0.2;
 				OTHER_LDFLAGS = (
 					"-framework",
 					SafariServices,
@@ -987,6 +1019,38 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		17D243F12A7549EF00120AD1 /* XCRemoteSwiftPackageReference "FluidGradient" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/Cindori/FluidGradient";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.0.0;
+			};
+		};
+		17D243F42A754ACB00120AD1 /* XCRemoteSwiftPackageReference "SwiftUIX" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/SwiftUIX/SwiftUIX";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 0.1.6;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		17D243F22A7549EF00120AD1 /* FluidGradient */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 17D243F12A7549EF00120AD1 /* XCRemoteSwiftPackageReference "FluidGradient" */;
+			productName = FluidGradient;
+		};
+		17D243F52A754ACB00120AD1 /* SwiftUIX */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 17D243F42A754ACB00120AD1 /* XCRemoteSwiftPackageReference "SwiftUIX" */;
+			productName = SwiftUIX;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 17CE90512A65959900E4C4DA /* Project object */;
 }
