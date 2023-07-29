@@ -57,6 +57,8 @@
 		17D243FC2A75504C00120AD1 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17D243FA2A75504C00120AD1 /* HomeView.swift */; };
 		17FC52D22A6D56C000367D01 /* float.html in Resources */ = {isa = PBXBuildFile; fileRef = 17FC52D12A6D56C000367D01 /* float.html */; };
 		17FC52D32A6D56C000367D01 /* float.html in Resources */ = {isa = PBXBuildFile; fileRef = 17FC52D12A6D56C000367D01 /* float.html */; };
+		90A822BF2A75708E00A8616F /* ExtensionState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90A822BE2A75708E00A8616F /* ExtensionState.swift */; };
+		90A822C02A75708E00A8616F /* ExtensionState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90A822BE2A75708E00A8616F /* ExtensionState.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -138,6 +140,7 @@
 		17D243F72A754FFA00120AD1 /* UIViewControllerExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIViewControllerExtensions.swift; sourceTree = "<group>"; };
 		17D243FA2A75504C00120AD1 /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
 		17FC52D12A6D56C000367D01 /* float.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; name = float.html; path = "../../Twine by SwiftGG plugin/float.html"; sourceTree = "<group>"; };
+		90A822BE2A75708E00A8616F /* ExtensionState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExtensionState.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -195,6 +198,7 @@
 				17D243FA2A75504C00120AD1 /* HomeView.swift */,
 				17CE905D2A65959B00E4C4DA /* Assets.xcassets */,
 				17CE90562A65959A00E4C4DA /* Resources */,
+				90A822BE2A75708E00A8616F /* ExtensionState.swift */,
 			);
 			path = "Shared (App)";
 			sourceTree = "<group>";
@@ -498,6 +502,7 @@
 				17D243F82A754FFA00120AD1 /* UIViewControllerExtensions.swift in Sources */,
 				17CE909C2A65959B00E4C4DA /* ViewController.swift in Sources */,
 				17CE90682A65959B00E4C4DA /* AppDelegate.swift in Sources */,
+				90A822BF2A75708E00A8616F /* ExtensionState.swift in Sources */,
 				17D243FB2A75504C00120AD1 /* HomeView.swift in Sources */,
 				17CE906A2A65959B00E4C4DA /* SceneDelegate.swift in Sources */,
 			);
@@ -508,6 +513,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				17CE909D2A65959B00E4C4DA /* ViewController.swift in Sources */,
+				90A822C02A75708E00A8616F /* ExtensionState.swift in Sources */,
 				17D243FC2A75504C00120AD1 /* HomeView.swift in Sources */,
 				17D243F92A754FFA00120AD1 /* UIViewControllerExtensions.swift in Sources */,
 				17CE90792A65959B00E4C4DA /* AppDelegate.swift in Sources */,
@@ -695,7 +701,7 @@
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 4B97U7G8A7;
+				DEVELOPMENT_TEAM = 44BN78992X;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "iOS (Extension)/Info.plist";
 				INFOPLIST_KEY_CFBundleDisplayName = "Twine by SwiftGG Extension";
@@ -726,7 +732,7 @@
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 4B97U7G8A7;
+				DEVELOPMENT_TEAM = 44BN78992X;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "iOS (Extension)/Info.plist";
 				INFOPLIST_KEY_CFBundleDisplayName = "Twine by SwiftGG Extension";
@@ -761,7 +767,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 3;
-				DEVELOPMENT_TEAM = 4B97U7G8A7;
+				DEVELOPMENT_TEAM = 44BN78992X;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "iOS (App)/Info.plist";
 				INFOPLIST_KEY_CFBundleDisplayName = "Twine by SwiftGG";
@@ -800,7 +806,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 3;
-				DEVELOPMENT_TEAM = 4B97U7G8A7;
+				DEVELOPMENT_TEAM = 44BN78992X;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "iOS (App)/Info.plist";
 				INFOPLIST_KEY_CFBundleDisplayName = "Twine by SwiftGG";
@@ -838,7 +844,7 @@
 				CODE_SIGN_ENTITLEMENTS = "macOS (Extension)/Twine by SwiftGG.entitlements";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 4B97U7G8A7;
+				DEVELOPMENT_TEAM = 44BN78992X;
 				ENABLE_HARDENED_RUNTIME = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "macOS (Extension)/Info.plist";
@@ -870,7 +876,7 @@
 				CODE_SIGN_ENTITLEMENTS = "macOS (Extension)/Twine by SwiftGG.entitlements";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 4B97U7G8A7;
+				DEVELOPMENT_TEAM = 44BN78992X;
 				ENABLE_HARDENED_RUNTIME = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "macOS (Extension)/Info.plist";
@@ -905,7 +911,7 @@
 				CODE_SIGN_ENTITLEMENTS = "macOS (App)/Twine by SwiftGG.entitlements";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 4B97U7G8A7;
+				DEVELOPMENT_TEAM = 44BN78992X;
 				ENABLE_HARDENED_RUNTIME = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "macOS (App)/Info.plist";
@@ -942,7 +948,7 @@
 				CODE_SIGN_ENTITLEMENTS = "macOS (App)/Twine by SwiftGG.entitlements";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 4B97U7G8A7;
+				DEVELOPMENT_TEAM = 44BN78992X;
 				ENABLE_HARDENED_RUNTIME = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "macOS (App)/Info.plist";
