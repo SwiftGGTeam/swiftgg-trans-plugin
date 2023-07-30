@@ -158,7 +158,6 @@ You can also follow us through the following channels:
 ### Development Team
 
 - [SketchK](https://github.com/SwiftGGTeam/swiftgg-trans-plugin/commits?author=SketchK)
-- [numbbbbb](https://github.com/numbbbbb)
 - [zyterence](https://github.com/zyterence)
 - [OneeMe](https://github.com/OneeMe)
 - [IanIsMyUsername](https://github.com/IanIsMyUsername)
