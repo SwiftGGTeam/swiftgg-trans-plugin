@@ -41,7 +41,8 @@ Apple 为了让初学者能够很好的学习 iOS 开发知识，提供了易于
 
 ### 安装
 目前你可以在以下几个浏览器扩展商店中下载这款插件
-- [Chrome 下载](https://chrome.google.com/webstore/detail/twine-by-swiftgg/kelkibamnlfhadhkaonlpplfiidhbofk) 
+- [从 Chrome 扩展商店下载](https://chrome.google.com/webstore/detail/twine-by-swiftgg/kelkibamnlfhadhkaonlpplfiidhbofk) 
+- [从 Mac App Store 下载](https://apps.apple.com/cn/app/twine-by-swiftgg/id6451390893)
 
 **手动安装**
 1. 克隆此仓库到本地：
