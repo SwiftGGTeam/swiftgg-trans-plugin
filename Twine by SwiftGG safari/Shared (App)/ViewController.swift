@@ -28,6 +28,11 @@ let extensionBundleIdentifier = "com.swiftgg.Twine-by-SwiftGG.Extension"
 class ViewController: PlatformViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
+        #if os(macOS)
+        self.view.appearance = NSAppearance(named: .darkAqua)
+        #else
+        self.overrideUserInterfaceStyle = .dark
+        #endif
 
         let homeView = HomeView()
         self.addSwiftUIView(homeView, to: self.view)
