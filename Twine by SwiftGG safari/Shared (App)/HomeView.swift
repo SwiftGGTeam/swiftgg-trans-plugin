@@ -5,10 +5,10 @@
 //  Created by 轻舟 on 2023/7/29.
 //
 
-import SwiftUI
 import FluidGradient
-import SwiftUIX
 import SafariServices
+import SwiftUI
+import SwiftUIX
 
 struct HomeView: View {
     @State var state = ExtensionState.unknown
@@ -24,18 +24,18 @@ struct HomeView: View {
                 .init(hexadecimal: "CA5AFF"),
                 .init(hexadecimal: "5AD7FF"),
             ],
-                          highlights: [
-                            .init(hexadecimal: "9949FF"),
-                            .init(hexadecimal: "8E00FD"),
-                            .init(hexadecimal: "6BA6FF"),
-                          ],
-                          speed: 0.45,
-                          blur: 0.75)
-            #if os(macOS)
-            .background(Color(UniversalColor.quaternaryLabelColor))
-            #else
-            .background(Color(UniversalColor.quaternaryLabel))
-            #endif
+            highlights: [
+                .init(hexadecimal: "9949FF"),
+                .init(hexadecimal: "8E00FD"),
+                .init(hexadecimal: "6BA6FF"),
+            ],
+            speed: 0.45,
+            blur: 0.75)
+#if os(macOS)
+                .background(Color(UniversalColor.quaternaryLabelColor))
+#else
+                .background(Color(UniversalColor.quaternaryLabel))
+#endif
             
             VStack {
                 Text("Welcome To\nTwine by SwiftGG")
@@ -49,9 +49,9 @@ struct HomeView: View {
                     .font(.system(size: 18, weight: .bold))
                     .padding(.top, 40)
                     .lineSpacing(8)
-                #if os(macOS)
+#if os(macOS)
                     .frame(width: 550)
-                #endif
+#endif
                 
                 Button {
                     openSafariPreferences()
@@ -74,20 +74,20 @@ struct HomeView: View {
                 }
                 .buttonStyle(PlainButtonStyle())
                 .padding(.top, 80)
-                #if os(macOS)
+#if os(macOS)
                 Spacer()
-                #endif
+#endif
             }
 #if os(macOS)
-            .padding(55)
-            #else
-            .padding(24)
-            #endif
+                .padding(55)
+#else
+                .padding(24)
+#endif
         }
         .ignoresSafeArea()
         .onAppear {
 #if os(macOS)
-            SFSafariExtensionManager.getStateOfSafariExtension(withIdentifier: extensionBundleIdentifier) { (state, error) in
+            SFSafariExtensionManager.getStateOfSafariExtension(withIdentifier: extensionBundleIdentifier) { state, error in
                 guard let state = state, error == nil else {
                     // Insert code to inform the user that something went wrong.
                     return

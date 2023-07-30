@@ -5,7 +5,7 @@
 //  Created by 轻舟 on 2023/7/17.
 //
 
-//import WebKit
+// import WebKit
 import SwiftUI
 
 #if os(iOS)
@@ -26,10 +26,9 @@ typealias UniversalColor = NSColor
 let extensionBundleIdentifier = "com.swiftgg.Twine-by-SwiftGG.Extension"
 
 class ViewController: PlatformViewController {
-
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+
         let homeView = HomeView()
         self.addSwiftUIView(homeView, to: self.view)
     }
