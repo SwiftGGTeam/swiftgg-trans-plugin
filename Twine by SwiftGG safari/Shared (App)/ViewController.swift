@@ -13,12 +13,14 @@ import UIKit
 typealias PlatformViewController = UIViewController
 typealias HostingController = UIHostingController
 typealias UniversalView = UIView
+typealias UniversalColor = UIColor
 #elseif os(macOS)
 import Cocoa
 import SafariServices
 typealias PlatformViewController = NSViewController
 typealias HostingController = NSHostingController
 typealias UniversalView = NSView
+typealias UniversalColor = NSColor
 #endif
 
 let extensionBundleIdentifier = "com.swiftgg.Twine-by-SwiftGG.Extension"

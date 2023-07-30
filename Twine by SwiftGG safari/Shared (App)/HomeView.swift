@@ -31,7 +31,11 @@ struct HomeView: View {
                           ],
                           speed: 0.45,
                           blur: 0.75)
-            .background(Color(NSColor.quaternaryLabelColor))
+            #if os(macOS)
+            .background(Color(UniversalColor.quaternaryLabelColor))
+            #else
+            .background(Color(UniversalColor.quaternaryLabel))
+            #endif
             
             VStack {
                 Text("Welcome To\nTwine by SwiftGG")
@@ -39,13 +43,15 @@ struct HomeView: View {
                     .font(.system(size: 38, weight: .heavy))
                     .lineSpacing(10)
                     .padding(.top, 5)
-
+                
                 Text(state.text)
                     .multilineTextAlignment(.center)
                     .font(.system(size: 18, weight: .bold))
                     .padding(.top, 40)
                     .lineSpacing(8)
+                #if os(macOS)
                     .frame(width: 550)
+                #endif
                 
                 Button {
                     openSafariPreferences()
@@ -68,25 +74,32 @@ struct HomeView: View {
                 }
                 .buttonStyle(PlainButtonStyle())
                 .padding(.top, 80)
-                
+                #if os(macOS)
                 Spacer()
+                #endif
             }
+#if os(macOS)
             .padding(55)
+            #else
+            .padding(24)
+            #endif
         }
         .ignoresSafeArea()
         .onAppear {
+#if os(macOS)
             SFSafariExtensionManager.getStateOfSafariExtension(withIdentifier: extensionBundleIdentifier) { (state, error) in
                 guard let state = state, error == nil else {
                     // Insert code to inform the user that something went wrong.
                     return
                 }
-
+                
                 if state.isEnabled {
                     self.state = .on
                 } else {
                     self.state = .off
                 }
             }
+#endif
         }
     }
     
@@ -101,6 +114,10 @@ struct HomeView: View {
             DispatchQueue.main.async {
                 NSApplication.shared.terminate(nil)
             }
+        }
+#else
+        if let url = URL(string: "App-Prefs:Safari&path=WEB_EXTENSIONS") {
+            UIApplication.shared.open(url, options: [:], completionHandler: nil)
         }
 #endif
     }

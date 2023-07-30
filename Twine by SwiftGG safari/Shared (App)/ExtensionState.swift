@@ -15,11 +15,11 @@ enum ExtensionState {
     var text: String {
         switch self {
         case .on:
-            "SwiftGG Translator’s extension is currently on. You can turn it off in the Extensions section of Safari Settings."
+            return "SwiftGG Translator’s extension is currently on. You can turn it off in the Extensions section of Safari Settings."
         case .off:
-            "SwiftGG Translator’s extension is currently off. You can turn it on in the Extensions section of Safari Settings."
+            return "SwiftGG Translator’s extension is currently off. You can turn it on in the Extensions section of Safari Settings."
         case .unknown:
-            "You can turn on SwiftGG Translator’s extension in the Extensions section of Safari Settings."
+            return "You can turn on SwiftGG Translator’s extension in the Extensions section of Safari Settings."
         }
     }
 }
