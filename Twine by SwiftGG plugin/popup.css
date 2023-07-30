@@ -210,3 +210,10 @@ select.display-method {
         color: #31C0FF;
     }
 }
+
+@media screen and (max-device-width: 1024px) {
+  /* 设置移动设备的宽度 */
+  .popup {
+    width: 100%;
+  }
+}

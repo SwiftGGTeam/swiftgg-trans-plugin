@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		174474F92A73569800BB4202 /* Privacy policy.md in Resources */ = {isa = PBXBuildFile; fileRef = 174474F82A73569800BB4202 /* Privacy policy.md */; };
 		174474FA2A73569800BB4202 /* Privacy policy.md in Resources */ = {isa = PBXBuildFile; fileRef = 174474F82A73569800BB4202 /* Privacy policy.md */; };
+		177FB5742A75F31B00648CEC /* FluidGradient in Frameworks */ = {isa = PBXBuildFile; productRef = 177FB5732A75F31B00648CEC /* FluidGradient */; };
+		177FB5762A75F31F00648CEC /* SwiftUIX in Frameworks */ = {isa = PBXBuildFile; productRef = 177FB5752A75F31F00648CEC /* SwiftUIX */; };
 		17CE90682A65959B00E4C4DA /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17CE90672A65959B00E4C4DA /* AppDelegate.swift */; };
 		17CE906A2A65959B00E4C4DA /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17CE90692A65959B00E4C4DA /* SceneDelegate.swift */; };
 		17CE906D2A65959B00E4C4DA /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 17CE906B2A65959B00E4C4DA /* LaunchScreen.storyboard */; };
@@ -148,6 +150,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				177FB5742A75F31B00648CEC /* FluidGradient in Frameworks */,
+				177FB5762A75F31F00648CEC /* SwiftUIX in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -177,6 +181,13 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		177FB5722A75F31B00648CEC /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		17CE90502A65959900E4C4DA = {
 			isa = PBXGroup;
 			children = (
@@ -187,6 +198,7 @@
 				17CE90872A65959B00E4C4DA /* iOS (Extension) */,
 				17CE90912A65959B00E4C4DA /* macOS (Extension) */,
 				17CE90652A65959B00E4C4DA /* Products */,
+				177FB5722A75F31B00648CEC /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -318,6 +330,10 @@
 				17CE90862A65959B00E4C4DA /* PBXTargetDependency */,
 			);
 			name = "Twine by SwiftGG (iOS)";
+			packageProductDependencies = (
+				177FB5732A75F31B00648CEC /* FluidGradient */,
+				177FB5752A75F31F00648CEC /* SwiftUIX */,
+			);
 			productName = "Twine by SwiftGG (iOS)";
 			productReference = 17CE90642A65959B00E4C4DA /* Twine by SwiftGG.app */;
 			productType = "com.apple.product-type.application";
@@ -387,7 +403,7 @@
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
 				LastSwiftUpdateCheck = 1410;
-				LastUpgradeCheck = 1410;
+				LastUpgradeCheck = 1500;
 				TargetAttributes = {
 					17CE90632A65959B00E4C4DA = {
 						CreatedOnToolsVersion = 14.1;
@@ -620,9 +636,11 @@
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
+				DEAD_CODE_STRIPPING = YES;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_NO_COMMON_BLOCKS = YES;
@@ -678,9 +696,11 @@
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
+				DEAD_CODE_STRIPPING = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
@@ -701,7 +721,7 @@
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 44BN78992X;
+				DEVELOPMENT_TEAM = 4B97U7G8A7;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "iOS (Extension)/Info.plist";
 				INFOPLIST_KEY_CFBundleDisplayName = "Twine by SwiftGG Extension";
@@ -712,7 +732,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 1.0.1;
+				MARKETING_VERSION = 1.0.2;
 				OTHER_LDFLAGS = (
 					"-framework",
 					SafariServices,
@@ -732,7 +752,7 @@
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 44BN78992X;
+				DEVELOPMENT_TEAM = 4B97U7G8A7;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "iOS (Extension)/Info.plist";
 				INFOPLIST_KEY_CFBundleDisplayName = "Twine by SwiftGG Extension";
@@ -743,7 +763,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 1.0.1;
+				MARKETING_VERSION = 1.0.2;
 				OTHER_LDFLAGS = (
 					"-framework",
 					SafariServices,
@@ -766,8 +786,8 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 3;
-				DEVELOPMENT_TEAM = 44BN78992X;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 4B97U7G8A7;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "iOS (App)/Info.plist";
 				INFOPLIST_KEY_CFBundleDisplayName = "Twine by SwiftGG";
@@ -775,8 +795,8 @@
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -805,8 +825,8 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 3;
-				DEVELOPMENT_TEAM = 44BN78992X;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 4B97U7G8A7;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "iOS (App)/Info.plist";
 				INFOPLIST_KEY_CFBundleDisplayName = "Twine by SwiftGG";
@@ -814,8 +834,8 @@
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -844,7 +864,8 @@
 				CODE_SIGN_ENTITLEMENTS = "macOS (Extension)/Twine by SwiftGG.entitlements";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 44BN78992X;
+				DEAD_CODE_STRIPPING = YES;
+				DEVELOPMENT_TEAM = 4B97U7G8A7;
 				ENABLE_HARDENED_RUNTIME = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "macOS (Extension)/Info.plist";
@@ -855,8 +876,8 @@
 					"@executable_path/../Frameworks",
 					"@executable_path/../../../../Frameworks",
 				);
-				MACOSX_DEPLOYMENT_TARGET = 10.14;
-				MARKETING_VERSION = 1.0.1;
+				MACOSX_DEPLOYMENT_TARGET = "$(RECOMMENDED_MACOSX_DEPLOYMENT_TARGET)";
+				MARKETING_VERSION = 1.0.2;
 				OTHER_LDFLAGS = (
 					"-framework",
 					SafariServices,
@@ -876,7 +897,8 @@
 				CODE_SIGN_ENTITLEMENTS = "macOS (Extension)/Twine by SwiftGG.entitlements";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 44BN78992X;
+				DEAD_CODE_STRIPPING = YES;
+				DEVELOPMENT_TEAM = 4B97U7G8A7;
 				ENABLE_HARDENED_RUNTIME = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "macOS (Extension)/Info.plist";
@@ -887,8 +909,8 @@
 					"@executable_path/../Frameworks",
 					"@executable_path/../../../../Frameworks",
 				);
-				MACOSX_DEPLOYMENT_TARGET = 10.14;
-				MARKETING_VERSION = 1.0.1;
+				MACOSX_DEPLOYMENT_TARGET = "$(RECOMMENDED_MACOSX_DEPLOYMENT_TARGET)";
+				MARKETING_VERSION = 1.0.2;
 				OTHER_LDFLAGS = (
 					"-framework",
 					SafariServices,
@@ -911,7 +933,8 @@
 				CODE_SIGN_ENTITLEMENTS = "macOS (App)/Twine by SwiftGG.entitlements";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 44BN78992X;
+				DEAD_CODE_STRIPPING = YES;
+				DEVELOPMENT_TEAM = 4B97U7G8A7;
 				ENABLE_HARDENED_RUNTIME = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "macOS (App)/Info.plist";
@@ -948,7 +971,8 @@
 				CODE_SIGN_ENTITLEMENTS = "macOS (App)/Twine by SwiftGG.entitlements";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 44BN78992X;
+				DEAD_CODE_STRIPPING = YES;
+				DEVELOPMENT_TEAM = 4B97U7G8A7;
 				ENABLE_HARDENED_RUNTIME = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "macOS (App)/Info.plist";
@@ -1046,6 +1070,16 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		177FB5732A75F31B00648CEC /* FluidGradient */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 17D243F12A7549EF00120AD1 /* XCRemoteSwiftPackageReference "FluidGradient" */;
+			productName = FluidGradient;
+		};
+		177FB5752A75F31F00648CEC /* SwiftUIX */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 17D243F42A754ACB00120AD1 /* XCRemoteSwiftPackageReference "SwiftUIX" */;
+			productName = SwiftUIX;
+		};
 		17D243F22A7549EF00120AD1 /* FluidGradient */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 17D243F12A7549EF00120AD1 /* XCRemoteSwiftPackageReference "FluidGradient" */;

@@ -5,10 +5,10 @@
 //  Created by 轻舟 on 2023/7/29.
 //
 
-import SwiftUI
 import FluidGradient
-import SwiftUIX
 import SafariServices
+import SwiftUI
+import SwiftUIX
 
 struct HomeView: View {
     @State var state = ExtensionState.unknown
@@ -24,14 +24,18 @@ struct HomeView: View {
                 .init(hexadecimal: "CA5AFF"),
                 .init(hexadecimal: "5AD7FF"),
             ],
-                          highlights: [
-                            .init(hexadecimal: "9949FF"),
-                            .init(hexadecimal: "8E00FD"),
-                            .init(hexadecimal: "6BA6FF"),
-                          ],
-                          speed: 0.45,
-                          blur: 0.75)
-            .background(Color(NSColor.quaternaryLabelColor))
+            highlights: [
+                .init(hexadecimal: "9949FF"),
+                .init(hexadecimal: "8E00FD"),
+                .init(hexadecimal: "6BA6FF"),
+            ],
+            speed: 0.45,
+            blur: 0.75)
+#if os(macOS)
+                .background(Color(UniversalColor.quaternaryLabelColor))
+#else
+                .background(Color(UniversalColor.quaternaryLabel))
+#endif
             
             VStack {
                 Text("Welcome To\nTwine by SwiftGG")
@@ -39,13 +43,15 @@ struct HomeView: View {
                     .font(.system(size: 38, weight: .heavy))
                     .lineSpacing(10)
                     .padding(.top, 5)
-
+                
                 Text(state.text)
                     .multilineTextAlignment(.center)
                     .font(.system(size: 18, weight: .bold))
                     .padding(.top, 40)
                     .lineSpacing(8)
+#if os(macOS)
                     .frame(width: 550)
+#endif
                 
                 Button {
                     openSafariPreferences()
@@ -68,25 +74,32 @@ struct HomeView: View {
                 }
                 .buttonStyle(PlainButtonStyle())
                 .padding(.top, 80)
-                
+#if os(macOS)
                 Spacer()
+#endif
             }
-            .padding(55)
+#if os(macOS)
+                .padding(55)
+#else
+                .padding(24)
+#endif
         }
         .ignoresSafeArea()
         .onAppear {
-            SFSafariExtensionManager.getStateOfSafariExtension(withIdentifier: extensionBundleIdentifier) { (state, error) in
+#if os(macOS)
+            SFSafariExtensionManager.getStateOfSafariExtension(withIdentifier: extensionBundleIdentifier) { state, error in
                 guard let state = state, error == nil else {
                     // Insert code to inform the user that something went wrong.
                     return
                 }
-
+                
                 if state.isEnabled {
                     self.state = .on
                 } else {
                     self.state = .off
                 }
             }
+#endif
         }
     }
     
@@ -101,6 +114,10 @@ struct HomeView: View {
             DispatchQueue.main.async {
                 NSApplication.shared.terminate(nil)
             }
+        }
+#else
+        if let url = URL(string: "App-Prefs:Safari&path=WEB_EXTENSIONS") {
+            UIApplication.shared.open(url, options: [:], completionHandler: nil)
         }
 #endif
     }

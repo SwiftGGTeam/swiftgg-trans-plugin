@@ -9,9 +9,8 @@ import Foundation
 import SwiftUI
 
 extension ViewController {
-    
     @discardableResult
-    func addSwiftUIView<Content>(_ swiftUIView: Content, to view: UniversalView) -> HostingController<Content> where Content : View {
+    func addSwiftUIView<Content>(_ swiftUIView: Content, to view: UniversalView) -> HostingController<Content> where Content: View {
         let hostingController = HostingController(rootView: swiftUIView)
         addChild(hostingController)
         view.addSubview(hostingController.view)
@@ -27,7 +26,7 @@ extension ViewController {
         
         NSLayoutConstraint.activate(constraints)
         
-        /// Notify the hosting controller that it has been moved to the current view controller.
+/// Notify the hosting controller that it has been moved to the current view controller.
 #if os(iOS)
         hostingController.didMove(toParent: self)
 #endif
