@@ -70,7 +70,8 @@ Using the plugin is very simple. Just click on the extension, enable automatic t
 Currently, you can download this plugin from the following browser extension stores:
 
 - [Download on Chrome Web Store](https://chrome.google.com/webstore/detail/twine-by-swiftgg/kelkibamnlfhadhkaonlpplfiidhbofk) 
-- [Download on Mac App Store](https://apps.apple.com/cn/app/twine-by-swiftgg/id6451390893)
+- [Download on macOS App Store](https://apps.apple.com/cn/app/twine-by-swiftgg/id6451390893)
+- [Download on iOS App Store](https://apps.apple.com/cn/app/twine-by-swiftgg/id6451390893)
 
 **Install with Srouce Code**
 
