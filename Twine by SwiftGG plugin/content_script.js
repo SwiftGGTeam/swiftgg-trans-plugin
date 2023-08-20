@@ -166,8 +166,8 @@ function addTitleNode() {
 
   let parent = title.parentNode;
   parent.insertBefore(wrapper, title);
-  wrapper.appendChild(newNode)
   wrapper.appendChild(title)
+  wrapper.appendChild(newNode)
   wrapper.appendChild(hideNewNode)
   wrapper.appendChild(space)
 }
@@ -224,8 +224,8 @@ function appendH2Nodes() {
     hideNewNode.dataset.tag = "swiftgg:hide-translate"
 
     parent.insertBefore(wrapper, node);
-    wrapper.appendChild(newNode)
     wrapper.appendChild(node)
+    wrapper.appendChild(newNode)
     wrapper.appendChild(hideNewNode)
     wrapper.appendChild(space)
   })
@@ -262,8 +262,8 @@ function appendPNodes() {
     hideNewNode.dataset.tag = "swiftgg:hide-translate"
 
     parent.insertBefore(wrapper, node);
-    wrapper.appendChild(newNode)
     wrapper.appendChild(node)
+    wrapper.appendChild(newNode)
     wrapper.appendChild(hideNewNode)
     wrapper.appendChild(space)
   })
