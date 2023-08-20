@@ -211,7 +211,7 @@ select.display-method {
     }
 }
 
-@media screen and (max-device-width: 1024px) {
+@media screen and (max-device-width: 748px) {
   /* 设置移动设备的宽度 */
   .popup {
     width: 100%;
