@@ -1,8 +1,9 @@
 {
     "name": "Twine by SwiftGG",
     "description": "Apple document",
-    "version": "1.0.2",
+    "version": "1.0.3",
     "manifest_version": 3,
+    "default_locale": "en",
     "background": {
         "service_worker": "./background.js"
     },
@@ -16,6 +17,7 @@
         "128": "/source/intro/swiftLogo.png"
     },
     "permissions": [
+        "i18n",
         "tabs",
         "storage"
     ],

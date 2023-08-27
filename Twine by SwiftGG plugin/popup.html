@@ -170,7 +170,7 @@
 
         <ul class="tool">
             <li class="translate">
-                <span>自动翻译</span>
+                <span id="auto_translate">自动翻译</span>
 
                 <div id="switch">
                     <div class="labelBox">
@@ -181,7 +181,7 @@
             </li>
 
             <li class="translate" id="translate-current">
-                <span>翻译当前页面</span>
+                <span id="translate_page">翻译当前页面</span>
 
                 <div id="current-switch" >
                     <div class="labelBox">
@@ -192,22 +192,22 @@
             </li>
 
             <li class="translate" id="display-method-item">
-                <span>翻译展示方式</span>
+                <span id="translation_display">翻译展示方式</span>
 
                 <label>
                     <select class="display-method" id="display-method">
-                        <option value="auto" selected>自动</option>
-                        <option value="weaken">弱化英文</option>
-                        <option value="float">悬停翻译</option>
-                        <option value="replace">悬停替换</option>
-                        <option value="highlight">同时高亮</option>
-                        <option value="chinese">仅显示中文</option>
+                        <option value="auto" selected id="auto">自动</option>
+                        <option value="weaken" id="weaken_original_text">弱化英文</option>
+                        <option value="float" id="hover_translation">悬停翻译</option>
+                        <option value="replace" id="hover_replacement">悬停替换</option>
+                        <option value="highlight" id="highlight_translation">同时高亮</option>
+                        <option value="chinese" id="show_translation_only">仅显示中文</option>
                     </select>
                 </label>
             </li>
 
             <li class="project">
-                <span>
+                <span id="project_address">
                     项目地址
                 </span>
                 <a href="https://github.com/SwiftGGTeam/swiftgg-trans-plugin" target="__blank"><img src="/source/intro/project.svg" class="gh-image" alt=""></a>
@@ -217,12 +217,12 @@
         <div class="divider"></div>
 
         <div class="course">
-            <h3 class="course-title">当前支持的 Apple 课程</h3>
+            <h3 class="course-title" id="apple_courses">当前支持的 Apple 课程</h3>
             <select class="menu" id="swiftui-menu">
                 <option value="" disabled selected>SwiftUI</option>
-                <option value="https://developer.apple.com/tutorials/swiftui">Introducing SwiftUI - 认识 SwiftUI，学习基础控件的使用和开发</option>
-                <option value="https://developer.apple.com/tutorials/swiftui-concepts/">Learning SwiftUI - 通过教程和示例学习 SwiftUI 的结构，布局和数据流</option>
-                <option value="https://developer.apple.com/tutorials/sample-apps">Explore SwiftUI Sample Apps - 通过多个示例程序探索 SwiftUI 的开发和框架使用</option>
+                <option value="https://developer.apple.com/tutorials/swiftui" id="introduce_swiftUI">Introducing SwiftUI - 认识 SwiftUI，学习基础控件的使用和开发</option>
+                <option value="https://developer.apple.com/tutorials/swiftui-concepts/" id="learning_swiftUI">Learning SwiftUI - 通过教程和示例学习 SwiftUI 的结构，布局和数据流</option>
+                <option value="https://developer.apple.com/tutorials/sample-apps" id="explore_swiftUI">Explore SwiftUI Sample Apps - 通过多个示例程序探索 SwiftUI 的开发和框架使用</option>
             </select>
             <!-- <select class="menu" id="visionOS-menu">
                 <option value="" disabled selected>visionOS</option>
@@ -233,8 +233,8 @@
 
 
         <footer>
-            <a href="https://github.com/SwiftGGTeam/swiftui-tutorial-chinese" target="__blank">我想参与项目</a>
-            <a href="https://github.com/SwiftGGTeam/swiftui-tutorial-chinese" target="__blank">获取帮助</a>
+            <a href="https://github.com/SwiftGGTeam/swiftui-tutorial-chinese" target="__blank" id="join_project">我想参与项目</a>
+            <a href="https://github.com/SwiftGGTeam/swiftui-tutorial-chinese" target="__blank" id="get_help">获取帮助</a>
         </footer>
 
     </main>

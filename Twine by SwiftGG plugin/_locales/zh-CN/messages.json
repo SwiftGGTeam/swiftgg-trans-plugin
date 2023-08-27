@@ -1,0 +1,70 @@
+{
+    "auto_translate": {
+        "message": "自动翻译",
+        "description": ""
+    },
+    "is_running": {
+        "message": "⬆️ SwiftGG 正在运行，请点击上方按钮开始学习 ⬆️",
+        "description": ""
+    },
+    "project_address": {
+        "message": "项目地址",
+        "description": ""
+    },
+    "apple_courses": {
+        "message": "当前支持的 Apple 课程",
+        "description": ""
+    },
+    "join_project": {
+        "message": "参与项目",
+        "description": ""
+    },
+    "get_help": {
+        "message": "Get Help",
+        "description": ""
+    },
+    "translate_page": {
+        "message": "翻译当前页面",
+        "description": ""
+    },
+    "translation_display": {
+        "message": "翻译展示方式",
+        "description": ""
+    },
+    "auto": {
+        "message": "自动",
+        "description": ""
+    },
+    "weaken_original_text": {
+        "message": "弱化原文",
+        "description": ""
+    },
+    "hover_translation": {
+        "message": "悬停翻译",
+        "description": ""
+    },
+    "hover_replacement": {
+        "message": "悬停替换",
+        "description": ""
+    },
+    "highlight_translation": {
+        "message": "同时高亮",
+        "description": ""
+    },
+    "show_translation_only": {
+        "message": "仅显示译文",
+        "description": ""
+    },
+    "introduce_swiftUI": {
+        "message": "Introducing SwiftUI - 认识 SwiftUI，学习基础控件的使用和开发",
+        "description": ""
+    },
+    "learning_swiftUI": {
+        "message": "Learning SwiftUI - 通过教程和示例学习 SwiftUI 的结构，布局和数据流",
+        "description": ""
+    },
+    "explore_swiftUI": {
+        "message": "Explore SwiftUI Sample Apps - 通过多个示例程序探索 SwiftUI 的开发和框架使用",
+        "description": ""
+    }
+}

@@ -125,7 +125,17 @@ struct HomeView: View {
 
 struct HomeView_Previews: PreviewProvider {
     static var previews: some View {
-        HomeView()
-            .frame(width: 750, height: 550)
+        Group {
+            HomeView()
+                .frame(width: 750, height: 550)
+                .environment(\.locale, Locale(identifier: "zh_CN"))
+                .previewDisplayName("中文")
+            
+            HomeView()
+                .frame(width: 750, height: 550)
+                .environment(\.locale, Locale(identifier: "en"))
+                .previewDisplayName("English")
+        }
+
     }
 }

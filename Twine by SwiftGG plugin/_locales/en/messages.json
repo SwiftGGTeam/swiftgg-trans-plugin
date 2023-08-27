@@ -1,0 +1,70 @@
+{
+    "auto_translate": {
+        "message": "Auto Translate",
+        "description": ""
+    },
+    "is_running": {
+        "message": "⬆️ SwiftGG is running, please click the top button to start learning ⬆️",
+        "description": ""
+    },
+    "project_address": {
+        "message": "Project Address",
+        "description": ""
+    },
+    "apple_courses": {
+        "message": "Supported Apple Courses",
+        "description": ""
+    },
+    "join_project": {
+        "message": "Join Project",
+        "description": ""
+    },
+    "get_help": {
+        "message": "Get Help",
+        "description": ""
+    },
+    "translate_page": {
+        "message": "Translate Current Page",
+        "description": ""
+    },
+    "translation_display": {
+        "message": "Translation Display",
+        "description": ""
+    },
+    "auto": {
+        "message": "auto",
+        "description": ""
+    },
+    "weaken_original_text": {
+        "message": "Weaken Original Text",
+        "description": ""
+    },
+    "hover_translation": {
+        "message": "Hover Translation",
+        "description": ""
+    },
+    "hover_replacement": {
+        "message": "Hover Replacement",
+        "description": ""
+    },
+    "highlight_translation": {
+        "message": "All Highlight",
+        "description": ""
+    },
+    "show_translation_only": {
+        "message": "Show Translation Only",
+        "description": ""
+    },
+    "introduce_swiftUI": {
+        "message": "Introducing SwiftUI",
+        "description": ""
+    },
+    "learning_swiftUI": {
+        "message": "Learning SwiftUI",
+        "description": ""
+    },
+    "explore_swiftUI": {
+        "message": "Explore SwiftUI Sample Apps",
+        "description": ""
+    }
+}

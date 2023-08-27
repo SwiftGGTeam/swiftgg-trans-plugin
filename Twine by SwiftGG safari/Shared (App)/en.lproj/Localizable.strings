@@ -1,0 +1,13 @@
+/* 
+  Localizable.strings
+  Twine by SwiftGG
+
+  Created by 轻舟 on 2023/8/22.
+  
+*/
+
+"Welcome To\nTwine by SwiftGG" = "Welcome To\nTwine by SwiftGG";
+"Quit and Open Safari Settings..." = "Quit and Open Safari Settings...";
+"Twine by SwiftGG’s extension is currently on. You can turn it off in the Extensions section of Safari Settings." = "Twine by SwiftGG’s extension is currently on. You can turn it off in the Extensions section of Safari Settings.";
+"Twine by SwiftGG’s extension is currently off. You can turn it on in the Extensions section of Safari Settings." = "Twine by SwiftGG’s extension is currently off. You can turn it on in the Extensions section of Safari Settings.";
+"You can turn on Twine by SwiftGG’s extension in the Extensions section of Safari Settings." = "You can turn on Twine by SwiftGG’s extension in the Extensions section of Safari Settings.";

@@ -289,7 +289,7 @@ function addInstructionToCategoryPage() {
   let spaceElement2 = document.createElement("br");
   let pElement = document.createElement("p")
   pElement.classList.add("indicator")
-  pElement.textContent = "⬆️ SwiftGG 正在运行，请点击上方按钮开始学习 ⬆️"
+  pElement.textContent = chrome.i18n.getMessage("is_running")
   spaceElement.dataset.tag = "swiftgg:translated"
   spaceElement2.dataset.tag = "swiftgg:translated"
   pElement.dataset.tag = "swiftgg:translated"

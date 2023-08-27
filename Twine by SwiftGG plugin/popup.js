@@ -58,6 +58,19 @@ document.addEventListener("DOMContentLoaded", function () {
   })
 });
 
+document.addEventListener("DOMContentLoaded", function () {
+  fetch('/_locales/en/messages.json')
+    .then(response => response.json())
+    .then(data => {
+      Object.entries(data).forEach(([key, translation]) => {
+        var element = document.getElementById(key);
+        if (element) {
+          element.innerHTML = translation.message;
+        }
+      });
+    })
+    .catch(error => console.error(error));
+});
 
 (async () => {
   const result = await chrome.storage.local.get(pluginFlag)
