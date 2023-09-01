@@ -3,7 +3,7 @@
     "description": "Apple document",
     "version": "1.0.3",
     "manifest_version": 3,
-    "default_locale": "en",
+    "default_locale": "zh_CN",
     "background": {
         "service_worker": "./background.js"
     },

@@ -65,7 +65,7 @@ document.addEventListener("DOMContentLoaded", function () {
       Object.entries(data).forEach(([key, translation]) => {
         var element = document.getElementById(key);
         if (element) {
-          element.innerHTML = translation.message;
+          element.innerHTML = chrome.i18n.getMessage(key);
         }
       });
     })
