@@ -1,5 +1,5 @@
 <div align="center">
-<img src="./Twine%20by%20SwiftGG%20plugin/source/intro/logo.png" alt="logo" style="display: block; margin: auto; width: 150px;"/>
+<img src="Twine by SwiftGG plugin/public/source/intro/logo.png" alt="logo" style="display: block; margin: auto; width: 150px;"/>
 </div>
 
 
@@ -21,7 +21,7 @@ Apple 为了让初学者能够很好的学习 iOS 开发知识，提供了易于
 在未来，我们希望 Twine by SwiftGG 成为初学者和资深开发者的得力助手，不仅涵盖 SwiftUI，还能扩展到其他 Apple 官方文档。我们期待与社区成员一起为开源做出贡献，共同推进技术的发展。
 
 ## 项目方案
-![flow.png](./Twine%20by%20SwiftGG%20plugin/source/intro/Flow.PNG)
+![flow.png](Twine by SwiftGG plugin/public/source/intro/Flow.PNG)
 在用户体验上，我们采用了类似沉浸式翻译的方式，中英文参照排列，同时你也可以自定义显示模式。这个方案保留了沉浸式的用户体验，同时在过程中还融入了社区的力量，能让更多的人参与进来，这也意味着插件会产生更多的语言版本，会有更高效的迭代速度和更有意思的交流与沟通。
 
 目前，Twine by SwiftGG 是一个完全开源的项目，由 3 个仓库构成，分别是:
@@ -35,7 +35,7 @@ Apple 为了让初学者能够很好的学习 iOS 开发知识，提供了易于
 - [Learning SwiftUI](https://developer.apple.com/tutorials/swiftui-concepts/)
 - [Exploring SwiftUI Sample Apps](https://developer.apple.com/tutorials/sample-apps)
 
-![screenshot.png](./Twine%20by%20SwiftGG%20plugin/source/intro/screenshot.png)
+![screenshot.png](Twine by SwiftGG plugin/public/source/intro/screenshot.png)
 
 使用非常简单，点击插件，打开自动翻译，进入到对应的教程页面即可自动翻译，可以根据你的喜好切换翻译展示方式，如果需要暂时不显示翻译，可以通过开关暂时关闭当前页面的翻译。只需要打开即可轻松上手。
 

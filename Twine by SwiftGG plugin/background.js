@@ -306,3 +306,25 @@ async function disableCSP() {
 
     await chrome.declarativeNetRequest.updateSessionRules({addRules, removeRuleIds})
 }
+
+(async () => {
+    let html = new Promise(function(resolve) {
+        if (document.readyState === "loading") {
+            document.addEventListener("DOMContentLoaded", function(event) {
+                setTimeout(() => {
+                    let outer = document.documentElement.outerHTML;
+                    resolve(outer);
+                }, 2000)
+            });
+        } else {
+            setTimeout(() => {
+                let outer = document.documentElement.outerHTML;
+                resolve(outer);
+            }, 2000)
+        }
+    });
+
+    await html;
+
+    return html;
+})()
