@@ -14,7 +14,8 @@ const pageSwitchedRequestMethod = "pageSwitched"
 const translateCurrentRequestMethod = "translateCurrent"
 const displayMethodRequestMethod = "displayMethod"
 const queryDisplayMethodRequestMethod = "queryDisplayMethod"
-const endUpWhiteList = ["swiftui","swiftui/","sample-apps","sample-apps/","swiftui-concepts","swiftui-concepts/","visionos","visionos/","documentation","documentation/"];
+const endUpWhiteList = ["swiftui","swiftui/","sample-apps","sample-apps/","swiftui-concepts","swiftui-concepts/","visionos","visionos/"]
+const categoryEndUpWhiteList = ["swiftui","swiftui/","sample-apps","sample-apps/","swiftui-concepts","swiftui-concepts/"]
 let currentTranslatedURL = null
 let translated = false
 const tabActiveRequestMethod = "tabActive"
@@ -93,7 +94,7 @@ chrome.runtime.onMessage.addListener(
 );
 
 function waitPage() {
-  const flagElement = isCategoryPage() ? ".title" : "div.headline h1";
+  const flagElement = isCategoryPage() ? ".title" : ".core-app";
   log(`Plugin ${flagElement}`);
   log("Plugin waiting");
   return new Promise((resolve) => {
@@ -140,6 +141,7 @@ function updateAHerfToAbsolutURL() {
 
 function addTitleNode() {
   let title = document.querySelector("div.headline h1");
+  if (!title) { return; }
   let titleText = json[title.innerText.trim()].zh;
   if (!titleText || titleText === "") {
     return;
@@ -280,7 +282,7 @@ function isCategoryPage() {
   const pathArray = currentURL.pathname.split('/');
 
   const lastPath = pathArray[pathArray.length - 1] || pathArray[pathArray.length - 2];
-  return endUpWhiteList.includes(lastPath)
+  return categoryEndUpWhiteList.includes(lastPath)
 }
 
 function addInstructionToCategoryPage() {
@@ -328,7 +330,10 @@ async function translate() {
   const currentURL = getCurrentURL()
   const pathArray = currentURL.pathname.split('/');
   const baseURL = "https://api.swift.gg/content/";
-  const url = baseURL + pathArray[pathArray.length-2] + '/' + pathArray[pathArray.length-1];
+  let url = baseURL + pathArray[pathArray.length-2] + '/' + pathArray[pathArray.length-1];
+  if (pathArray[pathArray.length-1] === "visionos") {
+    url = baseURL + "visionos/visionos"
+  }
 
   if (shouldTranslate === false) {
     return

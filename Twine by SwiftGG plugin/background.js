@@ -12,7 +12,8 @@ const queryCurrentRequestMethod = "queryTranslateCurrent"
 const updateCurrentRequestMethod = "updateTranslateCurrent"
 const translateCurrentRequestMethod = "translateCurrent"
 const queryDisplayMethodRequestMethod = "queryDisplayMethod"
-const endUpWhiteList = ["swiftui","swiftui/","sample-apps","sample-apps/","swiftui-concepts","swiftui-concepts/","visionos","visionos/","documentation","documentation/"];
+const endUpWhiteList = ["swiftui","swiftui/","sample-apps","sample-apps/","swiftui-concepts","swiftui-concepts/","visionos","visionos/"]
+const categoryEndUpWhiteList = ["swiftui","swiftui/","sample-apps","sample-apps/","swiftui-concepts","swiftui-concepts/"]
 let globalActiveTab = null
 
 const BrowserType = {
@@ -271,7 +272,7 @@ function isCategoryPage(url) {
     const pathArray = currentURL.pathname.split('/');
 
     const lastPath = pathArray[pathArray.length - 1] || pathArray[pathArray.length - 2];
-    return endUpWhiteList.includes(lastPath)
+    return categoryEndUpWhiteList.includes(lastPath)
 }
 
 function isSupportedPage(url) {

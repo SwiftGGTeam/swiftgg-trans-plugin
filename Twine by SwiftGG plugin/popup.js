@@ -4,7 +4,8 @@ const updateRequestMethod = "updateShouldTranslate"
 const updateCurrentRequestMethod = "updateTranslateCurrent"
 const queryCurrentRequestMethod = "queryTranslateCurrent"
 const displayMethodRequestMethod = "displayMethod"
-const endUpWhiteList = ["swiftui","swiftui/","sample-apps","sample-apps/","swiftui-concepts","swiftui-concepts/"];
+const endUpWhiteList = ["swiftui","swiftui/","sample-apps","sample-apps/","swiftui-concepts","swiftui-concepts/","visionos","visionos/"]
+const categoryEndUpWhiteList = ["swiftui","swiftui/","sample-apps","sample-apps/","swiftui-concepts","swiftui-concepts/"]
 
 document.addEventListener("DOMContentLoaded", function () {
   const switchButton = document.querySelector("#switch");
@@ -109,5 +110,5 @@ function isCategoryPage(url) {
   const pathArray = currentURL.pathname.split('/');
 
   const lastPath = pathArray[pathArray.length - 1] || pathArray[pathArray.length - 2];
-  return endUpWhiteList.includes(lastPath)
+  return categoryEndUpWhiteList.includes(lastPath)
 }
