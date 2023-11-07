@@ -1,5 +1,4 @@
 import {Storage, StorageFlag} from "./storage";
-import {Browser} from "./tBrowser";
 
 export class Config {
     private static instance: Config
@@ -15,13 +14,18 @@ export class Config {
         return Config.instance
     }
 
+    private _autoTranslate: boolean | undefined
+
     public get autoTranslate(): Promise<boolean> {
         return (async (): Promise<boolean> => {
-            const shouldAutoTranslate = await Storage.getInstance().getBoolean(StorageFlag.autoTranslate) ?? false
-
-            if (!shouldAutoTranslate) {
-                await Browser.getInstance().setIcon("closed")
+            if (this._autoTranslate) {
+                return this._autoTranslate
             }
+
+            const shouldAutoTranslate = await Storage.getInstance().getBoolean(StorageFlag.autoTranslate)
+                ?? false
+
+            this._autoTranslate = shouldAutoTranslate
 
             return shouldAutoTranslate
         })()
@@ -29,6 +33,7 @@ export class Config {
 
     public set autoTranslate(value: boolean) {
         (async () => {
+            this._autoTranslate = value
             await Storage.getInstance().setValue(StorageFlag.autoTranslate, value)
         })()
     }

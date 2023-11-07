@@ -1,4 +1,5 @@
 import DNR = chrome.declarativeNetRequest;
+import { Config } from "./config";
 
 export const enum BrowserType {
     chrome,
@@ -22,6 +23,10 @@ export class Browser {
 
     public async setup(): Promise<void> {
         if (await this.detectBrowser() === BrowserType.firefox) { await this.disableCSP() }
+
+        if (!(await Config.getInstance().autoTranslate)) {
+            await this.setIcon("closed")
+        }
     }
 
     public async setIcon(type: "closed" | "running" | "translating" | "translating-paused"): Promise<void> {
