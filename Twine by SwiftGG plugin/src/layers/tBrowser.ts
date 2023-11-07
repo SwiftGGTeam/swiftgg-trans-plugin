@@ -1,6 +1,6 @@
 import DNR = chrome.declarativeNetRequest;
 
-export enum BrowserType {
+export const enum BrowserType {
     chrome,
     safari,
     firefox,
@@ -24,7 +24,11 @@ export class Browser {
         if (await this.detectBrowser() === BrowserType.firefox) { await this.disableCSP() }
     }
 
-    private async detectBrowser(): Promise<BrowserType> {
+    public async setIcon(type: "closed" | "running" | "translating" | "translating-paused"): Promise<void> {
+        await chrome.action.setIcon({ path: { "128": `/source/intro/swiftLogo-${type}.png`} })
+    }
+
+    public async detectBrowser(): Promise<BrowserType> {
         const isChrome = typeof chrome !== 'undefined'
         const isFirefox = typeof browser !== 'undefined' && (await browser.runtime.getBrowserInfo()).name === "Firefox"
         const isSafari = typeof safari !== 'undefined'
