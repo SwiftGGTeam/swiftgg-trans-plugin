@@ -12,6 +12,8 @@
   "license": "ISC",
   "devDependencies": {
     "@types/chrome": "^0.0.249",
+    "@types/firefox-webext-browser": "^111.0.3",
+    "@types/safari-extension": "^0.0.30",
     "copy-webpack-plugin": "^11.0.0",
     "css-loader": "^6.8.1",
     "mini-css-extract-plugin": "^2.7.6",
