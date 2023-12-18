@@ -142,7 +142,7 @@ function updateAHerfToAbsolutURL() {
 function addTitleNode() {
   let title = document.querySelector("div.headline h1");
   if (!title) { return; }
-  let titleText = json[title.innerText.trim()].zh;
+  let titleText = json[title.innerText.trim()]?.zh;
   if (!titleText || titleText === "") {
     return;
   }
