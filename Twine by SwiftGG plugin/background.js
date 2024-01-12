@@ -36,11 +36,17 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
         (async () => {
             autoTranslate = request.data;
             const allTabs = await queryAllTabs()
+            const activeTab = await queryActiveTab()
             await updateLogo()
+
+            console.log(activeTab.id)
+
 
             for (let tab of allTabs) {
                 if (tab.url.includes("developer.apple.com")) {
                     if (isCategoryPage(tab.url)) {
+                        await requestTranslate(request.data, tab)
+                    } else if (tab.id === activeTab.id || isSupportedPage(tab.url)) {
                         await requestTranslate(request.data, tab)
                     }
                 }

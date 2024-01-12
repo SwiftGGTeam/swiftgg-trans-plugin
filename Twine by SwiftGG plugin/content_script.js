@@ -87,8 +87,12 @@ chrome.runtime.onMessage.addListener(
         removeTranslate()
         sendResponse()
       } else if (request.message === displayMethodRequestMethod) {
-        changeDisplayMethod(request.data)
-        sendResponse()
+        (async () => {
+          await changeDisplayMethod(request.data)
+          sendResponse()
+        })()
+
+        return true
       }
     }
 );
@@ -368,7 +372,7 @@ async function translate() {
   removeFloatElement()
 
   const displayMethod = await chrome.runtime.sendMessage({type: queryDisplayMethodRequestMethod});
-  changeDisplayMethod(displayMethod)
+  await changeDisplayMethod(displayMethod)
 }
 
 function removeTranslate() {
@@ -968,7 +972,7 @@ function removeFloatElement() {
   }
 }
 
-function changeDisplayMethod(method) {
+async function changeDisplayMethod(method) {
   rollBackRemovedElement()
   rollbackWeakenOriginal()
   rollbackAutoWeaken()
@@ -992,5 +996,7 @@ function changeDisplayMethod(method) {
   } else if (method === "replace") {
     removeTranslated()
     addReplaceListener()
+  } else if (method === "original") {
+    removeTranslated()
   }
 }

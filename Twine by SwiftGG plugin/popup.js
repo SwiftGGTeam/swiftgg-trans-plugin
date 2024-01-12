@@ -73,10 +73,10 @@ document.addEventListener("DOMContentLoaded", function () {
 
   if (activeTab && activeTab.url !== "" && isSupportedPage(activeTab.url) && !isCategoryPage(activeTab.url)) {
     const response = await chrome.runtime.sendMessage({type: queryCurrentRequestMethod})
-    document.getElementById("current-checkbox").checked = response.status;
-    document.getElementById('current-switch').setAttribute('class', response.status ? 'on' : 'off')
+    // document.getElementById("current-checkbox").checked = response.status;
+    // document.getElementById('current-switch').setAttribute('class', response.status ? 'on' : 'off')
   } else {
-    document.getElementById("translate-current").remove()
+    // document.getElementById("translate-current").remove()
     document.getElementById("display-method-item").remove()
   }
 
