@@ -13,7 +13,7 @@ const updateCurrentRequestMethod = "updateTranslateCurrent"
 const translateCurrentRequestMethod = "translateCurrent"
 const queryDisplayMethodRequestMethod = "queryDisplayMethod"
 const endUpWhiteList = ["swiftui","swiftui/","sample-apps","sample-apps/","swiftui-concepts","swiftui-concepts/","visionos","visionos/"]
-const categoryEndUpWhiteList = ["swiftui","swiftui/","sample-apps","sample-apps/","swiftui-concepts","swiftui-concepts/"]
+const categoryEndUpWhiteList = ["swiftui","swiftui/","sample-apps","sample-apps/","swiftui-concepts","swiftui-concepts/","visionos","visionos/"]
 let globalActiveTab = null
 
 const BrowserType = {
