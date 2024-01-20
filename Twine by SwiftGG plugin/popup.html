@@ -212,18 +212,28 @@
                 </label>
             </li>
 
-            <li class="project">
+            <li class="tools-bottom" id="display-language-item">
+                <span>翻译语言</span>
+                <label>
+                    <select class="display-method" id="display-language">
+                        <option value="chinese" selected>中文</option>
+                        <option value="others" disable>即将上线</option>
+                    </select>
+                </label>
+            </li>
+
+            <!-- <li class="project">
                 <span>
                     项目地址
                 </span>
                 <a href="https://github.com/SwiftGGTeam/apple-dev-doc-translation" target="__blank"><img src="/source/intro/project.svg" class="gh-image" alt=""></a>
-            </li>
+            </li> -->
         </ul>
 
         <div class="divider"></div>
 
         <div class="course">
-            <h3 class="course-title">当前支持的 Apple 课程</h3>
+            <h3 class="black-white-words">当前支持的 Apple 课程</h3>
             <select class="menu" id="swiftui-menu">
                 <option value="" disabled selected>SwiftUI</option>
                 <option value="https://developer.apple.com/tutorials/swiftui">Introducing SwiftUI - 认识 SwiftUI，学习基础控件的使用和开发</option>
@@ -240,8 +250,18 @@
 
 
         <footer>
-            <a href="https://github.com/SwiftGGTeam/apple-dev-doc-translation" target="__blank">我想参与项目</a>
-            <a href="https://github.com/SwiftGGTeam/apple-dev-doc-translation" target="__blank">获取帮助</a>
+            <a class="black-white-words" style="display: inline-flex; align-items: center;" href="https://github.com/SwiftGGTeam/apple-dev-doc-translation" target="__blank">
+                <img src="/source/intro/project.svg" class="gh-image" alt="" style="margin-right: 5px;">参与项目
+            </a>
+            <div>
+                <a class="swiftgg-blue-words" href="https://github.com/SwiftGGTeam/apple-dev-doc-translation" target="__blank">
+                    参与翻译
+                </a>
+                <a class="black-white-words">·</a>
+                <a href="https://github.com/SwiftGGTeam/apple-dev-doc-translation" target="__blank">
+                    帮助
+                </a>
+            </div>
         </footer>
 
     </main>

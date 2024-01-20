@@ -1,5 +1,7 @@
 :root {
     color-scheme: light dark;
+    --blue-light-color: #2cade6;
+    --blue-dark-color: #31C0FF;
 }
 
 * {
@@ -108,7 +110,7 @@ select {
 
     appearance: none;
     font-weight: 600;
-    color: #2cade6;
+    color: var(--blue-light-color);
 
     /* Custom arrow style */
     background: url('/source/intro/disclosure-indicator.png') no-repeat right center;
@@ -128,6 +130,7 @@ footer a {
     border: none;
     background-color: transparent;
     color: #FF6A46;
+    text-decoration: none;
 }
 
 span.header-text {
@@ -153,7 +156,7 @@ select.display-method {
 
     appearance: none;
     font-weight: 600;
-    color: #2cade6;
+    color: var(--blue-light-color);
 
     /* Custom arrow style */
     background: url('/source/intro/disclosure-indicator.png') no-repeat right center;
@@ -172,6 +175,13 @@ select.display-method {
     pointer-events: none; /* Make sure the arrow does not interfere with clicks */
 }
 
+.black-white-words {
+    color: #000000;
+}
+
+.swiftgg-blue-words {
+    color: var(--blue-light-color);
+}
 
 @media (prefers-color-scheme: dark) {
     .popup {
@@ -190,7 +200,7 @@ select.display-method {
         filter: invert(1);
     }
 
-    .course-title {
+    .black-white-words {
         color: white;
     }
 
@@ -199,7 +209,7 @@ select.display-method {
     }
 
     .course select {
-        color: #31C0FF;
+        color: var(--blue-dark-color);
     }
 
     .divider {
@@ -207,7 +217,11 @@ select.display-method {
     }
 
     select.display-method {
-        color: #31C0FF;
+        color: var(--blue-dark-color);
+    }
+
+    .swiftgg-blue-words {
+        color: var(--blue-dark-color);
     }
 }
 

@@ -80,7 +80,8 @@ document.addEventListener("DOMContentLoaded", function () {
     // document.getElementById("translate-current").remove()
     document.getElementById("display-method-item").remove()
     document.getElementById("tools-for-translation").remove()
-    
+  }
+  if (isCategoryPage(activeTab.url)) {
     // 在 Category 页面，提示用户点击页面里的开始学习按钮
     var supportText = document.querySelector('.support-text');
     supportText.textContent = '点击页面里开始学习按钮，进入详情页查看翻译';  
