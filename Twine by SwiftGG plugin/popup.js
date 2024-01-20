@@ -75,12 +75,16 @@ document.addEventListener("DOMContentLoaded", function () {
     const response = await chrome.runtime.sendMessage({type: queryCurrentRequestMethod})
     // document.getElementById("current-checkbox").checked = response.status;
     // document.getElementById('current-switch').setAttribute('class', response.status ? 'on' : 'off')
+    document.getElementById("unsupported-website-prompt").remove()
   } else {
     // document.getElementById("translate-current").remove()
     document.getElementById("display-method-item").remove()
+    document.getElementById("tools-for-translation").remove()
+    
+    // 在 Category 页面，提示用户点击页面里的开始学习按钮
+    var supportText = document.querySelector('.support-text');
+    supportText.textContent = '点击页面里开始学习按钮，进入详情页查看翻译';  
   }
-
-
 })()
 
 document.addEventListener('change', function(event) {
