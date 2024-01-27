@@ -12,7 +12,8 @@ const queryCurrentRequestMethod = "queryTranslateCurrent"
 const updateCurrentRequestMethod = "updateTranslateCurrent"
 const translateCurrentRequestMethod = "translateCurrent"
 const queryDisplayMethodRequestMethod = "queryDisplayMethod"
-const endUpWhiteList = ["swiftui","swiftui/","sample-apps","sample-apps/","swiftui-concepts","swiftui-concepts/"];
+const endUpWhiteList = ["swiftui","swiftui/","sample-apps","sample-apps/","swiftui-concepts","swiftui-concepts/","visionos","visionos/"]
+const categoryEndUpWhiteList = ["swiftui","swiftui/","sample-apps","sample-apps/","swiftui-concepts","swiftui-concepts/","visionos","visionos/"]
 let globalActiveTab = null
 
 const BrowserType = {
@@ -35,11 +36,17 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
         (async () => {
             autoTranslate = request.data;
             const allTabs = await queryAllTabs()
+            const activeTab = await queryActiveTab()
             await updateLogo()
+
+            console.log(activeTab.id)
+
 
             for (let tab of allTabs) {
                 if (tab.url.includes("developer.apple.com")) {
                     if (isCategoryPage(tab.url)) {
+                        await requestTranslate(request.data, tab)
+                    } else if (tab.id === activeTab.id || isSupportedPage(tab.url)) {
                         await requestTranslate(request.data, tab)
                     }
                 }
@@ -271,7 +278,7 @@ function isCategoryPage(url) {
     const pathArray = currentURL.pathname.split('/');
 
     const lastPath = pathArray[pathArray.length - 1] || pathArray[pathArray.length - 2];
-    return endUpWhiteList.includes(lastPath)
+    return categoryEndUpWhiteList.includes(lastPath)
 }
 
 function isSupportedPage(url) {

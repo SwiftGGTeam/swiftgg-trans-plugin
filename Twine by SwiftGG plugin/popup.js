@@ -4,7 +4,8 @@ const updateRequestMethod = "updateShouldTranslate"
 const updateCurrentRequestMethod = "updateTranslateCurrent"
 const queryCurrentRequestMethod = "queryTranslateCurrent"
 const displayMethodRequestMethod = "displayMethod"
-const endUpWhiteList = ["swiftui","swiftui/","sample-apps","sample-apps/","swiftui-concepts","swiftui-concepts/"];
+const endUpWhiteList = ["swiftui","swiftui/","sample-apps","sample-apps/","swiftui-concepts","swiftui-concepts/","visionos","visionos/"]
+const categoryEndUpWhiteList = ["swiftui","swiftui/","sample-apps","sample-apps/","swiftui-concepts","swiftui-concepts/"]
 
 document.addEventListener("DOMContentLoaded", function () {
   const switchButton = document.querySelector("#switch");
@@ -85,14 +86,19 @@ document.addEventListener("DOMContentLoaded", function () {
 
   if (activeTab && activeTab.url !== "" && isSupportedPage(activeTab.url) && !isCategoryPage(activeTab.url)) {
     const response = await chrome.runtime.sendMessage({type: queryCurrentRequestMethod})
-    document.getElementById("current-checkbox").checked = response.status;
-    document.getElementById('current-switch').setAttribute('class', response.status ? 'on' : 'off')
+    // document.getElementById("current-checkbox").checked = response.status;
+    // document.getElementById('current-switch').setAttribute('class', response.status ? 'on' : 'off')
+    document.getElementById("unsupported-website-prompt").remove()
   } else {
-    document.getElementById("translate-current").remove()
+    // document.getElementById("translate-current").remove()
     document.getElementById("display-method-item").remove()
+    document.getElementById("tools-for-translation").remove()
   }
-
-
+  if (isCategoryPage(activeTab.url)) {
+    // 在 Category 页面，提示用户点击页面里的开始学习按钮
+    var supportText = document.querySelector('.support-text');
+    supportText.textContent = '点击页面里开始学习按钮，进入详情页查看翻译';  
+  }
 })()
 
 document.addEventListener('change', function(event) {
@@ -122,5 +128,5 @@ function isCategoryPage(url) {
   const pathArray = currentURL.pathname.split('/');
 
   const lastPath = pathArray[pathArray.length - 1] || pathArray[pathArray.length - 2];
-  return endUpWhiteList.includes(lastPath)
+  return categoryEndUpWhiteList.includes(lastPath)
 }
