@@ -333,7 +333,7 @@ async function startTranslate() {
 async function translate() {
   const currentURL = getCurrentURL()
   const pathArray = currentURL.pathname.split('/');
-  const baseURL = "https://api.swift.gg/content/";
+  const baseURL = "https://api.swiftgg.team/content/";
   let url = baseURL + pathArray[pathArray.length-2] + '/' + pathArray[pathArray.length-1];
   if (pathArray[pathArray.length-1] === "visionos") {
     url = baseURL + "visionos/visionos"
