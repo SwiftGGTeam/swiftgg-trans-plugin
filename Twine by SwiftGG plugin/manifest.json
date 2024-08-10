@@ -17,7 +17,6 @@
         "128": "/source/intro/swiftLogo.png"
     },
     "permissions": [
-        "i18n",
         "tabs",
         "storage"
     ],
