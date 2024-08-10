@@ -1,11 +1,20 @@
-p.indicator { font-size: 18px; font-weight: bold; color: #FFFFFF; }
+p.indicator {
+    font-size: 18px;
+    font-weight: bold;
+    color: #FFFFFF;
+}
 
 .swiftgg-unselectable {
-    -webkit-touch-callout:none; /* iOS Safari */
-    -webkit-user-select:none;   /* Chrome/Safari/Opera */
-    -moz-user-select:none;      /* Firefox */
-    -ms-user-select:none;       /* Internet Explorer/Edge */
-    user-select:none;           /* Non-prefixed version */
+    -webkit-touch-callout: none;
+    /* iOS Safari */
+    -webkit-user-select: none;
+    /* Chrome/Safari/Opera */
+    -moz-user-select: none;
+    /* Firefox */
+    -ms-user-select: none;
+    /* Internet Explorer/Edge */
+    user-select: none;
+    /* Non-prefixed version */
 }
 
 div.swiftgg-float {
@@ -15,10 +24,12 @@ div.swiftgg-float {
     top: 20px;
     right: 25px;
     background-color: #1F1F1F;
-    box-shadow: 0 0 15px  rgba(0,0,0,0.25);
-    -moz-box-shadow: 0 0 15px  rgba(0,0,0,0.25);
-    -webkit-box-shadow: 0 0 15px  rgba(0,0,0,0.25);
-    -o-box-shadow: 0 0 15px  rgba(0,0,0,0.25); border-radius: 20px; width: 300px;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.25);
+    -moz-box-shadow: 0 0 15px rgba(0, 0, 0, 0.25);
+    -webkit-box-shadow: 0 0 15px rgba(0, 0, 0, 0.25);
+    -o-box-shadow: 0 0 15px rgba(0, 0, 0, 0.25);
+    border-radius: 20px;
+    width: 300px;
 }
 
 div.swiftgg-float-header {
@@ -47,7 +58,8 @@ span.swiftgg-float-header-text {
 }
 
 div.swiftgg-float-space {
-    all: initial; flex-grow: 1;
+    all: initial;
+    flex-grow: 1;
 }
 
 p.swiftgg-float-body-text {
@@ -172,12 +184,14 @@ span.swiftgg-float-button-translate-text {
     }
 }
 
-@media screen { @media (min-width: 0px) {
-    button.swiftgg-float-button-translate {
-        font-size: 15px
-    }
+@media screen {
+    @media (min-width: 0px) {
+        button.swiftgg-float-button-translate {
+            font-size: 15px
+        }
 
-    button.swiftgg-float-button-cancel {
-        font-size: 15px
+        button.swiftgg-float-button-cancel {
+            font-size: 15px
+        }
     }
-} }
+}

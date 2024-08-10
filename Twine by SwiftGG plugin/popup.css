@@ -33,7 +33,7 @@ header img {
 }
 
 body {
-    font-family: Roboto, 'Segoe UI', Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', -apple-system, BlinkMacSystemFont,  sans-serif;
+    font-family: Roboto, 'Segoe UI', Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', -apple-system, BlinkMacSystemFont, sans-serif;
 }
 
 select {
@@ -104,7 +104,7 @@ select {
     outline: none;
     background-color: transparent;
     width: 100%;
-    
+
     margin-top: 10px;
     padding-right: 20px;
 
@@ -137,13 +137,9 @@ span.header-text {
     padding-left: 6px;
 }
 
-img.gh-image {
+img.gh-image {}
 
-}
-
-img.header-image {
-
-}
+img.header-image {}
 
 select.display-method {
     border: none;
@@ -165,14 +161,20 @@ select.display-method {
 }
 
 .display-method::after {
-    content: "\25BC"; /* Unicode for a downward-pointing arrow */
+    content: "\25BC";
+    /* Unicode for a downward-pointing arrow */
     display: inline-block;
     position: absolute;
-    top: 50%; /* Vertically center the arrow */
-    right: 10px; /* Adjust the right distance of the arrow from the right edge */
-    transform: translateY(-50%); /* Vertically center the arrow */
-    font-size: 12px; /* Adjust the font size of the arrow */
-    pointer-events: none; /* Make sure the arrow does not interfere with clicks */
+    top: 50%;
+    /* Vertically center the arrow */
+    right: 10px;
+    /* Adjust the right distance of the arrow from the right edge */
+    transform: translateY(-50%);
+    /* Vertically center the arrow */
+    font-size: 12px;
+    /* Adjust the font size of the arrow */
+    pointer-events: none;
+    /* Make sure the arrow does not interfere with clicks */
 }
 
 .black-white-words {
@@ -226,8 +228,9 @@ select.display-method {
 }
 
 @media screen and (max-device-width: 748px) {
-  /* 设置移动设备的宽度 */
-  .popup {
-    width: 100%;
-  }
+
+    /* 设置移动设备的宽度 */
+    .popup {
+        width: 100%;
+    }
 }

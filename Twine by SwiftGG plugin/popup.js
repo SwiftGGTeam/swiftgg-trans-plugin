@@ -4,8 +4,8 @@ const updateRequestMethod = "updateShouldTranslate"
 const updateCurrentRequestMethod = "updateTranslateCurrent"
 const queryCurrentRequestMethod = "queryTranslateCurrent"
 const displayMethodRequestMethod = "displayMethod"
-const endUpWhiteList = ["swiftui","swiftui/","sample-apps","sample-apps/","swiftui-concepts","swiftui-concepts/","visionos","visionos/"]
-const categoryEndUpWhiteList = ["swiftui","swiftui/","sample-apps","sample-apps/","swiftui-concepts","swiftui-concepts/"]
+const endUpWhiteList = ["swiftui", "swiftui/", "sample-apps", "sample-apps/", "swiftui-concepts", "swiftui-concepts/", "visionos", "visionos/"]
+const categoryEndUpWhiteList = ["swiftui", "swiftui/", "sample-apps", "sample-apps/", "swiftui-concepts", "swiftui-concepts/"]
 
 document.addEventListener("DOMContentLoaded", function () {
   const switchButton = document.querySelector("#switch");
@@ -17,7 +17,7 @@ document.addEventListener("DOMContentLoaded", function () {
     checkbox.checked = !checkbox.checked
     document.getElementById('switch').setAttribute('class', checkbox.checked ? 'on' : 'off')
     chrome.storage.local.set({ pluginFlag: checkbox.checked }).then(() => {
-      chrome.runtime.sendMessage({type: updateRequestMethod, data: checkbox.checked}).then();
+      chrome.runtime.sendMessage({ type: updateRequestMethod, data: checkbox.checked }).then();
     });
   });
 });
@@ -36,7 +36,7 @@ document.addEventListener("DOMContentLoaded", function () {
     label.classList.remove("disable-animation");
     checkbox.checked = !checkbox.checked
     document.getElementById('current-switch').setAttribute('class', checkbox.checked ? 'on' : 'off')
-    chrome.runtime.sendMessage({type: updateCurrentRequestMethod, data: checkbox.checked}).then();
+    chrome.runtime.sendMessage({ type: updateCurrentRequestMethod, data: checkbox.checked }).then();
   });
 });
 
@@ -53,7 +53,7 @@ document.addEventListener("DOMContentLoaded", function () {
           message: displayMethodRequestMethod,
           url: true.url,
           data: displaySelect.value
-        }).then().catch((e) => {console.log(e)})
+        }).then().catch((e) => { console.log(e) })
       })
     })
   })
@@ -85,7 +85,7 @@ document.addEventListener("DOMContentLoaded", function () {
   const activeTab = await queryActiveTab()
 
   if (activeTab && activeTab.url !== "" && isSupportedPage(activeTab.url) && !isCategoryPage(activeTab.url)) {
-    const response = await chrome.runtime.sendMessage({type: queryCurrentRequestMethod})
+    const response = await chrome.runtime.sendMessage({ type: queryCurrentRequestMethod })
     // document.getElementById("current-checkbox").checked = response.status;
     // document.getElementById('current-switch').setAttribute('class', response.status ? 'on' : 'off')
     document.getElementById("unsupported-website-prompt").remove()
@@ -97,14 +97,14 @@ document.addEventListener("DOMContentLoaded", function () {
   if (isCategoryPage(activeTab.url)) {
     // 在 Category 页面，提示用户点击页面里的开始学习按钮
     var supportText = document.querySelector('.support-text');
-    supportText.textContent = '点击页面里开始学习按钮，进入详情页查看翻译';  
+    supportText.textContent = '点击页面里开始学习按钮，进入详情页查看翻译';
   }
 })()
 
-document.addEventListener('change', function(event) {
+document.addEventListener('change', function (event) {
   const target = event.target;
   if (target.tagName.toLowerCase() === 'select') {
-    chrome.tabs.create({url: target.value}).then();
+    chrome.tabs.create({ url: target.value }).then();
   }
 });
 
@@ -114,11 +114,11 @@ async function queryActiveTab() {
 
 function isSupportedPage(url) {
   const currentURL = new URL(url)
-  const pathArray = currentURL.pathname.split('/').filter(function (el){
+  const pathArray = currentURL.pathname.split('/').filter(function (el) {
     return el !== ""
   })
 
-  return endUpWhiteList.includes(pathArray[pathArray.length-2]) || endUpWhiteList.includes(pathArray[pathArray.length-1])
+  return endUpWhiteList.includes(pathArray[pathArray.length - 2]) || endUpWhiteList.includes(pathArray[pathArray.length - 1])
 }
 
 function isCategoryPage(url) {
