@@ -26,19 +26,14 @@ let removedElement = []
 
 log("Plugin start request flag");
 
-
-$(document).ready(async () => {
+(async () => {
     getCurrentURL()
-
     const response = await chrome.runtime.sendMessage({ type: initialRequestMethod });
     log(`Flag status: ${response.shouldTranslate}`);
     shouldTranslate = response.shouldTranslate
 
     await startTranslate()
-
-    log("Plugin wait page loaded");
-});
-
+})();
 
 chrome.runtime.onMessage.addListener(
     function (request, sender, sendResponse) {
@@ -277,10 +272,8 @@ function isCategoryPage() {
     // TODO: 这个逻辑以后要改掉，现在是写死在插件的
     const currentURL = getCurrentURL()
     const pathArray = currentURL.pathname.split('/');
-
     const lastPath = pathArray[pathArray.length - 1] || pathArray[pathArray.length - 2];
-    return categoryEndUpWhiteList.includes(lastPath)
-    const result = categoryEndUpWhiteList.includes(lastPath)
+    const result = categoryEndUpWhiteList.includes(lastPath);
     log(`Plugin isCategoryPage: ${result}`);
     return result;
 }

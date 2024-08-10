@@ -57,6 +57,8 @@
 		90A822C02A75708E00A8616F /* ExtensionState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90A822BE2A75708E00A8616F /* ExtensionState.swift */; };
 		BDB1CFAE2C6757C600B03834 /* _locales in Resources */ = {isa = PBXBuildFile; fileRef = BDB1CFAD2C6757C600B03834 /* _locales */; };
 		BDB1CFAF2C6757C600B03834 /* _locales in Resources */ = {isa = PBXBuildFile; fileRef = BDB1CFAD2C6757C600B03834 /* _locales */; };
+		BDB1CFB12C67BB4800B03834 /* background.js in Resources */ = {isa = PBXBuildFile; fileRef = BDB1CFB02C67BB4800B03834 /* background.js */; };
+		BDB1CFB22C67BB4800B03834 /* background.js in Resources */ = {isa = PBXBuildFile; fileRef = BDB1CFB02C67BB4800B03834 /* background.js */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -141,6 +143,7 @@
 		17FC52D12A6D56C000367D01 /* float.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; name = float.html; path = "../../Twine by SwiftGG plugin/float.html"; sourceTree = "<group>"; };
 		90A822BE2A75708E00A8616F /* ExtensionState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExtensionState.swift; sourceTree = "<group>"; };
 		BDB1CFAD2C6757C600B03834 /* _locales */ = {isa = PBXFileReference; lastKnownFileType = folder; name = _locales; path = "../../Twine by SwiftGG plugin/_locales"; sourceTree = "<group>"; };
+		BDB1CFB02C67BB4800B03834 /* background.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; name = background.js; path = "../../Twine by SwiftGG plugin/background.js"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -276,6 +279,7 @@
 		17CE90B22A65959C00E4C4DA /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				BDB1CFB02C67BB4800B03834 /* background.js */,
 				BDB1CFAD2C6757C600B03834 /* _locales */,
 				174474F82A73569800BB4202 /* Privacy policy.md */,
 				17FC52D12A6D56C000367D01 /* float.html */,
@@ -465,6 +469,7 @@
 				17CE90CD2A65959C00E4C4DA /* popup.html in Resources */,
 				17CE90CA2A65959C00E4C4DA /* content_script.css in Resources */,
 				17CE90D02A65959C00E4C4DA /* content_script.js in Resources */,
+				BDB1CFB12C67BB4800B03834 /* background.js in Resources */,
 				BDB1CFAE2C6757C600B03834 /* _locales in Resources */,
 				17CE90D12A65959C00E4C4DA /* manifest.json in Resources */,
 				17CE90CB2A65959C00E4C4DA /* popup.js in Resources */,
@@ -484,6 +489,7 @@
 				17CE90C22A65959C00E4C4DA /* popup.html in Resources */,
 				17CE90BF2A65959C00E4C4DA /* content_script.css in Resources */,
 				17CE90C52A65959C00E4C4DA /* content_script.js in Resources */,
+				BDB1CFB22C67BB4800B03834 /* background.js in Resources */,
 				BDB1CFAF2C6757C600B03834 /* _locales in Resources */,
 				17CE90C62A65959C00E4C4DA /* manifest.json in Resources */,
 				17CE90C02A65959C00E4C4DA /* popup.js in Resources */,

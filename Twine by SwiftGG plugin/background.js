@@ -25,11 +25,9 @@ const BrowserType = {
 
 retrieveShouldTranslate().then()
 
-detectBrowser().then((type) => {
-    if (type === BrowserType.firefox) {
-        disableCSP().then()
-    }
-})
+if (detectBrowser() === BrowserType.firefox) {
+    disableCSP()
+}
 
 chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
     if (request.type === updateRequestMethod) {
@@ -198,9 +196,9 @@ async function updateLogo() {
     }
 }
 
-async function detectBrowser() {
+function detectBrowser() {
     const isChrome = typeof chrome !== 'undefined'
-    const isFirefox = typeof browser !== 'undefined' && (await browser.runtime.getBrowserInfo()).name === "Firefox"
+    const isFirefox = navigator.userAgent.indexOf('Firefox') > -1
     const isSafari = typeof safari !== 'undefined'
 
     if (isSafari) {
@@ -215,7 +213,7 @@ async function detectBrowser() {
 }
 
 async function setIcon(path) {
-    switch (await detectBrowser()) {
+    switch (detectBrowser()) {
         case BrowserType.chrome:
             await chrome.action.setIcon({ path: { "128": path } })
             break

@@ -34,10 +34,9 @@
                 "content_script.css"
             ],
             "js": [
-                "scripts/jquery..min.js",
                 "content_script.js"
             ],
-            "run_at": "document_end"
+            "run_at": "document_idle"
         }
     ],
     "web_accessible_resources": [
