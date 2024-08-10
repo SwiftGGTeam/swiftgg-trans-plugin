@@ -35,6 +35,7 @@
                 "content_script.css"
             ],
             "js": [
+                "scripts/jquery..min.js",
                 "content_script.js"
             ],
             "run_at": "document_end"

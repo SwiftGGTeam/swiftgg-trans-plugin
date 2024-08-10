@@ -26,7 +26,8 @@ let removedElement = []
 
 log("Plugin start request flag");
 
-(async () => {
+
+$(document).ready(async () => {
     getCurrentURL()
 
     const response = await chrome.runtime.sendMessage({ type: initialRequestMethod });
@@ -36,7 +37,8 @@ log("Plugin start request flag");
     await startTranslate()
 
     log("Plugin wait page loaded");
-})()
+});
+
 
 chrome.runtime.onMessage.addListener(
     function (request, sender, sendResponse) {
