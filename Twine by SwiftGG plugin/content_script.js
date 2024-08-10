@@ -132,19 +132,6 @@ function checkResponse(response) {
     }
 }
 
-function updateAHerfToAbsolutURL() {
-    let relativeLinks = document.querySelectorAll('a[href^="/"]');
-    log("Plugin start update herf");
-    for (let i = 0; i < relativeLinks.length; i++) {
-        let link = relativeLinks[i];
-        let relativePath = link.getAttribute('href');
-        let absolutePath = `https://developer.apple.com${relativePath}`;
-        log(absolutePath);
-        link.setAttribute('href', absolutePath);
-        link.setAttribute('target', '_blank');
-    }
-}
-
 function addTitleNode() {
     let title = document.querySelector("div.headline h1");
     if (!title) { return; }
@@ -282,14 +269,22 @@ function log(message) {
         console.log(message)
     }
 }
-
+/**
+ * 检查当前页面是否为无需翻译的首页页面，这种页面只要提示用户继续往下走就行了
+ * @returns {boolean} - 如果当前页面是类别页面则返回 true，否则返回 false
+ */
 function isCategoryPage() {
+    // TODO: 这个逻辑以后要改掉，现在是写死在插件的
     const currentURL = getCurrentURL()
     const pathArray = currentURL.pathname.split('/');
 
     const lastPath = pathArray[pathArray.length - 1] || pathArray[pathArray.length - 2];
     return categoryEndUpWhiteList.includes(lastPath)
+    const result = categoryEndUpWhiteList.includes(lastPath)
+    log(`Plugin isCategoryPage: ${result}`);
+    return result;
 }
+
 
 function addInstructionToCategoryPage() {
     let contentDiv = document.getElementsByClassName("copy-container")[0]
@@ -314,7 +309,9 @@ function isSupportedPage() {
         return el !== ""
     })
 
-    return endUpWhiteList.includes(pathArray[pathArray.length - 2]) || endUpWhiteList.includes(pathArray[pathArray.length - 1])
+    const result = endUpWhiteList.includes(pathArray[pathArray.length - 2]) || endUpWhiteList.includes(pathArray[pathArray.length - 1])
+    log(`Plugin isSupportedPage: ${result}`);
+    return result;
 }
 
 async function startTranslate() {
@@ -358,12 +355,10 @@ async function translate() {
     await waitPage()
 
     if (isCategoryPage() === true) {
-        updateAHerfToAbsolutURL()
         log("in category page")
         addInstructionToCategoryPage()
     } else {
         log("Plugin Start add content");
-        updateAHerfToAbsolutURL()
         addTitleNode();
         appendH2Nodes();
         appendPNodes();
