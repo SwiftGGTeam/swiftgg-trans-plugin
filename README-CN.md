@@ -114,12 +114,11 @@ SwiftGG 是一个致力于为 Swift 语言和 iOS 开发者提供高质量中文
 - [SketchK](https://github.com/SwiftGGTeam/swiftgg-trans-plugin/commits?author=SketchK)
 - [numbbbbb](https://github.com/numbbbbb)
 - [zyterence](https://github.com/zyterence)
-- [OneeMe](https://github.com/OneeMe)
+- [SpatialOnee](https://github.com/OneeMe)
 - [IanIsMyUsername](https://github.com/IanIsMyUsername)
 - [hiETsang](https://github.com/hiETsang)
 - [Ryan-BetterMe](https://github.com/Ryan-BetterMe)
 - [JacobMao](https://github.com/JacobMao)
 - [RyanZhu](https://github.com/underthestars-zhy)
 - [FrankChu](https://github.com/yongfrank)
-
 

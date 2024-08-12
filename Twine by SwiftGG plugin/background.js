@@ -12,8 +12,8 @@ const queryCurrentRequestMethod = "queryTranslateCurrent"
 const updateCurrentRequestMethod = "updateTranslateCurrent"
 const translateCurrentRequestMethod = "translateCurrent"
 const queryDisplayMethodRequestMethod = "queryDisplayMethod"
-const endUpWhiteList = ["swiftui","swiftui/","sample-apps","sample-apps/","swiftui-concepts","swiftui-concepts/","visionos","visionos/"]
-const categoryEndUpWhiteList = ["swiftui","swiftui/","sample-apps","sample-apps/","swiftui-concepts","swiftui-concepts/","visionos","visionos/"]
+const endUpWhiteList = ["swiftui", "swiftui/", "sample-apps", "sample-apps/", "swiftui-concepts", "swiftui-concepts/", "visionos", "visionos/"]
+const categoryEndUpWhiteList = ["swiftui", "swiftui/", "sample-apps", "sample-apps/", "swiftui-concepts", "swiftui-concepts/", "visionos", "visionos/"]
 let globalActiveTab = null
 
 const BrowserType = {
@@ -25,11 +25,9 @@ const BrowserType = {
 
 retrieveShouldTranslate().then()
 
-detectBrowser().then((type) => {
-    if (type === BrowserType.firefox) {
-        disableCSP().then()
-    }
-})
+if (detectBrowser() === BrowserType.firefox) {
+    disableCSP()
+}
 
 chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
     if (request.type === updateRequestMethod) {
@@ -59,7 +57,7 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
     } else if (request.type === initialRequestMethod) {
         (async () => {
             const result = await retrieveShouldTranslate()
-            sendResponse({shouldTranslate: result});
+            sendResponse({ shouldTranslate: result });
         })()
 
         return true
@@ -72,7 +70,7 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
         return true
     } else if (request.type === queryCurrentRequestMethod) {
         (async () => {
-            sendResponse({status: await queryActiveTabStatus()})
+            sendResponse({ status: await queryActiveTabStatus() })
         })()
 
         return true
@@ -98,7 +96,7 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
     }
 });
 
-chrome.tabs.onUpdated.addListener(function() {
+chrome.tabs.onUpdated.addListener(function () {
     (async () => {
         const previousActiveTab = globalActiveTab
         const activeTab = await queryActiveTab()
@@ -122,7 +120,7 @@ chrome.tabs.onUpdated.addListener(function() {
     })()
 });
 
-chrome.tabs.onActivated.addListener(function() {
+chrome.tabs.onActivated.addListener(function () {
     (async () => {
         const activeTab = await queryActiveTab()
 
@@ -169,7 +167,7 @@ async function requestTranslate(translate, tab) {
 async function updateLogo() {
     const activeTab = await queryActiveTab()
 
-    if (activeTab) {} else return
+    if (activeTab) { } else return
 
     if (autoTranslate) {
         if (activeTab.url.includes("developer.apple.com")) {
@@ -198,9 +196,9 @@ async function updateLogo() {
     }
 }
 
-async function detectBrowser() {
+function detectBrowser() {
     const isChrome = typeof chrome !== 'undefined'
-    const isFirefox = typeof browser !== 'undefined' && (await browser.runtime.getBrowserInfo()).name === "Firefox"
+    const isFirefox = navigator.userAgent.indexOf('Firefox') > -1
     const isSafari = typeof safari !== 'undefined'
 
     if (isSafari) {
@@ -215,15 +213,15 @@ async function detectBrowser() {
 }
 
 async function setIcon(path) {
-    switch (await detectBrowser()) {
+    switch (detectBrowser()) {
         case BrowserType.chrome:
-            await chrome.action.setIcon({ path: { "128": path} })
+            await chrome.action.setIcon({ path: { "128": path } })
             break
         case BrowserType.firefox:
-            await chrome.action.setIcon({ path: { "128": path} })
+            await chrome.action.setIcon({ path: { "128": path } })
             break
         case BrowserType.safari:
-            await browser.browserAction.setIcon({ path: { "128": path} })
+            await browser.browserAction.setIcon({ path: { "128": path } })
             break
         case BrowserType.unknown:
             break
@@ -252,7 +250,7 @@ async function retrieveShouldTranslate() {
     autoTranslate = result.pluginFlag || false
     if (previousShouldTranslate == null) {
         if (!autoTranslate) {
-            await chrome.action.setIcon({ path: { "128": "/source/intro/swiftLogo-closed.png"} })
+            await chrome.action.setIcon({ path: { "128": "/source/intro/swiftLogo-closed.png" } })
         }
     }
     return result.pluginFlag || false
@@ -286,11 +284,11 @@ function isSupportedPage(url) {
     currentURL.hash = ""
     currentURL.search = ""
 
-    const pathArray = currentURL.pathname.split('/').filter(function (el){
+    const pathArray = currentURL.pathname.split('/').filter(function (el) {
         return el !== ""
     })
 
-    return endUpWhiteList.includes(pathArray[pathArray.length-2]) || endUpWhiteList.includes(pathArray[pathArray.length-1])
+    return endUpWhiteList.includes(pathArray[pathArray.length - 2]) || endUpWhiteList.includes(pathArray[pathArray.length - 1])
 }
 
 async function disableCSP() {
@@ -306,10 +304,10 @@ async function disableCSP() {
             type: 'modifyHeaders',
             responseHeaders: [{ header: 'Content-Security-Policy', operation: 'set', value: 'default-src * \'unsafe-inline\' \'unsafe-eval\' data: blob:; ' }]
         },
-        condition: {urlFilter: "||developer.apple.com*", resourceTypes: ['main_frame', 'sub_frame']}
+        condition: { urlFilter: "||developer.apple.com*", resourceTypes: ['main_frame', 'sub_frame'] }
     })
 
-    chrome.browsingData.remove({}, { serviceWorkers: true }, () => {})
+    chrome.browsingData.remove({}, { serviceWorkers: true }, () => { })
 
-    await chrome.declarativeNetRequest.updateSessionRules({addRules, removeRuleIds})
+    await chrome.declarativeNetRequest.updateSessionRules({ addRules, removeRuleIds })
 }
