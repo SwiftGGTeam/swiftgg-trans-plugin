@@ -95,13 +95,13 @@ chrome.runtime.onMessage.addListener(
 );
 
 function waitPage() {
-    const flagElement = isCategoryPage() ? ".title" : ".core-app";
-    log(`Plugin ${flagElement}`);
+    // 只要页面中有 p 标签，我们就认为页面已经加载完成
+    const flagElementQuery = "p";
     log("Plugin waiting");
     return new Promise((resolve) => {
         const interval = setInterval(function () {
             log("Plugin retry");
-            let asyncElement = document.querySelector(flagElement);
+            let asyncElement = document.querySelector(flagElementQuery);
             if (asyncElement) {
                 log("Element loaded");
                 resolve()
@@ -229,6 +229,7 @@ function appendH2Nodes() {
 
 function appendPNodes() {
     let pNodes = document.querySelectorAll("p");
+    log(`Find ${pNodes.length} p elements to change`);
     Array.from(pNodes).filter((node) => Boolean(json[node.innerText])).forEach((node) => {
         let parent = node.parentNode;
         let newNode = document.createElement("p");
@@ -261,7 +262,7 @@ function appendPNodes() {
 
 function log(message) {
     if (isDebugMode) {
-        console.log(message)
+        console.log('[Twine by SwiftGG]' + message)
     }
 }
 /**
