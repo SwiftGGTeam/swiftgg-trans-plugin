@@ -1,7 +1,7 @@
 {
     "name": "Twine by SwiftGG",
     "description": "Apple document",
-    "version": "1.0.6",
+    "version": "1.0.7",
     "manifest_version": 3,
     "default_locale": "zh_CN",
     "background": {
