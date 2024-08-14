@@ -28,7 +28,12 @@ log("Plugin start request flag");
 
 (async () => {
     getCurrentURL()
-    const response = await chrome.runtime.sendMessage({ type: initialRequestMethod });
+    let response = await chrome.runtime.sendMessage({ type: initialRequestMethod });
+    if (!response) {
+        // 有时候 safari 中会出现 service worker 被杀掉，这里做一个保护
+        response = { shouldTranslate: true };
+        console.log("Response is null, set shouldTranslate to default true");
+    }
     log(`Flag status: ${response.shouldTranslate}`);
     shouldTranslate = response.shouldTranslate
 
