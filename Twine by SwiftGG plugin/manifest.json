@@ -42,7 +42,8 @@
     "web_accessible_resources": [
         {
             "resources": [
-                "float.html"
+                "float.html",
+                "data/data.json"
             ],
             "matches": [
                 "https://developer.apple.com/*",
