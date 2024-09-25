@@ -15,6 +15,7 @@ const queryDisplayMethodRequestMethod = "queryDisplayMethod"
 const endUpWhiteList = ["swiftui", "swiftui/", "sample-apps", "sample-apps/", "swiftui-concepts", "swiftui-concepts/", "visionos", "visionos/"]
 const categoryEndUpWhiteList = ["swiftui", "swiftui/", "sample-apps", "sample-apps/", "swiftui-concepts", "swiftui-concepts/", "visionos", "visionos/"]
 let globalActiveTab = null
+let allJsonData = null;
 
 const BrowserType = {
     chrome: Symbol("chrome"),
@@ -28,6 +29,10 @@ retrieveShouldTranslate().then()
 if (detectBrowser() === BrowserType.firefox) {
     disableCSP()
 }
+
+chrome.runtime.onInstalled.addListener(() => {
+    loadJsonData();
+});
 
 chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
     if (request.type === updateRequestMethod) {
@@ -93,6 +98,16 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
         })()
 
         return true
+    } else if (request.type === 'getJsonData') {
+        if (allJsonData === null) {
+            loadJsonData();
+        }
+        if (allJsonData && request.path) {
+            const data = allJsonData[request.path] || null;
+            sendResponse({ data: data });
+        } else {
+            sendResponse({ data: null });
+        }
     }
 });
 
@@ -310,4 +325,15 @@ async function disableCSP() {
     chrome.browsingData.remove({}, { serviceWorkers: true }, () => { })
 
     await chrome.declarativeNetRequest.updateSessionRules({ addRules, removeRuleIds })
+}
+
+function loadJsonData() {
+    console.log(`path is ${chrome.runtime.getURL('data/data.json')}`)
+    fetch(chrome.runtime.getURL('data/data.json'))
+        .then(response => response.json())
+        .then(data => {
+            allJsonData = data;
+            console.log('JSON数据加载完成:', allJsonData);
+        })
+        .catch(error => console.error('加载JSON数据时出错:', error));
 }
