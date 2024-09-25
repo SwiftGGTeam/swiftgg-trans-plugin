@@ -26,6 +26,16 @@ let removedElement = []
 
 log("Plugin start request flag");
 
+async function loadJsonData(path) {
+    return new Promise((resolve) => {
+        chrome.runtime.sendMessage({ type: 'getJsonData', path: path }, response => {
+            console.log(`Plugin getJsonData: ${response.data}`);
+            resolve(response.data);
+        });
+    });
+}
+
+// 在脚本开始时调用这个函数
 (async () => {
     getCurrentURL()
     let response = await chrome.runtime.sendMessage({ type: initialRequestMethod });
@@ -116,11 +126,10 @@ function waitPage() {
     })
 }
 
-async function fetchRelatedData(url) {
+async function fetchRelatedData(path) {
     try {
-        const response = await fetch(url)
-        checkResponse(response)
-        json = await response.json()
+        const response = await loadJsonData(path)
+        json = response
     } catch (error) {
         console.log('Error fetching data:', error);
     }
@@ -331,10 +340,9 @@ async function startTranslate() {
 async function translate() {
     const currentURL = getCurrentURL()
     const pathArray = currentURL.pathname.split('/');
-    const baseURL = "https://api.swiftgg.team/content/";
-    let url = baseURL + pathArray[pathArray.length - 2] + '/' + pathArray[pathArray.length - 1];
+    let path = pathArray[pathArray.length - 2] + '/' + pathArray[pathArray.length - 1];
     if (pathArray[pathArray.length - 1] === "visionos") {
-        url = baseURL + "visionos/visionos"
+        path = "visionos/visionos"
     }
 
     if (shouldTranslate === false) {
@@ -348,7 +356,7 @@ async function translate() {
     currentTranslatedURL = currentURL
 
     if (isCategoryPage() === false) {
-        await fetchRelatedData(url)
+        await fetchRelatedData(path)
     }
 
     await waitPage()
