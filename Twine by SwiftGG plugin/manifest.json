@@ -43,6 +43,7 @@
         {
             "resources": [
                 "float.html",
+                "float.css",
                 "data/data.json"
             ],
             "matches": [

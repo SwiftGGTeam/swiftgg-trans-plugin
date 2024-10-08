@@ -18,7 +18,6 @@ const endUpWhiteList = ["swiftui", "swiftui/", "sample-apps", "sample-apps/", "s
 const categoryEndUpWhiteList = ["swiftui", "swiftui/", "sample-apps", "sample-apps/", "swiftui-concepts", "swiftui-concepts/"]
 let currentTranslatedURL = null
 let translated = false
-const tabActiveRequestMethod = "tabActive"
 let noDisturb = false
 let shouldTranslate = false
 let globalCurrentURL = null
@@ -37,6 +36,7 @@ async function loadJsonData(path) {
 
 // 在脚本开始时调用这个函数
 (async () => {
+    await injectFloat()
     getCurrentURL()
     let response = await chrome.runtime.sendMessage({ type: initialRequestMethod });
     if (!response) {
@@ -73,20 +73,6 @@ chrome.runtime.onMessage.addListener(
             return true
         } else if (request.message === queryStatusRequestMethod) {
             sendResponse({ status: translated })
-        } else if (request.message === tabActiveRequestMethod) {
-            (async () => {
-                if (isSupportedPage(request.url) && !isCategoryPage(request.url)) {
-                    if (request.shouldTranslate && !translated && !noDisturb) {
-                        await injectFloat()
-                    } else if (!request.shouldTranslate) {
-                        removeFloatElement()
-                    }
-                }
-
-                sendResponse()
-            })()
-
-            return true
         } else if (request.message === translateCurrentRequestMethod) {
             (async () => {
                 shouldTranslate = true
@@ -782,17 +768,23 @@ function getCurrentURL() {
 }
 
 async function injectFloat() {
-    if (elementExists("swiftgg-float")) {
+    if (elementExists("swiftgg-float-container")) {
         return
     }
 
+    // inject float.html
     const response = await fetch(chrome.runtime.getURL("float.html"))
     const floatContent = await response.text()
-    console.log(floatContent)
-    const container = document.createElement('div')
-    container.innerHTML = floatContent
-    const bodyElement = document.body
-    bodyElement.insertBefore(container, bodyElement.firstChild)
+    const div = document.createElement('div')
+    div.id = "swiftgg-float-container"
+    div.innerHTML = floatContent
+    document.body.appendChild(div)
+
+    // inject float.css
+    const style = document.createElement('style');
+    let css = await fetch(chrome.runtime.getURL('float.css')).then(response => response.text());
+    style.textContent = css;
+    document.head.appendChild(style);
 
     setFloatColorSchema()
     addListenerToFloatElement()
@@ -808,78 +800,8 @@ function directRemoveElement(elementId) {
     element.remove()
 }
 
+// 这里给 float 元素添加事件监听，以进一步添加交互
 function addListenerToFloatElement() {
-    const cancelButton = document.getElementById("swiftgg-float-cancel")
-
-    cancelButton.addEventListener("mouseenter", function () {
-        if (checkColorSchema()) {
-            cancelButton.style.backgroundColor = "#292929"
-        } else {
-            cancelButton.style.backgroundColor = "#F0F0F0"
-        }
-    }, false)
-
-    cancelButton.addEventListener("mouseleave", function () {
-        if (checkColorSchema()) {
-            cancelButton.style.backgroundColor = "#1F1F1F"
-        } else {
-            cancelButton.style.backgroundColor = "#FAFAFA"
-        }
-    }, false)
-
-    cancelButton.addEventListener("mousedown", function () {
-        if (checkColorSchema()) {
-            cancelButton.style.backgroundColor = "#333333"
-        } else {
-            cancelButton.style.backgroundColor = "#E6E6E6"
-        }
-    })
-
-    cancelButton.addEventListener("mouseup", function () {
-        if (checkColorSchema()) {
-            cancelButton.style.backgroundColor = "#292929"
-        } else {
-            cancelButton.style.backgroundColor = "#F0F0F0"
-        }
-    })
-
-    cancelButton.onclick = floatCancel
-
-    const translateButton = document.getElementById("swiftgg-float-translate")
-
-    translateButton.addEventListener("mouseenter", function () {
-        if (checkColorSchema()) {
-            translateButton.style.backgroundColor = "#212629"
-        } else {
-            translateButton.style.backgroundColor = "#D9F2FF"
-        }
-    }, false)
-
-    translateButton.addEventListener("mouseleave", function () {
-        if (checkColorSchema()) {
-            translateButton.style.backgroundColor = "#1F1F1F"
-        } else {
-            translateButton.style.backgroundColor = "#FAFAFA"
-        }
-    }, false)
-
-    translateButton.addEventListener("mousedown", function () {
-        if (checkColorSchema()) {
-            translateButton.style.backgroundColor = "#223038"
-        } else {
-            translateButton.style.backgroundColor = "#B8E0F5"
-        }
-    })
-
-    translateButton.addEventListener("mouseup", function () {
-        if (checkColorSchema()) {
-            translateButton.style.backgroundColor = "#212629"
-        } else {
-            translateButton.style.backgroundColor = "#D9F2FF"
-        }
-    })
-
-    translateButton.onclick = floatTranslate
 
     window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e) => {
         if (e.matches) {

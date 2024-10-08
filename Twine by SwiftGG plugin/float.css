@@ -1,0 +1,16 @@
+#swiftgg-float-container {
+  position: fixed;
+  right: 0px;
+  top: 45vh;
+  z-index: 9999;
+  max-width: 300px;
+  width: 100%;
+}
+
+.swiftgg-float-content {
+  background-color: red;
+  border: 1px solid #e0e0e0;
+  border-radius: 5px;
+  padding: 10px;
+  margin: 0;
+}

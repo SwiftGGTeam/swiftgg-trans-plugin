@@ -137,22 +137,6 @@ chrome.tabs.onUpdated.addListener(function () {
 
 chrome.tabs.onActivated.addListener(function () {
     (async () => {
-        const activeTab = await queryActiveTab()
-
-        await updateLogo()
-
-        try {
-            if (activeTab.id && activeTab.url.includes("developer.apple.com")) {
-                await chrome.tabs.sendMessage(activeTab.id, {
-                    message: tabActiveRequestMethod,
-                    url: activeTab.url,
-                    shouldTranslate: autoTranslate,
-                })
-            }
-        } catch (error) {
-            console.log(error)
-        }
-
         await updateLogo()
     })()
 });
