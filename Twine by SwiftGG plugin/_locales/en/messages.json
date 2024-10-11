@@ -28,8 +28,12 @@
         "description": ""
     },
     "translation_display": {
-        "message": "Translation Display",
-        "description": ""
+        "message": "Display Method",
+        "description": "Label for the translation display method dropdown"
+    },
+    "translation_language": {
+        "message": "Translation Language",
+        "description": "Label for the translation language dropdown"
     },
     "auto": {
         "message": "auto",

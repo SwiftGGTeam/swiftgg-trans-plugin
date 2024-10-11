@@ -13,11 +13,11 @@
         }
 
         #switch .labelBox {
-            background: #409eff;
+            background: #2782FB;
             border-radius: 40px;
-            width: 42px;
+            width: 38px;
+            height: 20px;
             position: relative;
-            height: 22px;
         }
 
         #switch.off .labelBox {
@@ -26,8 +26,8 @@
 
         #switch .check {
             display: block;
-            width: 18px;
-            height: 18px;
+            width: 16px;
+            height: 16px;
             border-radius: 50%;
             background: #fff;
             /* border: 1px solid #e5e5e5; */
@@ -52,9 +52,9 @@
         #current-switch .labelBox {
             background: #409eff;
             border-radius: 40px;
-            width: 42px;
+            width: 38px;
+            height: 20px;
             position: relative;
-            height: 22px;
         }
 
         #current-switch.off .labelBox {
@@ -63,8 +63,8 @@
 
         #current-switch .check {
             display: block;
-            width: 18px;
-            height: 18px;
+            width: 16px;
+            height: 16px;
             border-radius: 50%;
             background: #fff;
             /* border: 1px solid #e5e5e5; */
@@ -90,14 +90,14 @@
 
             100% {
                 top: 2px;
-                left: 22px;
+                left: 20px;
             }
         }
 
         @keyframes labelOFF {
             0% {
                 top: 2px;
-                left: 22px;
+                left: 20px;
             }
 
             100% {
@@ -108,7 +108,7 @@
 
         #switch input[type=checkbox]:checked+label.check {
             top: 2px;
-            left: 22px;
+            left: 20px;
             -webkit-animation: labelON 0.2s ease-in 0s 1;
             -moz-animation: labelON 0.2s ease-in 0s 1;
             -o-animation: labelON 0.2s ease-in 0s 1;
@@ -128,7 +128,7 @@
 
         #current-switch input[type=checkbox]:checked+label.check {
             top: 2px;
-            left: 22px;
+            left: 20px;
             -webkit-animation: labelON 0.2s ease-in 0s 1;
             -moz-animation: labelON 0.2s ease-in 0s 1;
             -o-animation: labelON 0.2s ease-in 0s 1;
@@ -159,17 +159,11 @@
 
 <body>
     <main class="popup">
-        <header>
-            <img src="https://www.gitbook.com/cdn-cgi/image/width=40,dpr=2,height=40,fit=contain,format=auto/https%3A%2F%2F4205117763-files.gitbook.io%2F~%2Ffiles%2Fv0%2Fb%2Fgitbook-legacy-files%2Fo%2Fspaces%252F-Law_TwYroharctnLUSD%252Favatar.png%3Fgeneration%3D1553649267470994%26alt%3Dmedia"
-                alt="" class="header-image">
-            <span class="header-text">
-                Twine by SwiftGG
-            </span>
-        </header>
+        <!-- Remove the header section -->
 
         <ul class="tool" id="tools-for-translation">
             <li class="translate">
-                <span id="auto_translate">开启翻译</span>
+                <span id="auto_translate">自动翻译</span>
 
                 <div id="switch">
                     <div class="labelBox">
@@ -191,23 +185,24 @@
             <!--            </li>-->
 
             <li class="translate" id="display-method-item">
-                <span id="translation_display">翻译展示方式</span>
+                <span id="translation_display">显示方式</span>
 
                 <label>
                     <select class="display-method" id="display-method">
-                        <option value="original" selected>仅原文</option>
-                        <option value="auto" selected>中英对照</option>
+                        
+                        <option value="auto" selected>双语对照</option>
                         <!--                        <option value="weaken">弱化英文</option>-->
                         <!--                        <option value="float">悬停翻译</option>-->
                         <!--                        <option value="replace">悬停替换</option>-->
                         <!--                        <option value="highlight">同时高亮</option>-->
-                        <option value="chinese">仅中文</option>
+                        <option value="original">仅原文</option>
+                        <option value="chinese">仅译文</option>
                     </select>
                 </label>
             </li>
 
             <li class="tools-bottom" id="display-language-item">
-                <span>翻译语言</span>
+                <span id="translation_language">翻译语言</span>
                 <label>
                     <select class="display-method" id="display-language">
                         <option value="chinese" selected>中文</option>
@@ -226,26 +221,32 @@
         <div class="divider"></div>
 
         <div class="course">
-            <h3 class="black-white-words">当前支持的 Apple 文档</h3>
-            <select class="menu" id="swiftui-menu">
-                <option value="" disabled selected>SwiftUI Tutorials</option>
-                <option value="https://developer.apple.com/tutorials/swiftui">Introducing SwiftUI</option>
-                <option value="https://developer.apple.com/tutorials/swiftui-concepts/">Learning SwiftUI</option>
-                <option value="https://developer.apple.com/tutorials/sample-apps">Explore SwiftUI Sample Apps</option>
-            </select>
-            <select class="menu" id="visionOS-menu">
-                <option value="" disabled selected>visionOS Documents</option>
-                <option value="https://developer.apple.com/documentation/visionos">visionOS</option>
-            </select>
+            <h3 class="black-white-words" id="apple_courses">当前支持的 Apple 文档</h3>
+            <ul class="course-list">
+                <li class="course-item">
+                    <span class="course-category">SwiftUI Tutorials</span>
+                    <a href="https://developer.apple.com/tutorials/swiftui" class="course-link">Introducing SwiftUI</a>
+                </li>
+                <li class="course-item">
+                    <span class="course-category">SwiftUI Tutorials</span>
+                    <a href="https://developer.apple.com/tutorials/swiftui-concepts/" class="course-link">Learning SwiftUI</a>
+                </li>
+                <li class="course-item">
+                    <span class="course-category">SwiftUI Tutorials</span>
+                    <a href="https://developer.apple.com/tutorials/sample-apps" class="course-link">Explore SwiftUI Sample Apps</a>
+                </li>
+                <li class="course-item">
+                    <span class="course-category">visionOS Documents</span>
+                    <a href="https://developer.apple.com/documentation/visionos" class="course-link">visionOS</a>
+                </li>
+            </ul>
         </div>
-
-        <div class="divider"></div>
 
 
         <footer>
             <a class="black-white-words" style="display: inline-flex; align-items: center;"
                 href="https://github.com/SwiftGGTeam/swiftgg-trans-plugin" target="__blank">
-                <img src="/source/intro/project.svg" class="gh-image" alt="" style="margin-right: 5px;">参与项目
+                <img src="/source/intro/newlogo.svg" class="gh-image" alt="" style="margin-right: 5px;">
             </a>
             <div>
                 <a class="swiftgg-blue-words" href="https://github.com/SwiftGGTeam/apple-dev-doc-translation"
