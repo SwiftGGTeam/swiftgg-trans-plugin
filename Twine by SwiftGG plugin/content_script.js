@@ -767,6 +767,12 @@ function getCurrentURL() {
     return currentURL
 }
 
+async function injectSvg(svgName) {
+    const svg = chrome.runtime.getURL(`source/intro/${svgName}.svg`)
+    const logo = document.getElementById(svgName)
+    logo.src = svg
+}
+
 async function injectFloat() {
     if (elementExists("swiftgg-float-container")) {
         return
@@ -779,12 +785,22 @@ async function injectFloat() {
     div.id = "swiftgg-float-container"
     div.innerHTML = floatContent
     document.body.appendChild(div)
-
     // inject float.css
     const style = document.createElement('style');
     let css = await fetch(chrome.runtime.getURL('float.css')).then(response => response.text());
     style.textContent = css;
     document.head.appendChild(style);
+    // inject svg
+    await Promise.all([
+        injectSvg('swiftgg-logo'),
+        injectSvg('swiftgg-status-icon-check'),
+        injectSvg('swiftgg-status-icon-pause'),
+        injectSvg('swiftgg-status-icon-xmark'),
+    ]);
+    // inject float.js
+    const script = document.createElement('script');
+    script.src = chrome.runtime.getURL('float.js');
+    document.head.appendChild(script)
 
     setFloatColorSchema()
     addListenerToFloatElement()

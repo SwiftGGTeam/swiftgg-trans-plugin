@@ -1,16 +1,80 @@
-#swiftgg-float-container {
+#swiftgg-float-content {
   position: fixed;
   right: 0px;
   top: 45vh;
   z-index: 9999;
   max-width: 300px;
-  width: 100%;
+  display: flex;
+  align-items: flex-end;
+  cursor: pointer;
+  user-select: none;
 }
 
-.swiftgg-float-content {
-  background-color: red;
-  border: 1px solid #e0e0e0;
-  border-radius: 5px;
-  padding: 10px;
-  margin: 0;
+
+
+#swiftgg-float-content-left {
+  color: #2782FB;
+  background-color: #DBEAFF;
+  font-size: 16px;
+  margin-left: 0;
+  margin-right: 8px;
+  padding: 4px 8px;
+  border-radius: 4px;
+}
+
+
+#swiftgg-status-icon-xmark {
+  width: 16px;
+  height: 16px;
+  position: absolute;
+  right: 0px;
+  top: -20px;
+}
+
+#swiftgg-float-content-right {
+  display: flex;
+  height: 34px;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+  position: relative;
+  background-color: white;
+  padding-left: 8px;
+  border-radius: 16px 0 0 16px;
+  box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.1);
+}
+
+#swiftgg-float-content-right:hover {
+  padding-right: 16px;
+}
+
+#status-icon-container {
+  position: absolute;
+  width: 14px;
+  height: 14px;
+  left: 34px;
+  bottom: 4px;
+  background-color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+#swiftgg-logo {
+  width: 48px;
+  height: 24px;
+  border-radius: 4px 0 0 4px;
+  background-color: white;
+  position: relative;
+}
+
+#swiftgg-status-icon-check {
+  width: 12px;
+  height: 12px;
+}
+
+#swiftgg-status-icon-pause {
+  width: 12px;
+  height: 12px;
+  display: none;
 }

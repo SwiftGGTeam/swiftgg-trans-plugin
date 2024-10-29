@@ -44,7 +44,12 @@
             "resources": [
                 "float.html",
                 "float.css",
-                "data/data.json"
+                "data/data.json",
+                "float.js",
+                "source/intro/swiftgg-logo.svg",
+                "source/intro/swiftgg-status-icon-check.svg",
+                "source/intro/swiftgg-status-icon-pause.svg",
+                "source/intro/swiftgg-status-icon-xmark.svg"
             ],
             "matches": [
                 "https://developer.apple.com/*",
