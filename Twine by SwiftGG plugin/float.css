@@ -5,7 +5,7 @@
   z-index: 9999;
   max-width: 300px;
   display: flex;
-  align-items: flex-end;
+  align-items: center;
   cursor: pointer;
   user-select: none;
 }
@@ -15,10 +15,10 @@
 #swiftgg-float-content-left {
   color: #2782FB;
   background-color: #DBEAFF;
-  font-size: 16px;
+  font-size: 11px;
   margin-left: 0;
   margin-right: 8px;
-  padding: 4px 8px;
+  padding: 6px 14px;
   border-radius: 4px;
 }
 
@@ -27,8 +27,19 @@
   width: 16px;
   height: 16px;
   position: absolute;
-  right: 0px;
-  top: -20px;
+  right: -8px;
+  top: -26px;
+  opacity: 0;
+  pointer-events: auto;
+  padding: 8px;
+  cursor: pointer;
+  box-sizing: content-box;
+}
+
+#swiftgg-float-content:hover #swiftgg-status-icon-xmark,
+#swiftgg-status-icon-xmark:hover,
+#swiftgg-float-content-left:hover ~ #swiftgg-status-icon-xmark {
+  opacity: 1;
 }
 
 #swiftgg-float-content-right {
@@ -39,12 +50,14 @@
   align-items: center;
   position: relative;
   background-color: white;
-  padding-left: 8px;
+  padding-left: 4px;
   border-radius: 16px 0 0 16px;
   box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.1);
 }
 
-#swiftgg-float-content-right:hover {
+#swiftgg-float-content-right:hover,
+#swiftgg-status-icon-xmark:hover ~ #swiftgg-float-content-right,
+#swiftgg-float-content-left:hover ~ #swiftgg-float-content-right {
   padding-right: 16px;
 }
 
@@ -52,7 +65,7 @@
   position: absolute;
   width: 14px;
   height: 14px;
-  left: 34px;
+  left: 22px;
   bottom: 4px;
   background-color: white;
   display: flex;
@@ -61,8 +74,8 @@
 }
 
 #swiftgg-logo {
-  width: 48px;
-  height: 24px;
+  width: 32px;
+  height: 22px;
   border-radius: 4px 0 0 4px;
   background-color: white;
   position: relative;

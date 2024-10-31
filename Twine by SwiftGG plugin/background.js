@@ -164,35 +164,7 @@ async function requestTranslate(translate, tab) {
 }
 
 async function updateLogo() {
-    const activeTab = await queryActiveTab()
-
-    if (activeTab) { } else return
-
-    if (autoTranslate) {
-        if (activeTab.url.includes("developer.apple.com")) {
-            if (isSupportedPage(activeTab.url.toString()) && !isCategoryPage(activeTab.url.toString())) {
-                if (await queryActiveTabStatus()) {
-                    await setIcon("/source/intro/swiftLogo-translating.png")
-                } else {
-                    await setIcon("/source/intro/swiftLogo-translating-pause.png")
-                }
-            } else {
-                await setIcon("/source/intro/swiftLogo-running.png")
-            }
-        } else {
-            await setIcon("/source/intro/swiftLogo.png")
-        }
-    } else {
-        if (activeTab.url.includes("developer.apple.com")) {
-            if (await queryActiveTabStatus()) {
-                await setIcon("/source/intro/swiftLogo-translating.png")
-            } else {
-                await setIcon("/source/intro/swiftLogo-closed.png")
-            }
-        } else {
-            await setIcon("/source/intro/swiftLogo-closed.png")
-        }
-    }
+    await setIcon("/source/intro/swiftLogo.png")
 }
 
 function detectBrowser() {
@@ -247,11 +219,6 @@ async function retrieveShouldTranslate() {
     const result = await chrome.storage.local.get(pluginFlag)
     const previousShouldTranslate = autoTranslate
     autoTranslate = result.pluginFlag || false
-    if (previousShouldTranslate == null) {
-        if (!autoTranslate) {
-            await chrome.action.setIcon({ path: { "128": "/source/intro/swiftLogo-closed.png" } })
-        }
-    }
     return result.pluginFlag || false
 }
 

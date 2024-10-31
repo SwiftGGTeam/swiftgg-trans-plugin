@@ -121,4 +121,5 @@ SwiftGG 是一个致力于为 Swift 语言和 iOS 开发者提供高质量中文
 - [JacobMao](https://github.com/JacobMao)
 - [RyanZhu](https://github.com/underthestars-zhy)
 - [FrankChu](https://github.com/yongfrank)
+- [KiwiGuo](https://kiwig.xyz/)
 

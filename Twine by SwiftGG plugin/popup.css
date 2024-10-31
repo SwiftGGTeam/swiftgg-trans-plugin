@@ -1,7 +1,7 @@
 :root {
     color-scheme: light dark;
     --blue-light-color: #2782FB;
-    --blue-dark-color: #005AD1;
+    --blue-dark-color: #4377ba;
 }
 
 * {
@@ -165,7 +165,7 @@ select.display-method {
     }
 
     span {
-        color: white;
+        color: rgba(255, 255, 255, 0.8);
     }
 
     img.gh-image {
@@ -173,7 +173,7 @@ select.display-method {
     }
 
     .black-white-words {
-        color: white;
+        color: rgba(255, 255, 255, 0.8);
     }
 
     img.header-image {
@@ -187,6 +187,7 @@ select.display-method {
     .divider {
         background-color: #2E2E2E;
     }
+
 
     select.display-method {
         color: var(--blue-dark-color);
@@ -255,8 +256,11 @@ select.display-method {
     .course-title:visited,
     .course-title:active,
     .course-title:focus,
+    .course-list li.course-item {
+        background-color: #2A2A2A;
+    }
     .course-list li a {
-        color: var(--blue-dark-color) !important;
+        color: rgba(255, 255, 255, 0.80) !important;
         text-decoration: none !important;
         border-bottom: none !important;
     }
