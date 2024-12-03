@@ -1,0 +1,96 @@
+#swiftgg-float-content {
+  position: fixed;
+  right: 0px;
+  top: 45vh;
+  z-index: 9999;
+  max-width: 300px;
+  display: flex;
+  align-items: center;
+  cursor: grab;
+  user-select: none;
+  touch-action: none;
+  will-change: transform;
+  transition: transform 0.1s ease-out;
+}
+
+
+
+#swiftgg-float-content-left {
+  color: #2782FB;
+  background-color: #DBEAFF;
+  font-size: 11px;
+  margin-left: 0;
+  margin-right: 8px;
+  padding: 6px 14px;
+  border-radius: 4px;
+}
+
+
+#swiftgg-status-icon-xmark {
+  width: 14px;
+  height: 14px;
+  position: absolute;
+  right: -8px;
+  top: -26px;
+  opacity: 0;
+  pointer-events: auto;
+  padding: 8px;
+  cursor: pointer;
+  box-sizing: content-box;
+}
+
+#swiftgg-float-content:hover #swiftgg-status-icon-xmark,
+#swiftgg-status-icon-xmark:hover,
+#swiftgg-float-content-left:hover~#swiftgg-status-icon-xmark {
+  opacity: 1;
+}
+
+#swiftgg-float-content-right {
+  display: flex;
+  height: 34px;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+  position: relative;
+  background-color: white;
+  padding-left: 4px;
+  border-radius: 16px 0 0 16px;
+  box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.1);
+}
+
+#swiftgg-float-content-right:hover,
+#swiftgg-status-icon-xmark:hover~#swiftgg-float-content-right,
+#swiftgg-float-content-left:hover~#swiftgg-float-content-right {
+  padding-right: 16px;
+}
+
+#status-icon-container {
+  position: absolute;
+  width: 14px;
+  height: 14px;
+  left: 22px;
+  bottom: 2px;
+  background-color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+#swiftgg-logo {
+  width: 32px;
+  height: 22px;
+  border-radius: 4px 0 0 4px;
+  background-color: white;
+  position: relative;
+}
+
+#swiftgg-status-icon-check {
+  width: 10px;
+  height: 10px;
+}
+
+#swiftgg-status-icon-pause {
+  width: 10px;
+  height: 10px;
+  display: none;
+}

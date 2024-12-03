@@ -18,7 +18,6 @@ const endUpWhiteList = ["swiftui", "swiftui/", "sample-apps", "sample-apps/", "s
 const categoryEndUpWhiteList = ["swiftui", "swiftui/", "sample-apps", "sample-apps/", "swiftui-concepts", "swiftui-concepts/"]
 let currentTranslatedURL = null
 let translated = false
-const tabActiveRequestMethod = "tabActive"
 let noDisturb = false
 let shouldTranslate = false
 let globalCurrentURL = null
@@ -37,6 +36,7 @@ async function loadJsonData(path) {
 
 // 在脚本开始时调用这个函数
 (async () => {
+    await injectFloat()
     getCurrentURL()
     let response = await chrome.runtime.sendMessage({ type: initialRequestMethod });
     if (!response) {
@@ -73,20 +73,6 @@ chrome.runtime.onMessage.addListener(
             return true
         } else if (request.message === queryStatusRequestMethod) {
             sendResponse({ status: translated })
-        } else if (request.message === tabActiveRequestMethod) {
-            (async () => {
-                if (isSupportedPage(request.url) && !isCategoryPage(request.url)) {
-                    if (request.shouldTranslate && !translated && !noDisturb) {
-                        await injectFloat()
-                    } else if (!request.shouldTranslate) {
-                        removeFloatElement()
-                    }
-                }
-
-                sendResponse()
-            })()
-
-            return true
         } else if (request.message === translateCurrentRequestMethod) {
             (async () => {
                 shouldTranslate = true
@@ -143,8 +129,9 @@ function checkResponse(response) {
 
 function addTitleNode() {
     let title = document.querySelector("div.headline h1");
-    if (!title) { return; }
-    let titleText = json[title.innerText.trim()]?.zh;
+    if (!title || !json) { return; }
+    let value = json[title.innerText.trim()]
+    let titleText = value?.zh
     if (!titleText || titleText === "") {
         return;
     }
@@ -369,11 +356,10 @@ async function translate() {
         addTitleNode();
         appendH2Nodes();
         appendPNodes();
-        translated = true
-        await chrome.runtime.sendMessage({ type: translatedRequestMethod }, () => { })
+        translated = true;
+        notifyFloatStatus();
+        await chrome.runtime.sendMessage({ type: translatedRequestMethod }, () => { });
     }
-
-    removeFloatElement()
 
     const displayMethod = await chrome.runtime.sendMessage({ type: queryDisplayMethodRequestMethod });
     await changeDisplayMethod(displayMethod)
@@ -385,11 +371,11 @@ function removeTranslate() {
     rollbackAutoWeaken()
 
     removeTranslatedNode()
-
     removeWrapperNode()
 
     currentTranslatedURL = null
     translated = false
+    notifyFloatStatus();
 }
 
 function removeWrapperNode() {
@@ -781,22 +767,48 @@ function getCurrentURL() {
     return currentURL
 }
 
+async function injectSvg(svgName) {
+    const svg = chrome.runtime.getURL(`source/intro/${svgName}.svg`)
+    const logo = document.getElementById(svgName)
+    logo.src = svg
+}
+
 async function injectFloat() {
-    if (elementExists("swiftgg-float")) {
+    if (elementExists("swiftgg-float-container")) {
         return
     }
-
+    // inject float.html
     const response = await fetch(chrome.runtime.getURL("float.html"))
     const floatContent = await response.text()
-    console.log(floatContent)
-    const container = document.createElement('div')
-    container.innerHTML = floatContent
-    const bodyElement = document.body
-    bodyElement.insertBefore(container, bodyElement.firstChild)
+    const div = document.createElement('div')
+    div.id = "swiftgg-float-container"
+    div.innerHTML = floatContent
+    document.body.appendChild(div)
+    // inject float.css
+    const style = document.createElement('style');
+    let css = await fetch(chrome.runtime.getURL('float.css')).then(response => response.text());
+    style.textContent = css;
+    document.head.appendChild(style);
+    // inject svg
+    await Promise.all([
+        injectSvg('swiftgg-logo'),
+        injectSvg('swiftgg-status-icon-check'),
+        injectSvg('swiftgg-status-icon-pause'),
+        injectSvg('swiftgg-status-icon-xmark'),
+    ]);
+    // inject float.js
+    const script = document.createElement('script');
+    script.src = chrome.runtime.getURL('float.js');
+    document.head.appendChild(script);
 
-    setFloatColorSchema()
-    addListenerToFloatElement()
+    // 等待 float.js 加载完成后发送初始状态
+    script.onload = () => {
+        document.dispatchEvent(new CustomEvent('swiftgg:initStatus', {
+            detail: { translated }
+        }));
+    };
 }
+
 
 function elementExists(elementId) {
     const element = document.getElementById(elementId);
@@ -808,172 +820,14 @@ function directRemoveElement(elementId) {
     element.remove()
 }
 
-function addListenerToFloatElement() {
-    const cancelButton = document.getElementById("swiftgg-float-cancel")
-
-    cancelButton.addEventListener("mouseenter", function () {
-        if (checkColorSchema()) {
-            cancelButton.style.backgroundColor = "#292929"
-        } else {
-            cancelButton.style.backgroundColor = "#F0F0F0"
-        }
-    }, false)
-
-    cancelButton.addEventListener("mouseleave", function () {
-        if (checkColorSchema()) {
-            cancelButton.style.backgroundColor = "#1F1F1F"
-        } else {
-            cancelButton.style.backgroundColor = "#FAFAFA"
-        }
-    }, false)
-
-    cancelButton.addEventListener("mousedown", function () {
-        if (checkColorSchema()) {
-            cancelButton.style.backgroundColor = "#333333"
-        } else {
-            cancelButton.style.backgroundColor = "#E6E6E6"
-        }
-    })
-
-    cancelButton.addEventListener("mouseup", function () {
-        if (checkColorSchema()) {
-            cancelButton.style.backgroundColor = "#292929"
-        } else {
-            cancelButton.style.backgroundColor = "#F0F0F0"
-        }
-    })
-
-    cancelButton.onclick = floatCancel
-
-    const translateButton = document.getElementById("swiftgg-float-translate")
-
-    translateButton.addEventListener("mouseenter", function () {
-        if (checkColorSchema()) {
-            translateButton.style.backgroundColor = "#212629"
-        } else {
-            translateButton.style.backgroundColor = "#D9F2FF"
-        }
-    }, false)
-
-    translateButton.addEventListener("mouseleave", function () {
-        if (checkColorSchema()) {
-            translateButton.style.backgroundColor = "#1F1F1F"
-        } else {
-            translateButton.style.backgroundColor = "#FAFAFA"
-        }
-    }, false)
-
-    translateButton.addEventListener("mousedown", function () {
-        if (checkColorSchema()) {
-            translateButton.style.backgroundColor = "#223038"
-        } else {
-            translateButton.style.backgroundColor = "#B8E0F5"
-        }
-    })
-
-    translateButton.addEventListener("mouseup", function () {
-        if (checkColorSchema()) {
-            translateButton.style.backgroundColor = "#212629"
-        } else {
-            translateButton.style.backgroundColor = "#D9F2FF"
-        }
-    })
-
-    translateButton.onclick = floatTranslate
-
-    window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e) => {
-        if (e.matches) {
-            applyDarkSchemaToFloat()
-        } else {
-            applyLightSchemaToFloat()
-        }
-    });
-}
-
 function floatCancel() {
     const floatElement = document.getElementById("swiftgg-float")
     noDisturb = true
     removeFadeOut(floatElement, 600)
 }
 
-function floatTranslate() {
-    const floatElement = document.getElementById("swiftgg-float")
-    removeFadeOut(floatElement, 600);
-    shouldTranslate = true;
-    translated = true;
-
-    (async () => {
-        await startTranslate()
-    })()
-}
-function removeFadeOut(el, speed) {
-    let seconds = speed / 1000;
-    el.style.transition = "opacity " + seconds + "s ease";
-
-    el.style.opacity = "0";
-    setTimeout(function () {
-        el.remove()
-    }, speed);
-}
-
-function applyLightSchemaToFloat() {
-    const swiftggFloatDiv = document.getElementById("swiftgg-float")
-    if (swiftggFloatDiv) swiftggFloatDiv.style.backgroundColor = "#FAFAFA"
-    if (swiftggFloatDiv) swiftggFloatDiv.style.setProperty("box-shadow", "0 0 15px  rgba(0,0,0,0.10)")
-    if (swiftggFloatDiv) swiftggFloatDiv.style.setProperty("-moz-box-shadow", "0 0 15px  rgba(0,0,0,0.10)")
-    if (swiftggFloatDiv) swiftggFloatDiv.style.setProperty("-webkit-box-shadow", "0 0 15px  rgba(0,0,0,0.10)")
-    if (swiftggFloatDiv) swiftggFloatDiv.style.setProperty("-o-box-shadow", "0 0 15px  rgba(0,0,0,0.10)")
-    const swiftggFloatHeaderText = document.getElementById("swiftgg-float-header-text")
-    if (swiftggFloatHeaderText) swiftggFloatHeaderText.style.color = "#000000"
-    const swiftggFloatBodyText = document.getElementById("swiftgg-float-body-text")
-    if (swiftggFloatBodyText) swiftggFloatBodyText.style.color = "#595959"
-    const swiftggFloatCancelButton = document.getElementById("swiftgg-float-cancel")
-    if (swiftggFloatCancelButton) swiftggFloatCancelButton.style.backgroundColor = "#FAFAFA"
-    if (swiftggFloatCancelButton) swiftggFloatCancelButton.style.border = "2px solid #CCCCCC"
-    const swiftggFloatCancelText = document.getElementById("swiftgg-float-cancel-text")
-    if (swiftggFloatCancelText) swiftggFloatCancelText.style.color = "#A6A6A6"
-    const swiftggFloatTranslateButton = document.getElementById("swiftgg-float-translate")
-    if (swiftggFloatTranslateButton) swiftggFloatTranslateButton.style.backgroundColor = "#FAFAFA"
-    if (swiftggFloatTranslateButton) swiftggFloatTranslateButton.style.border = "2px solid #00A0F0"
-    const swiftggFloatTranslateText = document.getElementById("swiftgg-float-translate-text")
-    if (swiftggFloatTranslateText) swiftggFloatTranslateText.style.color = "#00AAFF"
-}
-
-function applyDarkSchemaToFloat() {
-    const swiftggFloatDiv = document.getElementById("swiftgg-float")
-    if (swiftggFloatDiv) swiftggFloatDiv.style.backgroundColor = "#1F1F1F"
-    const swiftggFloatHeaderText = document.getElementById("swiftgg-float-header-text")
-    if (swiftggFloatHeaderText) swiftggFloatHeaderText.style.color = "#FFFFFF"
-    const swiftggFloatBodyText = document.getElementById("swiftgg-float-body-text")
-    if (swiftggFloatBodyText) swiftggFloatBodyText.style.color = "#CCCCCC"
-    const swiftggFloatCancelButton = document.getElementById("swiftgg-float-cancel")
-    if (swiftggFloatCancelButton) swiftggFloatCancelButton.style.backgroundColor = "#1F1F1F"
-    if (swiftggFloatCancelButton) swiftggFloatCancelButton.style.border = "2px solid #404040"
-    const swiftggFloatCancelText = document.getElementById("swiftgg-float-cancel-text")
-    if (swiftggFloatCancelText) swiftggFloatCancelText.style.color = "#878787"
-    const swiftggFloatTranslateButton = document.getElementById("swiftgg-float-translate")
-    if (swiftggFloatTranslateButton) swiftggFloatTranslateButton.style.backgroundColor = "#1F1F1F"
-    if (swiftggFloatTranslateButton) swiftggFloatTranslateButton.style.border = "2px solid #006FA6"
-    const swiftggFloatTranslateText = document.getElementById("swiftgg-float-translate-text")
-    if (swiftggFloatTranslateText) swiftggFloatTranslateText.style.color = "#01AAFF"
-}
-
-function setFloatColorSchema() {
-    if (checkColorSchema()) {
-        applyDarkSchemaToFloat()
-    } else {
-        applyLightSchemaToFloat()
-    }
-}
-
 function checkColorSchema() {
     return (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches)
-}
-
-function removeFloatElement() {
-    if (elementExists("swiftgg-float")) {
-        directRemoveElement("swiftgg-float")
-    }
 }
 
 async function changeDisplayMethod(method) {
@@ -1003,4 +857,21 @@ async function changeDisplayMethod(method) {
     } else if (method === "original") {
         removeTranslated()
     }
+}
+
+// 监听来自 float.js 的翻译切换请求
+document.addEventListener('swiftgg:toggleTranslate', async (e) => {
+    shouldTranslate = e.detail.shouldTranslate;
+    if (shouldTranslate) {
+        await startTranslate();
+    } else {
+        removeTranslate();
+    }
+});
+
+// 在翻译状态改变时通知 float.js
+function notifyFloatStatus() {
+    document.dispatchEvent(new CustomEvent('swiftgg:statusChanged', {
+        detail: { translated }
+    }));
 }

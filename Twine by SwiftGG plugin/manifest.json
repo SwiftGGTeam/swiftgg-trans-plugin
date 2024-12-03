@@ -1,7 +1,7 @@
 {
     "name": "Twine by SwiftGG",
     "description": "Apple document",
-    "version": "1.0.9",
+    "version": "1.0.10",
     "manifest_version": 3,
     "default_locale": "zh_CN",
     "background": {
@@ -43,7 +43,13 @@
         {
             "resources": [
                 "float.html",
-                "data/data.json"
+                "float.css",
+                "data/data.json",
+                "float.js",
+                "source/intro/swiftgg-logo.svg",
+                "source/intro/swiftgg-status-icon-check.svg",
+                "source/intro/swiftgg-status-icon-pause.svg",
+                "source/intro/swiftgg-status-icon-xmark.svg"
             ],
             "matches": [
                 "https://developer.apple.com/*",

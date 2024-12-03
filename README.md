@@ -1,7 +1,6 @@
 <div align="center">
-<img src="./Twine%20by%20SwiftGG%20plugin/source/intro/logo.png" alt="logo" style="display: block; margin: auto; width: 150px;"/>
+<img src="./Twine%20by%20SwiftGG%20plugin/source/intro/logo.svg" alt="logo" style="display: block; margin: auto; width: 100%;"/>
 </div>
-
 [简体中文](./README-CN.md)
 
 Twine by SwiftGG is a browser extension designed to help iOS developers learn and understand Apple's official documentation more easily. Based on community-contributed localized content, it can identify English content in Apple's documentation and provide bilingual translation, assisting developers in their learning tasks.
@@ -167,3 +166,4 @@ You can also follow us through the following channels:
 - [JacobMao](https://github.com/JacobMao)
 - [RyanZhu](https://github.com/underthestars-zhy)
 - [yongfrank](https://github.com/yongfrank)
+- [KiwiGuo](https://kiwig.xyz/)

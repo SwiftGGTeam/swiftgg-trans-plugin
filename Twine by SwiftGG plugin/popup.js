@@ -88,10 +88,14 @@ document.addEventListener("DOMContentLoaded", function () {
   document.getElementById('switch').setAttribute('class', shouldTranslate ? 'on' : 'off')
 })()
 
-document.addEventListener('change', function (event) {
-  const target = event.target;
-  if (target.tagName.toLowerCase() === 'select') {
-    chrome.tabs.create({ url: target.value }).then();
+document.addEventListener('click', function (event) {
+  const target = event.target.closest('.course-item');
+  if (target) {
+    event.preventDefault();
+    const link = target.querySelector('.course-link');
+    if (link) {
+      chrome.tabs.create({ url: link.href });
+    }
   }
 });
 

@@ -30,10 +30,6 @@ if (detectBrowser() === BrowserType.firefox) {
     disableCSP()
 }
 
-chrome.runtime.onInstalled.addListener(() => {
-    loadJsonData();
-});
-
 chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
     if (request.type === updateRequestMethod) {
         (async () => {
@@ -99,15 +95,20 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
 
         return true
     } else if (request.type === 'getJsonData') {
-        if (allJsonData === null) {
-            loadJsonData();
-        }
-        if (allJsonData && request.path) {
-            const data = allJsonData[request.path] || null;
-            sendResponse({ data: data });
-        } else {
-            sendResponse({ data: null });
-        }
+        (async () => {
+            if (allJsonData === null) {
+                const response = await fetch(chrome.runtime.getURL('data/data.json'))
+                const data = await response.json()
+                allJsonData = data;
+            }
+            if (request.path && allJsonData[request.path]) {
+                const data = allJsonData[request.path];
+                sendResponse({ data: data });
+            } else {
+                sendResponse({ data: null });
+            }
+        })()
+        return true
     }
 });
 
@@ -137,22 +138,6 @@ chrome.tabs.onUpdated.addListener(function () {
 
 chrome.tabs.onActivated.addListener(function () {
     (async () => {
-        const activeTab = await queryActiveTab()
-
-        await updateLogo()
-
-        try {
-            if (activeTab.id && activeTab.url.includes("developer.apple.com")) {
-                await chrome.tabs.sendMessage(activeTab.id, {
-                    message: tabActiveRequestMethod,
-                    url: activeTab.url,
-                    shouldTranslate: autoTranslate,
-                })
-            }
-        } catch (error) {
-            console.log(error)
-        }
-
         await updateLogo()
     })()
 });
@@ -180,35 +165,7 @@ async function requestTranslate(translate, tab) {
 }
 
 async function updateLogo() {
-    const activeTab = await queryActiveTab()
-
-    if (activeTab) { } else return
-
-    if (autoTranslate) {
-        if (activeTab.url.includes("developer.apple.com")) {
-            if (isSupportedPage(activeTab.url.toString()) && !isCategoryPage(activeTab.url.toString())) {
-                if (await queryActiveTabStatus()) {
-                    await setIcon("/source/intro/swiftLogo-translating.png")
-                } else {
-                    await setIcon("/source/intro/swiftLogo-translating-pause.png")
-                }
-            } else {
-                await setIcon("/source/intro/swiftLogo-running.png")
-            }
-        } else {
-            await setIcon("/source/intro/swiftLogo.png")
-        }
-    } else {
-        if (activeTab.url.includes("developer.apple.com")) {
-            if (await queryActiveTabStatus()) {
-                await setIcon("/source/intro/swiftLogo-translating.png")
-            } else {
-                await setIcon("/source/intro/swiftLogo-closed.png")
-            }
-        } else {
-            await setIcon("/source/intro/swiftLogo-closed.png")
-        }
-    }
+    await setIcon("/source/intro/swiftLogo.png")
 }
 
 function detectBrowser() {
@@ -263,11 +220,6 @@ async function retrieveShouldTranslate() {
     const result = await chrome.storage.local.get(pluginFlag)
     const previousShouldTranslate = autoTranslate
     autoTranslate = result.pluginFlag || false
-    if (previousShouldTranslate == null) {
-        if (!autoTranslate) {
-            await chrome.action.setIcon({ path: { "128": "/source/intro/swiftLogo-closed.png" } })
-        }
-    }
     return result.pluginFlag || false
 }
 
@@ -325,15 +277,4 @@ async function disableCSP() {
     chrome.browsingData.remove({}, { serviceWorkers: true }, () => { })
 
     await chrome.declarativeNetRequest.updateSessionRules({ addRules, removeRuleIds })
-}
-
-function loadJsonData() {
-    console.log(`path is ${chrome.runtime.getURL('data/data.json')}`)
-    fetch(chrome.runtime.getURL('data/data.json'))
-        .then(response => response.json())
-        .then(data => {
-            allJsonData = data;
-            console.log('JSON数据加载完成:', allJsonData);
-        })
-        .catch(error => console.error('加载JSON数据时出错:', error));
 }
