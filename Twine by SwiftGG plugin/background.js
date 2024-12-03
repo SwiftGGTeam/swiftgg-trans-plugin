@@ -30,10 +30,6 @@ if (detectBrowser() === BrowserType.firefox) {
     disableCSP()
 }
 
-chrome.runtime.onInstalled.addListener(() => {
-    loadJsonData();
-});
-
 chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
     if (request.type === updateRequestMethod) {
         (async () => {
@@ -99,15 +95,20 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
 
         return true
     } else if (request.type === 'getJsonData') {
-        if (allJsonData === null) {
-            loadJsonData();
-        }
-        if (allJsonData && request.path) {
-            const data = allJsonData[request.path] || null;
-            sendResponse({ data: data });
-        } else {
-            sendResponse({ data: null });
-        }
+        (async () => {
+            if (allJsonData === null) {
+                const response = await fetch(chrome.runtime.getURL('data/data.json'))
+                const data = await response.json()
+                allJsonData = data;
+            }
+            if (request.path && allJsonData[request.path]) {
+                const data = allJsonData[request.path];
+                sendResponse({ data: data });
+            } else {
+                sendResponse({ data: null });
+            }
+        })()
+        return true
     }
 });
 
@@ -276,15 +277,4 @@ async function disableCSP() {
     chrome.browsingData.remove({}, { serviceWorkers: true }, () => { })
 
     await chrome.declarativeNetRequest.updateSessionRules({ addRules, removeRuleIds })
-}
-
-function loadJsonData() {
-    console.log(`path is ${chrome.runtime.getURL('data/data.json')}`)
-    fetch(chrome.runtime.getURL('data/data.json'))
-        .then(response => response.json())
-        .then(data => {
-            allJsonData = data;
-            console.log('JSON数据加载完成:', allJsonData);
-        })
-        .catch(error => console.error('加载JSON数据时出错:', error));
 }

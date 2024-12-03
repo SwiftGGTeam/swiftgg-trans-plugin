@@ -129,7 +129,7 @@ function checkResponse(response) {
 
 function addTitleNode() {
     let title = document.querySelector("div.headline h1");
-    if (!title) { return; }
+    if (!title || !json) { return; }
     let value = json[title.innerText.trim()]
     let titleText = value?.zh
     if (!titleText || titleText === "") {
