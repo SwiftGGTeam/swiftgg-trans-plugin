@@ -38,7 +38,7 @@ struct HomeView: View {
 #endif
             
             VStack {
-                Text("Welcome To\nTwine by SwiftGG")
+                Text("Welcome To\nTwine")
                     .multilineTextAlignment(.center)
                     .font(.system(size: 38, weight: .heavy))
                     .lineSpacing(10)

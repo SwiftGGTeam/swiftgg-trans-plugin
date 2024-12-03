@@ -17,159 +17,6 @@ p.indicator {
     /* Non-prefixed version */
 }
 
-div.swiftgg-float {
-    all: initial;
-    position: fixed;
-    z-index: 999999;
-    top: 20px;
-    right: 25px;
-    background-color: #1F1F1F;
-    box-shadow: 0 0 15px rgba(0, 0, 0, 0.25);
-    -moz-box-shadow: 0 0 15px rgba(0, 0, 0, 0.25);
-    -webkit-box-shadow: 0 0 15px rgba(0, 0, 0, 0.25);
-    -o-box-shadow: 0 0 15px rgba(0, 0, 0, 0.25);
-    border-radius: 20px;
-    width: 300px;
-}
-
-div.swiftgg-float-header {
-    all: initial;
-    padding-left: 20px;
-    padding-top: 20px;
-    display: flex;
-    align-items: center;
-}
-
-img.swiftgg-float-header-image {
-    all: initial;
-    display: inline-block;
-    width: 32px;
-    height: 32px;
-}
-
-span.swiftgg-float-header-text {
-    all: initial;
-    color: white;
-    font-family: "SF Pro Display", sans-serif;
-    font-size: 15px;
-    padding-left: 12px;
-    font-weight: 600;
-    letter-spacing: normal;
-}
-
-div.swiftgg-float-space {
-    all: initial;
-    flex-grow: 1;
-}
-
-p.swiftgg-float-body-text {
-    all: initial;
-    color: #CCCCCC;
-    font-family: "SF Pro Display", sans-serif;
-    font-size: 12px;
-    font-weight: 600;
-    margin: 0;
-    line-height: 18px;
-    padding-left: 20px;
-    padding-right: 20px;
-    padding-top: 12px;
-    display: block;
-    margin-block-start: 0;
-    margin-block-end: 0;
-    margin-inline-start: 0;
-    margin-inline-end: 0;
-}
-
-div.swiftgg-float-button-container {
-    all: initial;
-    display: flex;
-    align-items: center;
-    padding-right: 20px;
-    padding-top: 15px;
-    padding-bottom: 20px;
-}
-
-div.swiftgg-float-button-cancel-container {
-    all: initial;
-    padding-right: 12px
-}
-
-button.swiftgg-float-button-cancel {
-    all: initial;
-    width: 80px;
-    height: 30px;
-    border-radius: 8px;
-    box-sizing: border-box;
-    border: 2px solid #404040;
-    background-color: #1F1F1F;
-    appearance: auto;
-    text-rendering: auto;
-    color: buttontext;
-    letter-spacing: normal;
-    word-spacing: normal;
-    line-height: normal;
-    text-transform: none;
-    text-indent: 0;
-    text-shadow: none;
-    display: inline-block;
-    text-align: center;
-    margin: 0;
-    padding: 1px 6px;
-    cursor: default;
-    align-items: flex-start;
-    font-family: Arial, sans-serif;
-    font-weight: 400;
-    font-size: 13px
-}
-
-span.swiftgg-float-button-cancel-text {
-    all: initial;
-    color: #878787;
-    font-size: 11px;
-    font-family: "SF Pro Display", sans-serif;
-    font-weight: 700;
-    line-height: 18px;
-    word-wrap: break-word;
-}
-
-button.swiftgg-float-button-translate {
-    all: initial;
-    width: 80px;
-    height: 30px;
-    border-radius: 8px;
-    box-sizing: border-box;
-    border: 2px solid #006FA6;
-    background-color: #1F1F1F;
-    appearance: auto;
-    text-rendering: auto;
-    color: buttontext;
-    letter-spacing: normal;
-    word-spacing: normal;
-    line-height: normal;
-    text-transform: none;
-    text-indent: 0;
-    text-shadow: none;
-    display: inline-block;
-    text-align: center;
-    margin: 0;
-    padding: 1px 6px;
-    cursor: default;
-    align-items: flex-start;
-    font-family: Arial, sans-serif;
-    font-weight: 400;
-    font-size: 13px
-}
-
-span.swiftgg-float-button-translate-text {
-    all: initial;
-    color: #01AAFF;
-    font-size: 11px;
-    font-family: "SF Pro Display", sans-serif;
-    font-weight: 700;
-    line-height: 18px;
-    word-wrap: break-word;
-}
-
 .grey-text {
     color: gray !important;
 }
@@ -194,4 +41,103 @@ span.swiftgg-float-button-translate-text {
             font-size: 15px
         }
     }
+}
+
+/* float.css */
+
+#swiftgg-float-content {
+    position: fixed;
+    right: 0px;
+    top: 45vh;
+    z-index: 9999;
+    max-width: 300px;
+    display: flex;
+    align-items: center;
+    cursor: grab;
+    user-select: none;
+    touch-action: none;
+    will-change: transform;
+    transition: transform 0.1s ease-out;
+}
+
+
+
+#swiftgg-float-content-left {
+    color: #2782FB;
+    background-color: #DBEAFF;
+    font-size: 11px;
+    margin-left: 0;
+    margin-right: 8px;
+    padding: 6px 14px;
+    border-radius: 4px;
+}
+
+
+#swiftgg-status-icon-xmark {
+    width: 14px;
+    height: 14px;
+    position: absolute;
+    right: -8px;
+    top: -26px;
+    opacity: 0;
+    pointer-events: auto;
+    padding: 8px;
+    cursor: pointer;
+    box-sizing: content-box;
+}
+
+#swiftgg-float-content:hover #swiftgg-status-icon-xmark,
+#swiftgg-status-icon-xmark:hover,
+#swiftgg-float-content-left:hover~#swiftgg-status-icon-xmark {
+    opacity: 1;
+}
+
+#swiftgg-float-content-right {
+    display: flex;
+    height: 34px;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    position: relative;
+    background-color: white;
+    padding-left: 4px;
+    border-radius: 16px 0 0 16px;
+    box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.1);
+}
+
+#swiftgg-float-content-right:hover,
+#swiftgg-status-icon-xmark:hover~#swiftgg-float-content-right,
+#swiftgg-float-content-left:hover~#swiftgg-float-content-right {
+    padding-right: 16px;
+}
+
+#status-icon-container {
+    position: absolute;
+    width: 14px;
+    height: 14px;
+    left: 22px;
+    bottom: 2px;
+    background-color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#swiftgg-logo {
+    width: 32px;
+    height: 22px;
+    border-radius: 4px 0 0 4px;
+    background-color: white;
+    position: relative;
+}
+
+#swiftgg-status-icon-check {
+    width: 10px;
+    height: 10px;
+}
+
+#swiftgg-status-icon-pause {
+    width: 10px;
+    height: 10px;
+    display: none;
 }
