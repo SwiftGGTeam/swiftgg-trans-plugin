@@ -1,6 +1,5 @@
 const STATUS = {
   TRANSLATING: 'translating',
-  PAUSED: 'paused',
   ORIGINAL: 'original'
 };
 
@@ -11,11 +10,9 @@ class FloatController {
     this.xmarkIcon = document.getElementById('swiftgg-status-icon-xmark');
     this.statusText = document.getElementById('swiftgg-float-content-left');
     this.checkIcon = document.getElementById('swiftgg-status-icon-check');
-    this.pauseIcon = document.getElementById('swiftgg-status-icon-pause');
     this.statusIconContainer = document.getElementById('status-icon-container');
 
     this.statusText.style.display = 'none';
-    this.pauseIcon.style.display = 'none';
     this.xmarkIcon.style.display = 'none';
 
     this.currentStatus = STATUS.TRANSLATING;
@@ -34,9 +31,6 @@ class FloatController {
   toggleStatus() {
     switch (this.currentStatus) {
       case STATUS.TRANSLATING:
-        this.setStatus(STATUS.PAUSED);
-        break;
-      case STATUS.PAUSED:
         this.setStatus(STATUS.ORIGINAL);
         break;
       case STATUS.ORIGINAL:
@@ -67,30 +61,18 @@ class FloatController {
     const statusConfig = {
       [STATUS.TRANSLATING]: {
         text: '点击切换回原文',
-        check: 'block',
-        pause: 'none'
-      },
-      [STATUS.PAUSED]: {
-        text: '点击重新加载',
-        check: 'none',
-        pause: 'block'
+        check: 'block'
       },
       [STATUS.ORIGINAL]: {
         text: '点击查看翻译',
-        check: 'none',
-        pause: 'none'
+        check: 'none'
       }
     };
 
     const config = statusConfig[this.currentStatus];
     this.statusText.textContent = config.text;
     this.checkIcon.style.display = config.check;
-    this.pauseIcon.style.display = config.pause;
-    if (config.pause === 'none' && config.check === 'none') {
-      this.statusIconContainer.style.display = 'none';
-    } else {
-      this.statusIconContainer.style.display = 'block';
-    }
+    this.statusIconContainer.style.display = config.check === 'none' ? 'none' : 'block';
   }
 }
 
