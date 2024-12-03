@@ -15,7 +15,11 @@ class FloatController {
     this.statusText.style.display = 'none';
     this.xmarkIcon.style.display = 'none';
 
-    this.currentStatus = STATUS.TRANSLATED;
+    // 初始化状态
+    document.addEventListener('swiftgg:initStatus', (e) => {
+      this.currentStatus = e.detail.translated ? STATUS.TRANSLATED : STATUS.ORIGINAL;
+      this.updateUI();
+    });
 
     this.isDragging = false;
     this.currentX = 0;
@@ -26,7 +30,14 @@ class FloatController {
     this.yOffset = 0;
 
     this.initializeEventListeners();
-    this.updateUI(); // 初始化UI状态
+
+    // 监听来自 content_script 的状态变化
+    document.addEventListener('swiftgg:statusChanged', (e) => {
+      const newStatus = e.detail.translated ? STATUS.TRANSLATED : STATUS.ORIGINAL;
+      if (this.currentStatus !== newStatus) {
+        this.setStatus(newStatus);
+      }
+    });
   }
 
   initializeEventListeners() {
@@ -43,9 +54,17 @@ class FloatController {
     switch (this.currentStatus) {
       case STATUS.TRANSLATED:
         this.setStatus(STATUS.ORIGINAL);
+        // 通知 content_script 状态已改变
+        document.dispatchEvent(new CustomEvent('swiftgg:toggleTranslate', {
+          detail: { shouldTranslate: false }
+        }));
         break;
       case STATUS.ORIGINAL:
         this.setStatus(STATUS.TRANSLATED);
+        // 通知 content_script 状态已改变
+        document.dispatchEvent(new CustomEvent('swiftgg:toggleTranslate', {
+          detail: { shouldTranslate: true }
+        }));
         break;
     }
   }
