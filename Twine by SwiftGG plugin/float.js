@@ -1,5 +1,5 @@
 const STATUS = {
-  TRANSLATING: 'translating',
+  TRANSLATED: 'translated',
   ORIGINAL: 'original'
 };
 
@@ -15,7 +15,7 @@ class FloatController {
     this.statusText.style.display = 'none';
     this.xmarkIcon.style.display = 'none';
 
-    this.currentStatus = STATUS.TRANSLATING;
+    this.currentStatus = STATUS.TRANSLATED;
 
     this.isDragging = false;
     this.currentX = 0;
@@ -41,11 +41,11 @@ class FloatController {
 
   toggleStatus() {
     switch (this.currentStatus) {
-      case STATUS.TRANSLATING:
+      case STATUS.TRANSLATED:
         this.setStatus(STATUS.ORIGINAL);
         break;
       case STATUS.ORIGINAL:
-        this.setStatus(STATUS.TRANSLATING);
+        this.setStatus(STATUS.TRANSLATED);
         break;
     }
   }
@@ -70,7 +70,7 @@ class FloatController {
 
   updateUI() {
     const statusConfig = {
-      [STATUS.TRANSLATING]: {
+      [STATUS.TRANSLATED]: {
         text: '点击切换回原文',
         check: 'block'
       },
