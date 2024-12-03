@@ -55,14 +55,14 @@
 		17FC52D32A6D56C000367D01 /* float.html in Resources */ = {isa = PBXBuildFile; fileRef = 17FC52D12A6D56C000367D01 /* float.html */; };
 		90A822BF2A75708E00A8616F /* ExtensionState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90A822BE2A75708E00A8616F /* ExtensionState.swift */; };
 		90A822C02A75708E00A8616F /* ExtensionState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90A822BE2A75708E00A8616F /* ExtensionState.swift */; };
-		BD9389A12CB561500011473B /* float.css in Resources */ = {isa = PBXBuildFile; fileRef = BD9389A02CB561500011473B /* float.css */; };
-		BD9389A22CB561500011473B /* float.css in Resources */ = {isa = PBXBuildFile; fileRef = BD9389A02CB561500011473B /* float.css */; };
 		BDAF87552CA3A8CA009143F5 /* data in Resources */ = {isa = PBXBuildFile; fileRef = BDAF87542CA3A8CA009143F5 /* data */; };
 		BDAF87562CA3A8E0009143F5 /* data in Resources */ = {isa = PBXBuildFile; fileRef = BDAF87542CA3A8CA009143F5 /* data */; };
 		BDB1CFAE2C6757C600B03834 /* _locales in Resources */ = {isa = PBXBuildFile; fileRef = BDB1CFAD2C6757C600B03834 /* _locales */; };
 		BDB1CFAF2C6757C600B03834 /* _locales in Resources */ = {isa = PBXBuildFile; fileRef = BDB1CFAD2C6757C600B03834 /* _locales */; };
 		BDB1CFB12C67BB4800B03834 /* background.js in Resources */ = {isa = PBXBuildFile; fileRef = BDB1CFB02C67BB4800B03834 /* background.js */; };
 		BDB1CFB22C67BB4800B03834 /* background.js in Resources */ = {isa = PBXBuildFile; fileRef = BDB1CFB02C67BB4800B03834 /* background.js */; };
+		BDE831EA2CFF4CDE00E25427 /* float.js in Resources */ = {isa = PBXBuildFile; fileRef = BDE831E92CFF4CDE00E25427 /* float.js */; };
+		BDE831EB2CFF4CDE00E25427 /* float.js in Resources */ = {isa = PBXBuildFile; fileRef = BDE831E92CFF4CDE00E25427 /* float.js */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -146,10 +146,10 @@
 		17D243FA2A75504C00120AD1 /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
 		17FC52D12A6D56C000367D01 /* float.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; name = float.html; path = "../../Twine by SwiftGG plugin/float.html"; sourceTree = "<group>"; };
 		90A822BE2A75708E00A8616F /* ExtensionState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExtensionState.swift; sourceTree = "<group>"; };
-		BD9389A02CB561500011473B /* float.css */ = {isa = PBXFileReference; lastKnownFileType = text.css; name = float.css; path = "../Twine by SwiftGG plugin/float.css"; sourceTree = SOURCE_ROOT; };
 		BDAF87542CA3A8CA009143F5 /* data */ = {isa = PBXFileReference; lastKnownFileType = folder; name = data; path = "../../Twine by SwiftGG plugin/data"; sourceTree = "<group>"; };
 		BDB1CFAD2C6757C600B03834 /* _locales */ = {isa = PBXFileReference; lastKnownFileType = folder; name = _locales; path = "../../Twine by SwiftGG plugin/_locales"; sourceTree = "<group>"; };
 		BDB1CFB02C67BB4800B03834 /* background.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; name = background.js; path = "../../Twine by SwiftGG plugin/background.js"; sourceTree = "<group>"; };
+		BDE831E92CFF4CDE00E25427 /* float.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; name = float.js; path = "../Twine by SwiftGG plugin/float.js"; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -293,10 +293,10 @@
 				17CE90B42A65959C00E4C4DA /* content_script.css */,
 				17CE90B52A65959C00E4C4DA /* popup.js */,
 				17CE90B62A65959C00E4C4DA /* background.js */,
-				BD9389A02CB561500011473B /* float.css */,
 				17CE90B72A65959C00E4C4DA /* popup.html */,
 				17CE90B82A65959C00E4C4DA /* source */,
 				17CE90BA2A65959C00E4C4DA /* content_script.js */,
+				BDE831E92CFF4CDE00E25427 /* float.js */,
 				17CE90BB2A65959C00E4C4DA /* manifest.json */,
 				17CE90BC2A65959C00E4C4DA /* options.html */,
 				17CE90BD2A65959C00E4C4DA /* popup.css */,
@@ -480,7 +480,7 @@
 				17CE90D02A65959C00E4C4DA /* content_script.js in Resources */,
 				BDB1CFB12C67BB4800B03834 /* background.js in Resources */,
 				BDB1CFAE2C6757C600B03834 /* _locales in Resources */,
-				BD9389A22CB561500011473B /* float.css in Resources */,
+				BDE831EA2CFF4CDE00E25427 /* float.js in Resources */,
 				17CE90D12A65959C00E4C4DA /* manifest.json in Resources */,
 				17CE90CB2A65959C00E4C4DA /* popup.js in Resources */,
 				17FC52D22A6D56C000367D01 /* float.html in Resources */,
@@ -502,7 +502,7 @@
 				17CE90C52A65959C00E4C4DA /* content_script.js in Resources */,
 				BDB1CFB22C67BB4800B03834 /* background.js in Resources */,
 				BDB1CFAF2C6757C600B03834 /* _locales in Resources */,
-				BD9389A12CB561500011473B /* float.css in Resources */,
+				BDE831EB2CFF4CDE00E25427 /* float.js in Resources */,
 				17CE90C62A65959C00E4C4DA /* manifest.json in Resources */,
 				17CE90C02A65959C00E4C4DA /* popup.js in Resources */,
 				17FC52D32A6D56C000367D01 /* float.html in Resources */,

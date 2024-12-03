@@ -784,11 +784,6 @@ async function injectFloat() {
     div.id = "swiftgg-float-container"
     div.innerHTML = floatContent
     document.body.appendChild(div)
-    // inject float.css
-    const style = document.createElement('style');
-    let css = await fetch(chrome.runtime.getURL('float.css')).then(response => response.text());
-    style.textContent = css;
-    document.head.appendChild(style);
     // inject svg
     await Promise.all([
         injectSvg('swiftgg-logo'),
