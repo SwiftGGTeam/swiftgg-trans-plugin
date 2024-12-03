@@ -6,8 +6,11 @@
   max-width: 300px;
   display: flex;
   align-items: center;
-  cursor: pointer;
+  cursor: grab;
   user-select: none;
+  touch-action: none;
+  will-change: transform;
+  transition: transform 0.1s ease-out;
 }
 
 
@@ -38,7 +41,7 @@
 
 #swiftgg-float-content:hover #swiftgg-status-icon-xmark,
 #swiftgg-status-icon-xmark:hover,
-#swiftgg-float-content-left:hover ~ #swiftgg-status-icon-xmark {
+#swiftgg-float-content-left:hover~#swiftgg-status-icon-xmark {
   opacity: 1;
 }
 
@@ -56,8 +59,8 @@
 }
 
 #swiftgg-float-content-right:hover,
-#swiftgg-status-icon-xmark:hover ~ #swiftgg-float-content-right,
-#swiftgg-float-content-left:hover ~ #swiftgg-float-content-right {
+#swiftgg-status-icon-xmark:hover~#swiftgg-float-content-right,
+#swiftgg-float-content-left:hover~#swiftgg-float-content-right {
   padding-right: 16px;
 }
 
