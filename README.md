@@ -1,7 +1,6 @@
 <div align="center">
-<img src="./Twine%20by%20SwiftGG%20plugin/source/intro/logo.svg" alt="logo" style="display: block; margin: auto; width: 100%;"/>
+<img src="./Twine%20by%20SwiftGG%20plugin/source/intro/logo.svg" alt="logo" style="display: block; margin: auto; width: 40%; padding: 20px 0px 20px 0px;"/>
 </div>
-[简体中文](./README-CN.md)
 
 Twine by SwiftGG is a browser extension designed to help iOS developers learn and understand Apple's official documentation more easily. Based on community-contributed localized content, it can identify English content in Apple's documentation and provide bilingual translation, assisting developers in their learning tasks.
 
@@ -54,13 +53,14 @@ Currently, Twine by SwiftGG is a completely open-source project consisting of 3 
 
 ## Features and Usage
 
-Currently, we support three interactive tutorial documents, which are:
+Currently, we support four interactive tutorial documents, which are:
 
 - [Introducing SwiftUI](https://developer.apple.com/tutorials/swiftui)
 - [Learning SwiftUI](https://developer.apple.com/tutorials/swiftui-concepts/)
 - [Exploring SwiftUI Sample Apps](https://developer.apple.com/tutorials/sample-apps)
+- [visonOS](https://developer.apple.com/documentation/visionos)
 
-![screenshot.png](./Twine%20by%20SwiftGG%20plugin/source/intro/screenshot.png)
+![screenshot.png](./Twine%20by%20SwiftGG%20plugin/source/intro/intro.png)
 
 Using the plugin is very simple. Just click on the extension, enable automatic translation, and navigate to the corresponding tutorial page to see the content automatically translated. You can switch between translation display modes according to your preference. If you don't want to see the translation temporarily, you can disable it for the current page with a toggle switch. It's easy to get started with just a simple click.
 

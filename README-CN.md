@@ -1,5 +1,5 @@
 <div align="center">
-<img src="./Twine%20by%20SwiftGG%20plugin/source/intro/logo.svg" alt="logo" style="display: block; margin: auto; width: 100%;"/>
+<img src="./Twine%20by%20SwiftGG%20plugin/source/intro/logo.svg" alt="logo" style="display: block; margin: auto; width: 40%; padding: 20px 0px 20px 0px;"/>
 </div>
 
 ## 目录
@@ -28,12 +28,13 @@ Apple 为了让初学者能够很好的学习 iOS 开发知识，提供了易于
 - 本地化文件库：https://github.com/SwiftGGTeam/swiftui-tutorial-chinese
 
 ## 功能及使用
-目前我们支持了三个互动式的教学文档，它们分别是：
+目前我们支持了四个互动式的教学文档，它们分别是：
 - [Introducing SwiftUI](https://developer.apple.com/tutorials/swiftui)
 - [Learning SwiftUI](https://developer.apple.com/tutorials/swiftui-concepts/)
 - [Exploring SwiftUI Sample Apps](https://developer.apple.com/tutorials/sample-apps)
+- [visonOS](https://developer.apple.com/documentation/visionos)
 
-![screenshot.png](./Twine%20by%20SwiftGG%20plugin/source/intro/screenshot.png)
+![screenshot.png](./Twine%20by%20SwiftGG%20plugin/source/intro/intro.png)
 
 使用非常简单，点击插件，打开自动翻译，进入到对应的教程页面即可自动翻译，可以根据你的喜好切换翻译展示方式，如果需要暂时不显示翻译，可以通过开关暂时关闭当前页面的翻译。只需要打开即可轻松上手。
 
@@ -93,7 +94,6 @@ Apple 为了让初学者能够很好的学习 iOS 开发知识，提供了易于
 下一阶段，我们要做的事情有：
 - 浏览器插件方面
   - 支持多语言
-  - 支持 iOS 版本 Safari 浏览器
 - 数据后台仓库：
   - 使用 vapor 对后台进行重构
   - 优化网页里英文内容的匹配规则，支持更多的页面
