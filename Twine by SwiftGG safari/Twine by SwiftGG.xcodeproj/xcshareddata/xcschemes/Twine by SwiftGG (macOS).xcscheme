@@ -15,7 +15,7 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "17CE90752A65959B00E4C4DA"
-               BuildableName = "Twine by SwiftGG.app"
+               BuildableName = "Twine.app"
                BlueprintName = "Twine by SwiftGG (macOS)"
                ReferencedContainer = "container:Twine by SwiftGG.xcodeproj">
             </BuildableReference>
@@ -46,7 +46,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "17CE90752A65959B00E4C4DA"
-            BuildableName = "Twine by SwiftGG.app"
+            BuildableName = "Twine.app"
             BlueprintName = "Twine by SwiftGG (macOS)"
             ReferencedContainer = "container:Twine by SwiftGG.xcodeproj">
          </BuildableReference>
@@ -63,7 +63,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "17CE90752A65959B00E4C4DA"
-            BuildableName = "Twine by SwiftGG.app"
+            BuildableName = "Twine.app"
             BlueprintName = "Twine by SwiftGG (macOS)"
             ReferencedContainer = "container:Twine by SwiftGG.xcodeproj">
          </BuildableReference>
