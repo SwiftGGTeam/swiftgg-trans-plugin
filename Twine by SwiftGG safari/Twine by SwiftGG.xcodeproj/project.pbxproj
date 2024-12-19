@@ -117,13 +117,13 @@
 		17CE905C2A65959A00E4C4DA /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		17CE905D2A65959B00E4C4DA /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		17CE905F2A65959B00E4C4DA /* SafariWebExtensionHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SafariWebExtensionHandler.swift; sourceTree = "<group>"; };
-		17CE90642A65959B00E4C4DA /* Twine by SwiftGG.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Twine by SwiftGG.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		17CE90642A65959B00E4C4DA /* Twine.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Twine.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		17CE90672A65959B00E4C4DA /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		17CE90692A65959B00E4C4DA /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		17CE906C2A65959B00E4C4DA /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		17CE906F2A65959B00E4C4DA /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		17CE90712A65959B00E4C4DA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		17CE90762A65959B00E4C4DA /* Twine by SwiftGG.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Twine by SwiftGG.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		17CE90762A65959B00E4C4DA /* Twine.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Twine.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		17CE90782A65959B00E4C4DA /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		17CE907B2A65959B00E4C4DA /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		17CE907D2A65959B00E4C4DA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -234,8 +234,8 @@
 		17CE90652A65959B00E4C4DA /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				17CE90642A65959B00E4C4DA /* Twine by SwiftGG.app */,
-				17CE90762A65959B00E4C4DA /* Twine by SwiftGG.app */,
+				17CE90642A65959B00E4C4DA /* Twine.app */,
+				17CE90762A65959B00E4C4DA /* Twine.app */,
 				17CE90832A65959B00E4C4DA /* Twine by SwiftGG Extension.appex */,
 				17CE908D2A65959B00E4C4DA /* Twine by SwiftGG Extension.appex */,
 			);
@@ -335,7 +335,7 @@
 				177FB5752A75F31F00648CEC /* SwiftUIX */,
 			);
 			productName = "Twine by SwiftGG (iOS)";
-			productReference = 17CE90642A65959B00E4C4DA /* Twine by SwiftGG.app */;
+			productReference = 17CE90642A65959B00E4C4DA /* Twine.app */;
 			productType = "com.apple.product-type.application";
 		};
 		17CE90752A65959B00E4C4DA /* Twine by SwiftGG (macOS) */ = {
@@ -358,7 +358,7 @@
 				17D243F52A754ACB00120AD1 /* SwiftUIX */,
 			);
 			productName = "Twine by SwiftGG (macOS)";
-			productReference = 17CE90762A65959B00E4C4DA /* Twine by SwiftGG.app */;
+			productReference = 17CE90762A65959B00E4C4DA /* Twine.app */;
 			productType = "com.apple.product-type.application";
 		};
 		17CE90822A65959B00E4C4DA /* Twine by SwiftGG Extension (iOS) */ = {
@@ -819,7 +819,7 @@
 					WebKit,
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "com.swiftgg.Twine-by-SwiftGG";
-				PRODUCT_NAME = "Twine by SwiftGG";
+				PRODUCT_NAME = "${INFOPLIST_KEY_CFBundleDisplayName}";
 				SDKROOT = iphoneos;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -858,7 +858,7 @@
 					WebKit,
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "com.swiftgg.Twine-by-SwiftGG";
-				PRODUCT_NAME = "Twine by SwiftGG";
+				PRODUCT_NAME = "${INFOPLIST_KEY_CFBundleDisplayName}";
 				SDKROOT = iphoneos;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -964,7 +964,7 @@
 					WebKit,
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "com.swiftgg.Twine-by-SwiftGG";
-				PRODUCT_NAME = "Twine by SwiftGG";
+				PRODUCT_NAME = "${INFOPLIST_KEY_CFBundleDisplayName}";
 				SDKROOT = macosx;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -1002,7 +1002,7 @@
 					WebKit,
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "com.swiftgg.Twine-by-SwiftGG";
-				PRODUCT_NAME = "Twine by SwiftGG";
+				PRODUCT_NAME = "${INFOPLIST_KEY_CFBundleDisplayName}";
 				SDKROOT = macosx;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
