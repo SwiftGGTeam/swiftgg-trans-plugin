@@ -29,7 +29,6 @@
 		17CE90A12A65959B00E4C4DA /* SafariWebExtensionHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17CE905F2A65959B00E4C4DA /* SafariWebExtensionHandler.swift */; };
 		17CE90BF2A65959C00E4C4DA /* content_script.css in Resources */ = {isa = PBXBuildFile; fileRef = 17CE90B42A65959C00E4C4DA /* content_script.css */; };
 		17CE90C02A65959C00E4C4DA /* popup.js in Resources */ = {isa = PBXBuildFile; fileRef = 17CE90B52A65959C00E4C4DA /* popup.js */; };
-		17CE90C12A65959C00E4C4DA /* background.js in Resources */ = {isa = PBXBuildFile; fileRef = 17CE90B62A65959C00E4C4DA /* background.js */; };
 		17CE90C22A65959C00E4C4DA /* popup.html in Resources */ = {isa = PBXBuildFile; fileRef = 17CE90B72A65959C00E4C4DA /* popup.html */; };
 		17CE90C32A65959C00E4C4DA /* source in Resources */ = {isa = PBXBuildFile; fileRef = 17CE90B82A65959C00E4C4DA /* source */; };
 		17CE90C52A65959C00E4C4DA /* content_script.js in Resources */ = {isa = PBXBuildFile; fileRef = 17CE90BA2A65959C00E4C4DA /* content_script.js */; };
@@ -38,7 +37,6 @@
 		17CE90C82A65959C00E4C4DA /* popup.css in Resources */ = {isa = PBXBuildFile; fileRef = 17CE90BD2A65959C00E4C4DA /* popup.css */; };
 		17CE90CA2A65959C00E4C4DA /* content_script.css in Resources */ = {isa = PBXBuildFile; fileRef = 17CE90B42A65959C00E4C4DA /* content_script.css */; };
 		17CE90CB2A65959C00E4C4DA /* popup.js in Resources */ = {isa = PBXBuildFile; fileRef = 17CE90B52A65959C00E4C4DA /* popup.js */; };
-		17CE90CC2A65959C00E4C4DA /* background.js in Resources */ = {isa = PBXBuildFile; fileRef = 17CE90B62A65959C00E4C4DA /* background.js */; };
 		17CE90CD2A65959C00E4C4DA /* popup.html in Resources */ = {isa = PBXBuildFile; fileRef = 17CE90B72A65959C00E4C4DA /* popup.html */; };
 		17CE90CE2A65959C00E4C4DA /* source in Resources */ = {isa = PBXBuildFile; fileRef = 17CE90B82A65959C00E4C4DA /* source */; };
 		17CE90D02A65959C00E4C4DA /* content_script.js in Resources */ = {isa = PBXBuildFile; fileRef = 17CE90BA2A65959C00E4C4DA /* content_script.js */; };
@@ -135,7 +133,6 @@
 		17CE90932A65959B00E4C4DA /* Twine by SwiftGG.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Twine by SwiftGG.entitlements"; sourceTree = "<group>"; };
 		17CE90B42A65959C00E4C4DA /* content_script.css */ = {isa = PBXFileReference; lastKnownFileType = text.css; name = content_script.css; path = "../../Twine by SwiftGG plugin/content_script.css"; sourceTree = "<group>"; };
 		17CE90B52A65959C00E4C4DA /* popup.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; name = popup.js; path = "../../Twine by SwiftGG plugin/popup.js"; sourceTree = "<group>"; };
-		17CE90B62A65959C00E4C4DA /* background.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; name = background.js; path = "../../Twine by SwiftGG plugin/background.js"; sourceTree = "<group>"; };
 		17CE90B72A65959C00E4C4DA /* popup.html */ = {isa = PBXFileReference; lastKnownFileType = text.html; name = popup.html; path = "../../Twine by SwiftGG plugin/popup.html"; sourceTree = "<group>"; };
 		17CE90B82A65959C00E4C4DA /* source */ = {isa = PBXFileReference; lastKnownFileType = folder; name = source; path = "../../Twine by SwiftGG plugin/source"; sourceTree = "<group>"; };
 		17CE90BA2A65959C00E4C4DA /* content_script.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; name = content_script.js; path = "../../Twine by SwiftGG plugin/content_script.js"; sourceTree = "<group>"; };
@@ -292,7 +289,6 @@
 				17FC52D12A6D56C000367D01 /* float.html */,
 				17CE90B42A65959C00E4C4DA /* content_script.css */,
 				17CE90B52A65959C00E4C4DA /* popup.js */,
-				17CE90B62A65959C00E4C4DA /* background.js */,
 				17CE90B72A65959C00E4C4DA /* popup.html */,
 				17CE90B82A65959C00E4C4DA /* source */,
 				17CE90BA2A65959C00E4C4DA /* content_script.js */,
@@ -474,7 +470,6 @@
 				BDAF87562CA3A8E0009143F5 /* data in Resources */,
 				174474F92A73569800BB4202 /* Privacy policy.md in Resources */,
 				17CE90D32A65959C00E4C4DA /* popup.css in Resources */,
-				17CE90CC2A65959C00E4C4DA /* background.js in Resources */,
 				17CE90CD2A65959C00E4C4DA /* popup.html in Resources */,
 				17CE90CA2A65959C00E4C4DA /* content_script.css in Resources */,
 				17CE90D02A65959C00E4C4DA /* content_script.js in Resources */,
@@ -496,7 +491,6 @@
 				BDAF87552CA3A8CA009143F5 /* data in Resources */,
 				174474FA2A73569800BB4202 /* Privacy policy.md in Resources */,
 				17CE90C82A65959C00E4C4DA /* popup.css in Resources */,
-				17CE90C12A65959C00E4C4DA /* background.js in Resources */,
 				17CE90C22A65959C00E4C4DA /* popup.html in Resources */,
 				17CE90BF2A65959C00E4C4DA /* content_script.css in Resources */,
 				17CE90C52A65959C00E4C4DA /* content_script.js in Resources */,
